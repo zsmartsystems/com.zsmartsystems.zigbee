@@ -63,6 +63,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     private final Logger logger = LoggerFactory.getLogger(AshFrameHandler.class);
 
+    private final Logger txRxLogger = LoggerFactory.getLogger("TxRxLogger");
+
     private final Logger ezspDongleLogger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
 
     /**
@@ -849,6 +851,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
         ezspDongleLogger.debug("TX EZSP: {}", ezspTransaction.getRequest());
+        txRxLogger.debug("[" + frameHandler.getHandlerIdentifier() + "] TX EZSP: {}", ezspTransaction.getRequest());
         logger.debug("ASH TX EZSP: {}", ezspTransaction.getRequest());
 
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
