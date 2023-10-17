@@ -53,7 +53,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
         ZclCluster cluster = getCluster(endpoint, args[2]);
         boolean rediscover = false;
         if(args.length >= 4) {
-            if(args[3].equalsIgnoreCase("discover") || args[3].equalsIgnoreCase("nodiscover")) {
+            if(!args[3].equalsIgnoreCase("discover") && !args[3].equalsIgnoreCase("nodiscover")) {
                 out.println("Invalid discover/nodiscover argument (must be DISCOVER or NODISCOVER)");
                 return;
             }
