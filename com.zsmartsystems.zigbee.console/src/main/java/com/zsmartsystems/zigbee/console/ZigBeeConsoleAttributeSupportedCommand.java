@@ -34,7 +34,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER [REDISCOVER] [MANUFACTURER-CODE]";
+        return "ENDPOINT CLUSTER [DISCOVER|NODISCOVER] [MANUFACTURER-CODE]";
     }
 
     @Override
@@ -51,7 +51,14 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         ZclCluster cluster = getCluster(endpoint, args[2]);
-        boolean rediscover = args.length >= 4 && Boolean.parseBoolean(args[3]);
+        boolean rediscover = false;
+        if(args.length >= 4) {
+            if(args[3].equalsIgnoreCase("discover") || args[3].equalsIgnoreCase("nodiscover")) {
+                out.println("Invalid discover/nodiscover argument (must be DISCOVER or NODISCOVER)");
+                return;
+            }
+            rediscover = args[3].equalsIgnoreCase("discover");
+        }
         Integer manufacturerCode = args.length == 5 ? parseInteger(args[4]) : null;
 
         final Future<Boolean> future = cluster.discoverAttributes(rediscover, manufacturerCode);
