@@ -30,7 +30,10 @@ public class ZigBeeConsoleSetCheckInTimeoutCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getHelp() {
-        return "";
+        return "The TIMEOUT argument may have the following values:\n" +
+            "  -1: Disable\n" +
+            "   0: Use the device's default timeout\n" +
+            "  >0: Use the given timeout in quarterseconds\n";
     }
 
     @Override
