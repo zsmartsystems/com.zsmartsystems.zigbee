@@ -620,6 +620,17 @@ public final class ZigBeeConsole {
                     print(command.getDescription(), out);
                     print("", out);
                     print("Syntax: " + command.getSyntax(), out);
+                } else if(newCommands.containsKey(args[1])) {
+                    final ZigBeeConsoleCommand command = newCommands.get(args[1]);
+                    print(command.getDescription(), out);
+                    if(command.getSyntax() != null && !command.getSyntax().isEmpty()) {
+                        print("", out);
+                        print("Syntax: " + command.getSyntax(), out);
+                    }
+                    if(command.getHelp() != null && !command.getHelp().isEmpty()) {
+                        print("", out);
+                        print("Help: " + command.getHelp(), out);
+                    }
                 } else {
                     return false;
                 }
