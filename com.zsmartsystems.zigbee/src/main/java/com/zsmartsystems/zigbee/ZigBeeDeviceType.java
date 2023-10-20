@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T08:05:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-10-20T09:18:33Z")
 public enum ZigBeeDeviceType {
 
     /**
