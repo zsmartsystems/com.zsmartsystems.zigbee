@@ -150,6 +150,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_NUM_STORED_BEACONS = 0x08;
     protected static final int FRAME_ID_GET_PARENT_CHILD_PARAMETERS = 0x29;
     protected static final int FRAME_ID_GET_POLICY = 0x56;
+    protected static final int FRAME_ID_GET_RADIO_PARAMETERS = 0xFD;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
     protected static final int FRAME_ID_GET_ROUTING_SHORTCUT_THRESHOLD = 0xD1;
     protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY = 0xC1;
@@ -319,6 +320,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_NUM_STORED_BEACONS, EzspGetNumStoredBeaconsResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_RADIO_PARAMETERS, EzspGetRadioParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTING_SHORTCUT_THRESHOLD, EzspGetRoutingShortcutThresholdResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY, EzspGetSourceRouteTableEntryResponse.class);

@@ -259,7 +259,7 @@ public class ZigBeeConsoleMain {
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 16);
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 24);
 
-            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 8);
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 20);
 
             // Configure the concentrator
             // Max Hops defaults to system max

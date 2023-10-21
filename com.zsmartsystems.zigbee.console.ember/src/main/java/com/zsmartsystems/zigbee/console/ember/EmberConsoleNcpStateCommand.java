@@ -13,7 +13,9 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRadioParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMultiPhyRadioParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
@@ -90,6 +92,8 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         int nwkAddress = ncp.getNwkAddress();
         EzspGetNetworkParametersResponse nwkParameterResponse = ncp.getNetworkParameters();
         EmberNetworkParameters nwkParameters = nwkParameterResponse.getParameters();
+        EzspGetRadioParametersResponse radioParametersResponse = ncp.getRadioParameters();
+        EmberMultiPhyRadioParameters radioParameters = radioParametersResponse.getParameters();
 
         String mfgName = ncp.getMfgName();
         String mfgBoard = ncp.getMfgBoardName();
@@ -104,9 +108,11 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         out.println("NWK Address         : " + String.format("%04X", nwkAddress));
         out.println("Network PAN Id      : " + String.format("%04X", nwkParameters.getPanId()));
         out.println("Network EPAN Id     : " + nwkParameters.getExtendedPanId());
-        out.println("Radio Channel       : " + nwkParameters.getRadioChannel());
+        out.println(
+                "Radio Channel       : " + radioParameters.getRadioChannel() + " / " + nwkParameters.getRadioChannel());
         out.println("Network Manager Id  : " + String.format("%04X", nwkParameters.getNwkManagerId()));
-        out.println("Radio TX Power      : " + nwkParameters.getRadioTxPower());
+        out.println(
+                "Radio TX Power      : " + radioParameters.getRadioTxPower() + " / " + nwkParameters.getRadioTxPower());
         out.println("Join Method         : " + nwkParameters.getJoinMethod());
         out.println("Board Name          : " + mfgBoard);
         out.println("Manufacturer Name   : " + mfgName);
