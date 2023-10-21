@@ -138,6 +138,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private final Logger txRxLogger = LoggerFactory.getLogger("TxRxLogger");
 
+    private String handlerIdentifier;
+
+    public void setHandlerIdentifier(String handlerIdentifier) {
+        this.handlerIdentifier = handlerIdentifier;
+    }
+
     /**
      * The serial port used to connect to the dongle
      */

@@ -340,6 +340,8 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleWhitelistCommand.class);
 
             emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
+
+            emberDongle.setHandlerIdentifier(serialPortName);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
@@ -364,6 +366,8 @@ public class ZigBeeConsoleMain {
         }
 
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
+
+        networkManager.setNetworkManagerId(serialPortName);
 
         ZigBeeNetworkDataStore dataStore = new ZigBeeDataStore(dongleName);
         if (resetNetwork) {
