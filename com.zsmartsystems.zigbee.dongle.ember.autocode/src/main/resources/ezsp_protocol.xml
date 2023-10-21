@@ -3700,6 +3700,31 @@
 	</command>
 
 	<command>
+		<name>getRadioParameters</name>
+		<id>0xFD</id>
+		<description>Returns the current radio parameters based on phy index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>childCount</name>
+				<description>The number of children the node currently has.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The result of the CBKE operation.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberMultiPhyRadioParameters</data_type>
+				<name>parameters</name>
+				<description>The current radio parameters.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>requestLinkKey</name>
 		<id>0x14</id>
 		<description>A function to request a Link Key from the Trust Center with another device on the Network (which could be the Trust Center). A Link Key with the Trust Center is possible but the requesting device cannot be the Trust Center. Link Keys are optional in ZigBee Standard Security and thus the stack cannot know whether the other device supports them. If EMBER_REQUEST_KEY_TIMEOUT is non-zero on the Trust Center and the partner device is not the Trust Center, both devices must request keys with their partner device within the time period. The Trust Center only supports one outstanding key request at a time and therefore will ignore other requests. If the timeout is zero then the Trust Center will immediately respond and not wait for the second request. The Trust Center will always immediately respond to requests for a Link Key with it. Sleepy devices should poll at a higher rate until a response is received or the request times out. The success or failure of the request is returned via ezspZigbeeKeyEstablishmentHandler(...).</description>
@@ -4465,6 +4490,28 @@
 				<data_type>uint8_t</data_type>
 				<name>index</name>
 				<description>(Private) The index of the retrieved beacon.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberMultiPhyRadioParameters</name>
+		<description>Radio parameters.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radioTxPower</name>
+				<description>A power setting, in dBm.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radioPage</name>
+				<description>A radio page.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radioChannel</name>
+				<description>A radio channel.</description>
 			</parameter>
 		</parameters>
 	</structure>

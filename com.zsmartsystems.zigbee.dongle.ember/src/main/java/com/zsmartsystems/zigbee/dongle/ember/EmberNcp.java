@@ -74,6 +74,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRadioParametersRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRadioParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryRequest;
@@ -295,6 +297,19 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspGetNetworkParametersResponse.class));
         return (EzspGetNetworkParametersResponse) transaction.getResponse();
+    }
+
+    /**
+     * Gets the current radio parameters, or an empty parameters class if there's an error
+     *
+     * @return {@link EzspGetRadioParametersResponse} or null on error
+     */
+    public EzspGetRadioParametersResponse getRadioParameters() {
+        EzspGetRadioParametersRequest request = new EzspGetRadioParametersRequest();
+        request.setChildCount(1);
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetRadioParametersResponse.class));
+        return (EzspGetRadioParametersResponse) transaction.getResponse();
     }
 
     /**
