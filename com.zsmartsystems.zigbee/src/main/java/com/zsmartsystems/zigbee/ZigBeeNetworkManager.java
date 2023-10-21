@@ -141,6 +141,12 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     private final Logger txRxLogger = LoggerFactory.getLogger("TxRxLogger");
 
+    private String networkManagerId;
+
+    public void setNetworkManagerId(String networkManagerId) {
+        this.networkManagerId = networkManagerId;
+    }
+
     /**
      * The local endpoint ID used for all ZCL commands
      */

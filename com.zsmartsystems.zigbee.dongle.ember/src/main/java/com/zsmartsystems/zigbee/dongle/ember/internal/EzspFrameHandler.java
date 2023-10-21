@@ -20,6 +20,10 @@ public interface EzspFrameHandler {
 
     int getEzspVersion();
 
+    default String getHandlerIdentifier() {
+        return null;
+    }
+
     /**
      * Passes received asynchronous frames from the ASH handler to the EZSP layer
      *
