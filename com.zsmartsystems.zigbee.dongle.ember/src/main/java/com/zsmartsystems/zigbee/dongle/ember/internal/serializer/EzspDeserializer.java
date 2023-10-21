@@ -45,6 +45,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmas
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMultiPhyRadioParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
@@ -412,5 +413,9 @@ public class EzspDeserializer {
 
     public EmberKeyStatus deserializeEmberKeyStatus() {
         return EmberKeyStatus.getEmberKeyStatus(deserializeUInt8());
+    }
+
+    public EmberMultiPhyRadioParameters deserializeEmberMultiPhyRadioParameters() {
+        return new EmberMultiPhyRadioParameters(this);
     }
 }

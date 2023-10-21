@@ -171,6 +171,19 @@ public class EmberNcp {
     }
 
     /**
+     * Gets the current radio parameters, or an empty parameters class if there's an error
+     *
+     * @return {@link EzspGetRadioParametersResponse} or null on error
+     */
+    public EzspGetRadioParametersResponse getRadioParameters() {
+        EzspGetRadioParametersRequest request = new EzspGetRadioParametersRequest();
+        request.setChildCount(1);
+        EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler().sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetRadioParametersResponse.class));
+        return (EzspGetRadioParametersResponse) transaction.getResponse();
+    }
+
+    /**
      * Returns a value indicating whether the node is joining, joined to, or leaving a network.
      *
      * @return the {@link EmberNetworkStatus} or null on error

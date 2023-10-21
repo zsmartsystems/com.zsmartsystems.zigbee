@@ -326,7 +326,7 @@ public class ZigBeeConsoleMain {
                 }
             }
 
-            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 8);
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 20);
 
             // Configure the concentrator
             // Max Hops defaults to system max
