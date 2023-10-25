@@ -25,11 +25,11 @@ public class EzspGetRadioParametersRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0xFD;
 
     /**
-     * The number of children the node currently has.
+     * The physical radio to query.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
-    private int childCount;
+    private int phyIndex;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -45,23 +45,23 @@ public class EzspGetRadioParametersRequest extends EzspFrameRequest {
     }
 
     /**
-     * The number of children the node currently has.
+     * The physical radio to query.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
-     * @return the current childCount as {@link int}
+     * @return the current phyIndex as {@link int}
      */
-    public int getChildCount() {
-        return childCount;
+    public int getPhyIndex() {
+        return phyIndex;
     }
 
     /**
-     * The number of children the node currently has.
+     * The physical radio to query.
      *
-     * @param childCount the childCount to set as {@link int}
+     * @param phyIndex the phyIndex to set as {@link int}
      */
-    public void setChildCount(int childCount) {
-        this.childCount = childCount;
+    public void setPhyIndex(int phyIndex) {
+        this.phyIndex = phyIndex;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class EzspGetRadioParametersRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(childCount);
+        serializer.serializeUInt8(phyIndex);
         return serializer.getPayload();
     }
 
@@ -79,8 +79,8 @@ public class EzspGetRadioParametersRequest extends EzspFrameRequest {
         final StringBuilder builder = new StringBuilder(82);
         builder.append("EzspGetRadioParametersRequest [networkId=");
         builder.append(networkId);
-        builder.append(", childCount=");
-        builder.append(childCount);
+        builder.append(", phyIndex=");
+        builder.append(phyIndex);
         builder.append(']');
         return builder.toString();
     }

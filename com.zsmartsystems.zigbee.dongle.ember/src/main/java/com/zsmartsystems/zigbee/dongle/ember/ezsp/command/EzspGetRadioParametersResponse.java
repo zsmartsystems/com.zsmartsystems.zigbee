@@ -26,7 +26,7 @@ public class EzspGetRadioParametersResponse extends EzspFrameResponse {
     public static final int FRAME_ID = 0xFD;
 
     /**
-     * The result of the CBKE operation.
+     * The result of the operation.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -52,7 +52,7 @@ public class EzspGetRadioParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The result of the CBKE operation.
+     * The result of the operation.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -63,7 +63,7 @@ public class EzspGetRadioParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The result of the CBKE operation.
+     * The result of the operation.
      *
      * @param status the status to set as {@link EmberStatus}
      */
