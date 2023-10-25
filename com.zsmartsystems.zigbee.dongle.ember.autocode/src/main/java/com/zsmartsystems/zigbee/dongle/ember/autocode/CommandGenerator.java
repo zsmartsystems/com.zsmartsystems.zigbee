@@ -978,7 +978,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    /**");
         out.println("     * The maximum supported version of EZSP");
         out.println("     */");
-        out.println("    public static final int EZSP_MAX_VERSION = 11;");
+        out.println("    public static final int EZSP_MAX_VERSION = 12;");
         out.println();
         out.println("    /**");
         out.println("     * The network ID bit shift");
