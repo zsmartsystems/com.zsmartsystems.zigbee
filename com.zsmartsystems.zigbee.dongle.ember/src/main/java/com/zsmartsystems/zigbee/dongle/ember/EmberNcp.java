@@ -302,11 +302,12 @@ public class EmberNcp {
     /**
      * Gets the current radio parameters, or an empty parameters class if there's an error
      *
+     * @param phyIndex the physical radio index
      * @return {@link EzspGetRadioParametersResponse} or null on error
      */
-    public EzspGetRadioParametersResponse getRadioParameters() {
+    public EzspGetRadioParametersResponse getRadioParameters(int phyIndex) {
         EzspGetRadioParametersRequest request = new EzspGetRadioParametersRequest();
-        request.setChildCount(1);
+        request.setPhyIndex(phyIndex);
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspGetRadioParametersResponse.class));
         return (EzspGetRadioParametersResponse) transaction.getResponse();

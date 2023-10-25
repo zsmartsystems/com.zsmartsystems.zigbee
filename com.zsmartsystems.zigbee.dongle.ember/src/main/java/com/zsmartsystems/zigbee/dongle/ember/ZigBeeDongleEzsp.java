@@ -1328,8 +1328,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (ezspVersion.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
             if (!EzspFrame.setEzspVersion(ezspVersion.getProtocolVersion())) {
-                logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
-                        ezspVersion.getProtocolVersion(), EzspFrame.getEzspVersion());
+                logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (NCP = V{}, supported = V{}-V{})",
+                        ezspVersion.getProtocolVersion(), EzspFrame.EZSP_MIN_VERSION, EzspFrame.EZSP_MAX_VERSION);
                 return false;
             }
 

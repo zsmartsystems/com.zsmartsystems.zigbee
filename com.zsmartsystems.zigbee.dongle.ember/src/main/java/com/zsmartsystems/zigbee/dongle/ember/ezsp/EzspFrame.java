@@ -53,12 +53,12 @@ public abstract class EzspFrame {
     /**
      * The minimum supported version of EZSP
      */
-    private static final int EZSP_MIN_VERSION = 4;
+    public static final int EZSP_MIN_VERSION = 4;
 
     /**
      * The maximum supported version of EZSP
      */
-    private static final int EZSP_MAX_VERSION = 11;
+    public static final int EZSP_MAX_VERSION = 11;
 
     /**
      * The network ID bit shift
