@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.security;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -245,9 +246,10 @@ public class ZigBeeKey {
      * @return {@link ZigBeeKey} containing a random 128 bit key
      */
     public static ZigBeeKey createRandom() {
+        SecureRandom secureRandom = new SecureRandom();
         int key[] = new int[16];
         for (int cnt = 0; cnt < 16; cnt++) {
-            key[cnt] = (int) Math.floor((Math.random() * 255));
+            key[cnt] = secureRandom.nextInt(256);
         }
 
         return new ZigBeeKey(key);
