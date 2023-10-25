@@ -3706,15 +3706,15 @@
 		<command_parameters>
 			<parameter>
 				<data_type>uint8_t</data_type>
-				<name>childCount</name>
-				<description>The number of children the node currently has.</description>
+				<name>phyIndex</name>
+				<description>The physical radio to query.</description>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
 			<parameter>
 				<data_type>EmberStatus</data_type>
 				<name>status</name>
-				<description>The result of the CBKE operation.</description>
+				<description>The result of the operation.</description>
 			</parameter>
 			<parameter>
 				<data_type>EmberMultiPhyRadioParameters</data_type>

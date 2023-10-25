@@ -92,7 +92,7 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         int nwkAddress = ncp.getNwkAddress();
         EzspGetNetworkParametersResponse nwkParameterResponse = ncp.getNetworkParameters();
         EmberNetworkParameters nwkParameters = nwkParameterResponse.getParameters();
-        EzspGetRadioParametersResponse radioParametersResponse = ncp.getRadioParameters();
+        EzspGetRadioParametersResponse radioParametersResponse = ncp.getRadioParameters(0);
         EmberMultiPhyRadioParameters radioParameters = radioParametersResponse.getParameters();
 
         String mfgName = ncp.getMfgName();
