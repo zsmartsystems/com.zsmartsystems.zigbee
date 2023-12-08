@@ -140,6 +140,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private String handlerIdentifier;
 
+    @Override
+    public String getHandlerIdentifier() {
+        return handlerIdentifier;
+    }
+
     public void setHandlerIdentifier(String handlerIdentifier) {
         this.handlerIdentifier = handlerIdentifier;
     }
