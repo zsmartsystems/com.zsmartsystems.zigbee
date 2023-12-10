@@ -26,7 +26,7 @@ public interface ZigBeeAnnounceListener {
      * @param ieeeAddress the {@link IeeeAddress} of the newly announced device
      */
     default void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
-            final IeeeAddress ieeeAddress) {
+            final IeeeAddress ieeeAddress, final Integer parentNetworkAddress) {
         // Default implementation
     }
 

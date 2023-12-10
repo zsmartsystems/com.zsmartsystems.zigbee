@@ -1283,7 +1283,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
+                    announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress, parentNetworkAddress);
                 }
             });
         }
