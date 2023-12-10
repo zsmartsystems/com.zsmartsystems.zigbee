@@ -1233,7 +1233,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     @Override
     public void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
-            final IeeeAddress ieeeAddress) {
+            final IeeeAddress ieeeAddress, final Integer parentNetworkAddress) {
         logger.debug("{}: nodeStatusUpdate - node status is {}, network address is {}.", ieeeAddress, deviceStatus,
                 String.format("%04X", networkAddress));
 

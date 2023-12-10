@@ -68,7 +68,7 @@ public interface ZigBeeTransportReceive {
      * @param ieeeAddress the {@link IeeeAddress} address of the new node
      */
     void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
-            final IeeeAddress ieeeAddress);
+            final IeeeAddress ieeeAddress, final Integer parentNetworkAddress);
 
     /**
      * A callback called by the {@link ZigBeeTransportTransmit} when a transaction sent using

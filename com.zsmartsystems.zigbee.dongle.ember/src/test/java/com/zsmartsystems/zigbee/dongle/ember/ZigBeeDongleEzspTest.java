@@ -341,37 +341,37 @@ public class ZigBeeDongleEzspTest {
         Mockito.when(response.getNewNodeEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_UNSECURED_JOIN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_HIGH_SECURITY_UNSECURED_REJOIN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_REJOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_UNSECURED_REJOIN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_REJOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_HIGH_SECURITY_SECURED_REJOIN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.SECURED_REJOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_SECURED_REJOIN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.SECURED_REJOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_DEVICE_LEFT);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 123,
-                new IeeeAddress("1234567890ABCDEF"));
+                new IeeeAddress("1234567890ABCDEF"), null);
     }
 
     @Test
@@ -397,7 +397,7 @@ public class ZigBeeDongleEzspTest {
         Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
+                123, new IeeeAddress("1234567890ABCDEF"), null);
 
         response = Mockito.mock(EzspChildJoinHandler.class);
         Mockito.when(response.getChildId()).thenReturn(123);
@@ -405,7 +405,7 @@ public class ZigBeeDongleEzspTest {
         Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 123,
-                new IeeeAddress("1234567890ABCDEF"));
+                new IeeeAddress("1234567890ABCDEF"), null);
     }
 
     @Test
