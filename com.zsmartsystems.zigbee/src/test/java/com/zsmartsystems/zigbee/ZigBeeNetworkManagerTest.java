@@ -1241,14 +1241,14 @@ public class ZigBeeNetworkManagerTest
         assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
                 manager, "announceListeners")).size());
 
-        manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("123456789ABCDEF0"));
+        manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("123456789ABCDEF0"), null);
         Mockito.verify(node, Mockito.times(0)).setNodeState(ArgumentMatchers.any(ZigBeeNodeState.class));
 
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(1)).deviceStatusUpdate(
                 ArgumentMatchers.any(ZigBeeNodeStatus.class), ArgumentMatchers.any(Integer.class),
                 ArgumentMatchers.any(IeeeAddress.class));
 
-        manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("1234567890ABCDEF"));
+        manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("1234567890ABCDEF"), null);
         Mockito.verify(node, Mockito.times(1)).updateNode(ArgumentMatchers.any(ZigBeeNode.class));
 
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(2)).deviceStatusUpdate(

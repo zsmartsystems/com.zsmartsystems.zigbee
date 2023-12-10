@@ -806,14 +806,14 @@ public class ZigBeeDongleTelegesis
             TelegesisDeviceJoinedNetworkEvent deviceJoinedEvent = (TelegesisDeviceJoinedNetworkEvent) event;
 
             zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-                    deviceJoinedEvent.getNetworkAddress(), deviceJoinedEvent.getIeeeAddress());
+                    deviceJoinedEvent.getNetworkAddress(), deviceJoinedEvent.getIeeeAddress(), deviceJoinedEvent.getParentAddress());
             return;
         }
         if (event instanceof TelegesisDeviceLeftNetworkEvent) {
             TelegesisDeviceLeftNetworkEvent deviceLeftEvent = (TelegesisDeviceLeftNetworkEvent) event;
 
             zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, deviceLeftEvent.getNetworkAddress(),
-                    deviceLeftEvent.getIeeeAddress());
+                    deviceLeftEvent.getIeeeAddress(), null);
             return;
         }
 

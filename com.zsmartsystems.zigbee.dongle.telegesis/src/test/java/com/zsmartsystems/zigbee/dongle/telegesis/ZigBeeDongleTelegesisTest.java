@@ -144,7 +144,7 @@ public class ZigBeeDongleTelegesisTest {
         dongle.telegesisEventReceived(response);
 
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, 123,
-                new IeeeAddress("1234567890ABCDEF"));
+                new IeeeAddress("1234567890ABCDEF"), null);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class ZigBeeDongleTelegesisTest {
         dongle.telegesisEventReceived(response);
 
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 123,
-                new IeeeAddress("1234567890ABCDEF"));
+                new IeeeAddress("1234567890ABCDEF"), null);
     }
 
     @Test
