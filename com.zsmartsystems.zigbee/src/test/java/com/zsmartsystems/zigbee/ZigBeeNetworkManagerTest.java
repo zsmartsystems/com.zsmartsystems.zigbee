@@ -1246,14 +1246,14 @@ public class ZigBeeNetworkManagerTest
 
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(1)).deviceStatusUpdate(
                 ArgumentMatchers.any(ZigBeeNodeStatus.class), ArgumentMatchers.any(Integer.class),
-                ArgumentMatchers.any(IeeeAddress.class));
+                ArgumentMatchers.any(IeeeAddress.class), ArgumentMatchers.any(Integer.class));
 
         manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("1234567890ABCDEF"), null);
         Mockito.verify(node, Mockito.times(1)).updateNode(ArgumentMatchers.any(ZigBeeNode.class));
 
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(2)).deviceStatusUpdate(
                 ArgumentMatchers.any(ZigBeeNodeStatus.class), ArgumentMatchers.any(Integer.class),
-                ArgumentMatchers.any(IeeeAddress.class));
+                ArgumentMatchers.any(IeeeAddress.class), ArgumentMatchers.any(Integer.class));
 
         manager.removeAnnounceListener(announceListener);
     }

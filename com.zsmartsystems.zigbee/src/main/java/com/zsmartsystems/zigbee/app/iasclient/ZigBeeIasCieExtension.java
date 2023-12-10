@@ -73,7 +73,7 @@ public class ZigBeeIasCieExtension implements ZigBeeNetworkExtension, ZigBeeNetw
     }
 
     @Override
-    public void deviceStatusUpdate(ZigBeeNodeStatus deviceStatus, Integer networkAddress, IeeeAddress ieeeAddress) {
+    public void deviceStatusUpdate(ZigBeeNodeStatus deviceStatus, Integer networkAddress, IeeeAddress ieeeAddress, Integer parentNetworkAddress) {
         switch (deviceStatus) {
             case UNSECURED_JOIN:
                 ZigBeeNode node = networkManager.getNode(ieeeAddress);
