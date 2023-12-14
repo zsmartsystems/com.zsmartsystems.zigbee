@@ -443,7 +443,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus initialize() {
-        logger.debug("EZSP Dongle: Initialize with protocol {}.", protocol);
+        logger.debug("[{}]: EZSP Dongle: Initialize with protocol {}.", handlerIdentifier, protocol);
         zigbeeTransportReceive.setTransportState(ZigBeeTransportState.INITIALISING);
 
         ncp = new EmberNcp(this);
@@ -457,65 +457,65 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
-            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
+            logger.debug("[{}]: Configuration state {} = {}", handlerIdentifier, config.getKey(), config.getValue());
         }
 
         Map<EzspPolicyId, Integer> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
         for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
             EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
-            logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
+            logger.debug("[{}]: Policy state {} = {} [{}]", handlerIdentifier, policy.getKey(), decisionId,
                     String.format("%02X", policy.getValue()));
         }
 
         stackConfigurer.setConfiguration(stackConfiguration);
         configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
-            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
+            logger.debug("[{}]: Configuration state {} = {}", handlerIdentifier, config.getKey(), config.getValue());
         }
 
         stackConfigurer.setPolicy(stackPolicies);
         policies = stackConfigurer.getPolicy(stackPolicies.keySet());
         for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
             EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
-            logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
+            logger.debug("[{}]: Policy state {} = {} [{}]", handlerIdentifier, policy.getKey(), decisionId,
                     String.format("%02X", policy.getValue()));
         }
 
         // Get the current network parameters so that any configuration updates start from here
         networkParameters = ncp.getNetworkParameters().getParameters();
-        logger.debug("Ember initial network parameters are {}", networkParameters);
+        logger.debug("[{}]: Ember initial network parameters are {}", handlerIdentifier, networkParameters);
 
         ieeeAddress = ncp.getIeeeAddress();
-        logger.debug("Ember local IEEE Address is {}", ieeeAddress);
+        logger.debug("[{}]: Ember local IEEE Address is {}", handlerIdentifier, ieeeAddress);
 
         ncp.getNetworkParameters();
 
-        logger.debug("EZSP Dongle: initialize done");
+        logger.debug("[{}]: EZSP Dongle: initialize done", handlerIdentifier);
 
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeStatus startup(boolean reinitialize) {
-        logger.debug("EZSP Dongle: Startup - reinitialize={}", reinitialize);
+        logger.debug("[{}]: EZSP Dongle: Startup - reinitialize={}", handlerIdentifier, reinitialize);
 
         // If frameHandler is null then the serial port didn't initialise or startup has not been called
         if (frameHandler == null) {
-            logger.error("EZSP Dongle: Startup found low level handler is not initialised.");
+            logger.error("[{}]: EZSP Dongle: Startup found low level handler is not initialised.", handlerIdentifier);
             return ZigBeeStatus.INVALID_STATE;
         }
 
         // Add the endpoint
-        logger.debug("EZSP Adding Endpoint: ProfileID={}, DeviceID={}", String.format("%04X", defaultProfileId),
+        logger.debug("[{}]: EZSP Adding Endpoint: ProfileID={}, DeviceID={}", handlerIdentifier, String.format("%04X", defaultProfileId),
                 String.format("%04X", defaultDeviceId));
-        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", printClusterList(inputClusters));
-        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", printClusterList(outputClusters));
+        logger.debug("[{}]: EZSP Adding Endpoint: Input Clusters   {}", handlerIdentifier, printClusterList(inputClusters));
+        logger.debug("[{}]: EZSP Adding Endpoint: Output Clusters  {}", handlerIdentifier, printClusterList(outputClusters));
         ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, inputClusters, outputClusters);
 
         // Now initialise the network
         EmberStatus initResponse = ncp.networkInit();
         if (initResponse == EmberStatus.EMBER_NOT_JOINED && !reinitialize) {
-            logger.debug("EZSP dongle initialize failed to join network");
+            logger.debug("[{}]: EZSP dongle initialize failed to join network", handlerIdentifier);
             return ZigBeeStatus.NO_NETWORK;
         }
 
@@ -526,12 +526,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Check if the network is initialised
         EmberNetworkStatus networkState = ncp.getNetworkState();
-        logger.debug("EZSP networkStateResponse {}", networkState);
+        logger.debug("[{}]: EZSP networkStateResponse {}", handlerIdentifier, networkState);
 
         // If we want to reinitialize the network, then go...
         EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(this);
         if (reinitialize) {
-            logger.debug("Reinitialising Ember NCP network as {}", deviceType);
+            logger.debug("[{}]: Reinitialising Ember NCP network as {}", handlerIdentifier, deviceType);
             if (deviceType == DeviceType.COORDINATOR) {
                 if (netInitialiser.formNetwork(ncp, networkParameters, linkKey, networkKey) != ZigBeeStatus.SUCCESS) {
                     return ZigBeeStatus.NO_NETWORK;
@@ -546,22 +546,22 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Wait for the network to come up
         networkState = waitNetworkStartup(ncp);
-        logger.debug("EZSP networkState after online wait {}", networkState);
+        logger.debug("[{}]: EZSP networkState after online wait {}", handlerIdentifier, networkState);
 
         // Get the security state - mainly for information
         EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
-        logger.debug("EZSP Current Security State = {}", currentSecurityState);
+        logger.debug("[{}]: EZSP Current Security State = {}", handlerIdentifier, currentSecurityState);
 
         EmberStatus txPowerResponse = ncp.setRadioPower(networkParameters.getRadioTxPower());
         if (txPowerResponse != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Setting TX Power to {} resulted in {}", networkParameters.getRadioTxPower(), txPowerResponse);
+            logger.debug("[{}]: Setting TX Power to {} resulted in {}", handlerIdentifier, networkParameters.getRadioTxPower(), txPowerResponse);
         }
 
         int address = ncp.getNwkAddress();
         if (address != 0xFFFE) {
             nwkAddress = address;
         }
-        logger.debug("EZSP Dongle: Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
+        logger.debug("[{}]: EZSP Dongle: Startup complete. NWK Address = {}, State = {}", handlerIdentifier, String.format("%04X", nwkAddress),
                 networkState);
 
         // At this stage, we will now take note of the EzspStackStatusHandler notifications
@@ -672,9 +672,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void shutdown() {
-        logger.debug("EZSP Dongle: Shutdown");
+        logger.debug("[{}]: EZSP Dongle: Shutdown", handlerIdentifier);
         if (frameHandler == null) {
-            logger.debug("EZSP Dongle: Shutdown frameHandler is null");
+            logger.debug("[{}]: EZSP Dongle: Shutdown frameHandler is null", handlerIdentifier);
             return;
         }
         frameHandler.setClosing();
@@ -806,7 +806,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
-            logger.debug("EZSP message not sent as unknown address mode: {}", apsFrame);
+            logger.debug("[{}]: EZSP message not sent as unknown address mode: {}", handlerIdentifier, apsFrame);
             return;
         }
 
@@ -827,7 +827,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
                     status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
                 } else {
-                    logger.debug("Unable to get response from {} :: {}", transaction.getRequest(),
+                    logger.debug("[{}]: Unable to get response from {} :: {}", handlerIdentifier, transaction.getRequest(),
                             transaction.getResponse());
                     return;
                 }
@@ -851,7 +851,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public void setNodeDescriptor(IeeeAddress ieeeAddress, NodeDescriptor nodeDescriptor) {
         // Update the extendedTimeout flag in the address table.
         // Users should ensure the address table is large enough to hold all nodes on the network.
-        logger.debug("{}: NodeDescriptor passed to Ember NCP {}", ieeeAddress, nodeDescriptor);
+        logger.debug("[{}]: {}: NodeDescriptor passed to Ember NCP {}", handlerIdentifier, ieeeAddress, nodeDescriptor);
         if (!nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)
                 || nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE)) {
             ncp.setExtendedTimeout(ieeeAddress, true);
@@ -861,13 +861,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("RX EZSP: {}", response);
+            logger.debug("[{}]: RX EZSP: {}", handlerIdentifier, response);
             txRxLogger.debug("[" + handlerIdentifier + "] RX EZSP: {}", response);
         }
 
         if (response instanceof EzspIncomingMessageHandler) {
             if (nwkAddress == null) {
-                logger.debug("Ignoring received frame as stack is still initialising");
+                logger.debug("[{}]: Ignoring received frame as stack is still initialising", handlerIdentifier);
                 return;
             }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
@@ -910,7 +910,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 case EMBER_INCOMING_MANY_TO_ONE_ROUTE_REQUEST:
                     return;
                 case UNKNOWN:
-                    logger.info("Ignoring unknown EZSP incoming message type");
+                    logger.info("[{}]: Ignoring unknown EZSP incoming message type", handlerIdentifier);
                     return;
             }
 
@@ -991,7 +991,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                     status = ZigBeeNodeStatus.DEVICE_LEFT;
                     break;
                 default:
-                    logger.debug("Unknown state in trust centre join handler {}", joinHandler.getStatus());
+                    logger.debug("[{}]: Unknown state in trust centre join handler {}", handlerIdentifier, joinHandler.getStatus());
                     return;
             }
 
@@ -1019,13 +1019,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
-        logger.debug("Ember: Link State change to {}, initialised={}, networkStateUp={}", linkState, initialised,
+        logger.debug("[{}]: Ember: Link State change to {}, initialised={}, networkStateUp={}", handlerIdentifier, linkState, initialised,
                 networkStateUp);
 
         // Only act on changes to OFFLINE once we have completed initialisation
         // changes to ONLINE have to work during init because they mark the end of the initialisation
         if (!initialised || linkState == networkStateUp) {
-            logger.debug("Ember: Link State change to {} ignored.", linkState);
+            logger.debug("[{}]: Ember: Link State change to {} ignored.", handlerIdentifier, linkState);
             return;
         }
         networkStateUp = linkState;
@@ -1034,7 +1034,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             @Override
             public void run() {
                 if (linkState) {
-                    logger.debug("Ember: Link State up running");
+                    logger.debug("[{}]: Ember: Link State up running", handlerIdentifier);
 
                     // Ensure we synchronise the network parameters
                     // This allows the system to read back the actual network parameters
@@ -1065,7 +1065,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
         if (channel != ZigBeeChannel.UNKNOWN && (ZigBeeChannelMask.CHANNEL_MASK_2GHZ & channel.getMask()) == 0) {
-            logger.debug("Unable to set channel outside of 2.4GHz channels: {}", channel);
+            logger.debug("[{}]: Unable to set channel outside of 2.4GHz channels: {}", handlerIdentifier, channel);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         if (networkStateUp) {
@@ -1143,7 +1143,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                     case INSTALL_KEY:
                         ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
                         if (!nodeKey.hasAddress()) {
-                            logger.debug("Attempt to set INSTALL_KEY without setting address");
+                            logger.debug("[{}]: Attempt to set INSTALL_KEY without setting address", handlerIdentifier);
                             configuration.setResult(option, ZigBeeStatus.FAILURE);
                             break;
                         }
@@ -1184,7 +1184,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
-                        logger.debug("Unsupported configuration option \"{}\" in EZSP dongle", option);
+                        logger.debug("[{}]: Unsupported configuration option \"{}\" in EZSP dongle", handlerIdentifier, option);
                         break;
                 }
             } catch (ClassCastException e) {
@@ -1272,11 +1272,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private boolean initialiseEzspProtocol() {
         if (frameHandler != null) {
-            logger.error("EZSP Dongle: Attempt to initialise Ember dongle when already initialised");
+            logger.error("[{}]: EZSP Dongle: Attempt to initialise Ember dongle when already initialised", handlerIdentifier);
             return false;
         }
         if (!serialPort.open()) {
-            logger.error("EZSP Dongle: Unable to open serial port");
+            logger.error("[{}]: EZSP Dongle: Unable to open serial port", handlerIdentifier);
             return false;
         }
 
@@ -1290,7 +1290,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             case NONE:
                 return true;
             default:
-                logger.error("EZSP Dongle: Unknown serial protocol {}", protocol);
+                logger.error("[{}]: EZSP Dongle: Unknown serial protocol {}", handlerIdentifier, protocol);
                 return false;
         }
 
@@ -1308,14 +1308,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
         EzspVersionResponse ezspVersionResponse = ncp.getVersion();
         if (ezspVersionResponse == null) {
-            logger.debug("EZSP Dongle: Version returned null. ASH/EZSP not initialised.");
+            logger.debug("[{}]: EZSP Dongle: Version returned null. ASH/EZSP not initialised.", handlerIdentifier);
             return false;
         }
 
         if(ezspVersionResponse.getProtocolVersion() != ezspVersion) {
             if (ezspVersion > EZSP_MAX_VERSION || ezspVersion < EZSP_MIN_VERSION) {
-                logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
-                    ezspVersionResponse.getProtocolVersion(), ezspVersion);
+                logger.error("[{}]: EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
+                    handlerIdentifier, ezspVersionResponse.getProtocolVersion(), ezspVersion);
                 return false;
             }
             ezspVersion = ezspVersionResponse.getProtocolVersion();
@@ -1356,7 +1356,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
         if (frameHandler != null) {
-            logger.debug("Ember Frame Handler is operating in updateFirmware");
+            logger.debug("[{}]: Ember Frame Handler is operating in updateFirmware", handlerIdentifier);
             return false;
         }
 
@@ -1367,7 +1367,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // If this fails, then we continue on the assumption that the bootloader may already be running
         if (initialiseEzspProtocol()) {
             if (ncp.getBootloaderVersion() == BOOTLOADER_INVALID_VERSION) {
-                logger.debug("EZSP bootload failed: No bootloader present");
+                logger.debug("[{}]: EZSP bootload failed: No bootloader present", handlerIdentifier);
                 return false;
             }
 
@@ -1379,16 +1379,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             EzspLaunchStandaloneBootloaderResponse bootloadResponse = (EzspLaunchStandaloneBootloaderResponse) bootloadTransaction
                     .getResponse();
             logger.debug(bootloadResponse.toString());
-            logger.debug("EZSP bootloadResponse {}", bootloadResponse.getStatus());
+            logger.debug("[{}]: EZSP bootloadResponse {}", handlerIdentifier, bootloadResponse.getStatus());
 
             if (bootloadResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
                 callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
-                logger.debug("EZSP bootload failed: bootloadResponse {}", bootloadResponse.getStatus());
+                logger.debug("[{}]: EZSP bootload failed: bootloadResponse {}", handlerIdentifier, bootloadResponse.getStatus());
                 return false;
             }
         }
         // Stop the handler and close the serial port
-        logger.debug("EZSP closing frame handler");
+        logger.debug("[{}]: EZSP closing frame handler", handlerIdentifier);
         frameHandler.setClosing();
         serialPort.close();
         frameHandler.close();
