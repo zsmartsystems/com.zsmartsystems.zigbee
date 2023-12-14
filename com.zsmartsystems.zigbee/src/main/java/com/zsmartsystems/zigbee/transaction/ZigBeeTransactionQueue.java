@@ -242,8 +242,11 @@ public class ZigBeeTransactionQueue {
      * @return the {@link ZigBeeTransaction} to send, or null if no transaction is available.
      */
     protected ZigBeeTransaction getTransaction() {
-        if (queue.isEmpty() || nextReleaseTime > System.currentTimeMillis()
+        long currentTimeMillis = System.currentTimeMillis();
+        if (queue.isEmpty() || nextReleaseTime > currentTimeMillis
                 || outstandingTransactions.size() >= profile.getMaxOutstandingTransactions() || isShutdown) {
+            logger.debug("{}: getTransaction returning null, queueSize={}, outstanding={}, maxOutstandingTxs={}, nextReleaseTime={}, currentTimeMillis={}, shutdown={}", queueName,
+                    queue.size(), outstandingTransactions.size(), profile.getMaxOutstandingTransactions(), nextReleaseTime, currentTimeMillis, isShutdown);
             return null;
         }
         ZigBeeTransaction transaction = queue.poll();

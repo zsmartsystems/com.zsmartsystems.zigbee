@@ -143,6 +143,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     private String networkManagerId;
 
+    public String getNetworkManagerId() {
+        return networkManagerId;
+    }
+
     public void setNetworkManagerId(String networkManagerId) {
         this.networkManagerId = networkManagerId;
     }
@@ -335,7 +339,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public void serializeNetworkDataStore(IeeeAddress nodeAddress) {
         ZigBeeNode node = getNode(nodeAddress);
         if (node == null) {
-            logger.debug("{}: ZigBeeNetworkManager serializeNetworkDataStore: node not found", nodeAddress);
+            logger.debug("[{}]: {}: ZigBeeNetworkManager serializeNetworkDataStore: node not found", networkManagerId, nodeAddress);
             return;
         }
 
@@ -410,7 +414,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
-        logger.debug("ZigBeeNetworkManager initialize: networkState={}", networkState);
+        logger.debug("[{}]: ZigBeeNetworkManager initialize: networkState={}", networkManagerId, networkState);
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.UNINITIALISED) {
                 return ZigBeeStatus.INVALID_STATE;
@@ -435,18 +439,18 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         Integer nwkAddress = transport.getNwkAddress();
         IeeeAddress ieeeAddress = transport.getIeeeAddress();
         if (ieeeAddress == null) {
-            logger.error("Adding local node to network FAILED as IEEE address is unknown");
+            logger.error("[{}]: Adding local node to network FAILED as IEEE address is unknown", networkManagerId);
             return;
         }
 
         if (nwkAddress == null) {
             if (networkState == ZigBeeNetworkState.ONLINE) {
-                logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+                logger.error("[{}]: {}: Adding local node to network: NWK unknown", networkManagerId, ieeeAddress);
             }
             nwkAddress = 0xFFFE;
         }
 
-        logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, String.format("%04X", nwkAddress));
+        logger.debug("[{}]: {}: Adding local node to network, NWK={}", networkManagerId, ieeeAddress, String.format("%04X", nwkAddress));
 
         if (networkNodes.containsKey(ieeeAddress)) {
             return;
@@ -547,11 +551,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus setDefaultProfileId(int defaultProfileId) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("Cannot set default profile ID to {} when network state is {}",
+            logger.error("[{}]: Cannot set default profile ID to {} when network state is {}", networkManagerId,
                     String.format("%04X", defaultProfileId), networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
-        logger.debug("Default profile ID set to {} [{}]", String.format("%04X", defaultProfileId),
+        logger.debug("[{}]: Default profile ID set to {} [{}]", networkManagerId, String.format("%04X", defaultProfileId),
                 ZigBeeProfileType.getByValue(defaultProfileId));
         this.defaultProfileId = defaultProfileId;
         transport.setDefaultProfileId(defaultProfileId);
@@ -568,11 +572,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus setDefaultDeviceId(int defaultDeviceId) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("Cannot set default device ID to {} when network state is {}",
+            logger.error("[{}]: Cannot set default device ID to {} when network state is {}", networkManagerId,
                     String.format("%04X", defaultDeviceId), networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
-        logger.debug("Default device ID set to {} [{}] for profile {} [{}]", String.format("%04X", defaultDeviceId),
+        logger.debug("[{}]: Default device ID set to {} [{}] for profile {} [{}]", networkManagerId, String.format("%04X", defaultDeviceId),
                 ZigBeeDeviceType.getByValue(ZigBeeProfileType.getByValue(defaultProfileId), defaultDeviceId),
                 String.format("%04X", defaultProfileId),
                 ZigBeeProfileType.getByValue(defaultProfileId));
@@ -652,9 +656,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus startup(boolean reinitialize) {
-        logger.debug("ZigBeeNetworkManager startup: reinitialize={}, networkState={}", reinitialize, networkState);
+        logger.debug("[{}]: ZigBeeNetworkManager startup: reinitialize={}, networkState={}", networkManagerId, reinitialize, networkState);
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("ZigBeeNetworkManager startup: Can't be called when networkState={}", networkState);
+            logger.error("[{}]: ZigBeeNetworkManager startup: Can't be called when networkState={}", networkManagerId, networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -694,7 +698,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * @return
      */
     public ZigBeeStatus reinitialize() {
-        logger.debug("ZigBeeNetworkManager reinitialize: networkState={}", networkState);
+        logger.debug("[{}]: ZigBeeNetworkManager reinitialize: networkState={}", networkManagerId, networkState);
 
         // Set the state to INITIALISING before reconfiguring the transport layer
         // to ensure we don't pass the OFFLINE state to the application
@@ -707,7 +711,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
-        logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
+        logger.debug("[{}]: ZigBeeNetworkManager shutdown: networkState={}", networkManagerId, networkState);
 
         // To avoid deferred writes while we shut down, set the deferred write time to 0.
         databaseManager.setDeferredWriteTime(0);
@@ -747,7 +751,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public void executeTask(Runnable runnableTask) {
         if (networkState != ZigBeeNetworkState.ONLINE) {
-            logger.debug("ZigBeeNetworkManager executeTask: not executing task while {}", networkState);
+            logger.debug("[{}]: ZigBeeNetworkManager executeTask: not executing task while {}", networkManagerId, networkState);
             return;
         }
         executorService.execute(runnableTask);
@@ -762,7 +766,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ScheduledFuture<?> scheduleTask(Runnable runnableTask, long delay) {
         if (networkState != ZigBeeNetworkState.ONLINE) {
-            logger.debug("ZigBeeNetworkManager scheduleTask: not scheduling task while {}", networkState);
+            logger.debug("[{}]: ZigBeeNetworkManager scheduleTask: not scheduling task while {}", networkManagerId, networkState);
             return null;
         }
         return executorService.schedule(runnableTask, delay, TimeUnit.MILLISECONDS);
@@ -780,7 +784,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public ScheduledFuture<?> rescheduleTask(ScheduledFuture<?> futureTask, Runnable runnableTask, long delay) {
         futureTask.cancel(false);
         if (networkState != ZigBeeNetworkState.ONLINE) {
-            logger.debug("ZigBeeNetworkManager rescheduleTask: not scheduling task while {}", networkState);
+            logger.debug("[{}]: ZigBeeNetworkManager rescheduleTask: not scheduling task while {}", networkManagerId, networkState);
             return null;
         }
 
@@ -826,7 +830,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
-        logger.debug("TX CMD: {}", command);
+        logger.debug("[{}]: TX CMD: {}", networkManagerId, command);
         txRxLogger.debug("[" + networkManagerId + "] TX CMD: {}", command);
 
         apsFrame.setCluster(command.getClusterId());
@@ -853,7 +857,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             apsFrame.setDestinationAddress(((ZigBeeGroupAddress) command.getDestinationAddress()).getAddress());
             apsFrame.setGroupAddress(((ZigBeeGroupAddress) command.getDestinationAddress()).getAddress());
         } else {
-            logger.debug("Command cannot be sent due to unknown destination address type {}", command);
+            logger.debug("[{}]: Command cannot be sent due to unknown destination address type {}", networkManagerId, command);
             return false;
         }
 
@@ -865,7 +869,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             fieldSerializer = new ZclFieldSerializer(serializer);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.debug("Error serializing ZigBee frame {}", e);
+            logger.debug("[{}]: Error serializing ZigBee frame {}", networkManagerId, e);
             return false;
         }
 
@@ -911,10 +915,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             // Serialise the ZCL header and add the payload
             apsFrame.setPayload(zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload()));
 
-            logger.debug("TX ZCL: {}", zclHeader);
+            logger.debug("[{}]: TX ZCL: {}", networkManagerId, zclHeader);
             txRxLogger.debug("[" + networkManagerId + "] TX ZCL: {}", zclHeader);
         }
-        logger.debug("TX APS: {}", apsFrame);
+        logger.debug("[{}]: TX APS: {}", networkManagerId, apsFrame);
         txRxLogger.debug("[" + networkManagerId + "] TX APS: {}", apsFrame);
 
         apsDataEntity.send(command.getTransactionId(), apsFrame);
@@ -933,12 +937,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
-                logger.debug("Dropping APS: state={}, frame={}", networkState, incomingApsFrame);
+                logger.debug("[{}]: Dropping APS: state={}, frame={}", networkManagerId, networkState, incomingApsFrame);
                 return;
             }
         }
 
-        logger.debug("RX APS: {}", incomingApsFrame);
+        logger.debug("[{}]: RX APS: {}", networkManagerId, incomingApsFrame);
         txRxLogger.debug("[" + networkManagerId + "] RX APS: {}", incomingApsFrame);
 
         // Process the APS layer - this performs services such as duplicate removal and defragmentation
@@ -948,7 +952,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         if (getNode(apsFrame.getSourceAddress()) == null) {
-            logger.debug("Incoming message from unknown node {}: Notifying announce listeners",
+            logger.debug("[{}]: Incoming message from unknown node {}: Notifying announce listeners", networkManagerId,
                     String.format("%04X", apsFrame.getSourceAddress()));
 
             // Notify the listeners that we have heard a command that was unknown to us
@@ -979,7 +983,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             deserializer = constructor.newInstance(new Object[] { apsFrame.getPayload() });
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.debug("Error creating deserializer", e);
+            logger.debug("[{}]: Error creating deserializer", networkManagerId, e);
             return;
         }
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -995,12 +999,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 command = receiveZclCommand(fieldDeserializer, apsFrame);
                 break;
             default:
-                logger.debug("Received message with unknown profile {}", String.format("%04X", apsFrame.getProfile()));
+                logger.debug("[{}]: Received message with unknown profile {}", networkManagerId, String.format("%04X", apsFrame.getProfile()));
                 break;
         }
 
         if (command == null) {
-            logger.debug("Incoming message from node {} did not translate to command",
+            logger.debug("[{}]: Incoming message from node {} did not translate to command", networkManagerId,
                     String.format("%04X", apsFrame.getSourceAddress()));
 
             return;
@@ -1012,7 +1016,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
         command.setApsSecurity(apsFrame.getSecurityEnabled());
 
-        logger.debug("RX CMD: {}", command);
+        logger.debug("[{}]: RX CMD: {}", networkManagerId, command);
         txRxLogger.debug("[" + networkManagerId + "] RX CMD: {}", command);
 
         // Pass the command to the transaction manager for processing
@@ -1041,7 +1045,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         if (node != null && command instanceof DeviceAnnounce) {
             final DeviceAnnounce deviceAnnounce = (DeviceAnnounce) command;
             node.setMacCapabilities(deviceAnnounce.getCapability());
-            logger.debug("{}: Save DeviceAnnounce reported MAC capabilities", node.getIeeeAddress());
+            logger.debug("[{}]: {}: Save DeviceAnnounce reported MAC capabilities", networkManagerId, node.getIeeeAddress());
             updateNode(node);
         }
 
@@ -1053,13 +1057,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             final ZigBeeApsFrame apsFrame) {
         if (apsFrame.getSourceEndpoint() != 0 || apsFrame.getDestinationEndpoint() != 0) {
             logger.debug(
-                    "Error instantiating ZDO command: Source or destination endpoints are not 0 (source={}, destination={})",
-                    apsFrame.getSourceEndpoint(), apsFrame.getDestinationEndpoint());
+                    "[{}]: Error instantiating ZDO command: Source or destination endpoints are not 0 (source={}, destination={})",
+                    networkManagerId, apsFrame.getSourceEndpoint(), apsFrame.getDestinationEndpoint());
             return null;
         }
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
-            logger.debug("Error instantiating ZDO command: Unknown cluster {}",
+            logger.debug("[{}]: Error instantiating ZDO command: Unknown cluster {}", networkManagerId,
                     String.format("%04X", apsFrame.getCluster()));
             return null;
         }
@@ -1072,7 +1076,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             command = constructor.newInstance();
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.debug("Error instantiating ZDO command", e);
+            logger.debug("[{}]: Error instantiating ZDO command", networkManagerId, e);
             return null;
         }
 
@@ -1085,23 +1089,23 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             final ZigBeeApsFrame apsFrame) {
         if (apsFrame.getDestinationEndpoint() != localEndpointId
                 && apsFrame.getDestinationEndpoint() != BROADCAST_ENDPOINT_ID) {
-            logger.debug("Unknown local endpoint for APS frame {}", apsFrame);
+            logger.debug("[{}]: Unknown local endpoint for APS frame {}", networkManagerId, apsFrame);
             return null;
         }
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
-        logger.debug("RX ZCL: {}", zclHeader);
-        txRxLogger.debug("[" + networkManagerId + "] RX ZCL: {}", zclHeader);
+        logger.debug("[{}]: RX ZCL: {}", networkManagerId, zclHeader);
+        txRxLogger.debug("[{}] RX ZCL: {}", networkManagerId, zclHeader);
 
         ZigBeeNode node = getNode(apsFrame.getSourceAddress());
         if (node == null) {
-            logger.debug("Unknown remote node {}", String.format("%04X", apsFrame.getSourceAddress()));
+            logger.debug("[{}]: Unknown remote node {}", networkManagerId, String.format("%04X", apsFrame.getSourceAddress()));
             return null;
         }
 
         ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
         if (endpoint == null) {
-            logger.debug("{}: Endpoint {}. Unknown remote endpoint", node.getIeeeAddress(),
+            logger.debug("[{}]: {}: Endpoint {}. Unknown remote endpoint", networkManagerId, node.getIeeeAddress(),
                     apsFrame.getSourceEndpoint());
             return null;
         }
@@ -1109,11 +1113,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         ZclCommand command;
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
             if (!isClientClusterSupported(apsFrame.getCluster())) {
-                logger.debug("Unsupported local client cluster {}", String.format("%04X", apsFrame.getCluster()));
+                logger.debug("[{}]: Unsupported local client cluster {}", networkManagerId, String.format("%04X", apsFrame.getCluster()));
             }
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("{}: Endpoint {}. Unknown input cluster {}", node.getIeeeAddress(),
+                logger.debug("[{}]: {}: Endpoint {}. Unknown input cluster {}", networkManagerId, node.getIeeeAddress(),
                         endpoint.getEndpointId(), String.format("%04X", apsFrame.getCluster()));
 
                 ZigBeeNode newNode = new ZigBeeNode(this, node.getIeeeAddress());
@@ -1123,12 +1127,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 newNode.addEndpoint(newEndpoint);
                 try {
                     boolean state = refreshNode(newNode).get();
-                    logger.debug("{}: Endpoint {}. Unknown input cluster {} updated node complete state {}",
-                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                    logger.debug("[{}]: {}: Endpoint {}. Unknown input cluster {} updated node complete state {}",
+                            networkManagerId, node.getIeeeAddress(), endpoint.getEndpointId(),
                             String.format("%04X", apsFrame.getCluster()), state);
                 } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("{}: Endpoint {}. Unknown input cluster {} updated node failed with {}",
-                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                    logger.debug("[{}]: {}: Endpoint {}. Unknown input cluster {} updated node failed with {}",
+                            networkManagerId, node.getIeeeAddress(), endpoint.getEndpointId(),
                             String.format("%04X", apsFrame.getCluster()), e.getClass().getSimpleName());
                 }
 
@@ -1137,13 +1141,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         } else {
             if (!isServerClusterSupported(apsFrame.getCluster())) {
-                logger.debug("Unsupported local server cluster {}", String.format("%04X", apsFrame.getCluster()));
+                logger.debug("[{}]: Unsupported local server cluster {}", networkManagerId, String.format("%04X", apsFrame.getCluster()));
                 createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
                 return null;
             }
             ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("{}: Endpoint {}. Unknown output cluster {}", node.getIeeeAddress(),
+                logger.debug("[{}]: {}: Endpoint {}. Unknown output cluster {}", networkManagerId, node.getIeeeAddress(),
                         endpoint.getEndpointId(), String.format("%04X", apsFrame.getCluster()));
 
                 ZigBeeNode newNode = new ZigBeeNode(this, node.getIeeeAddress());
@@ -1153,12 +1157,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 newNode.addEndpoint(newEndpoint);
                 try {
                     boolean state = refreshNode(newNode).get();
-                    logger.debug("{}: Endpoint {}. Unknown output cluster {} updated node complete state {}",
-                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                    logger.debug("[{}]: {}: Endpoint {}. Unknown output cluster {} updated node complete state {}",
+                            networkManagerId, node.getIeeeAddress(), endpoint.getEndpointId(),
                             String.format("%04X", apsFrame.getCluster()), state);
                 } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("{}: Endpoint {}. Unknown output cluster {} updated node failed with {}",
-                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                    logger.debug("[{}]: {}: Endpoint {}. Unknown output cluster {} updated node failed with {}",
+                            networkManagerId, node.getIeeeAddress(), endpoint.getEndpointId(),
                             String.format("%04X", apsFrame.getCluster()), e.getClass().getSimpleName());
                 }
 
@@ -1167,7 +1171,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         }
         if (command == null) {
-            logger.debug("{}: Unknown command {}", node.getIeeeAddress(), zclHeader.getCommandId());
+            logger.debug("[{}]: {}: Unknown command {}", networkManagerId, node.getIeeeAddress(), zclHeader.getCommandId());
             createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
             return null;
         }
@@ -1234,7 +1238,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     @Override
     public void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress, final Integer parentNetworkAddress) {
-        logger.debug("{}: nodeStatusUpdate - node status is {}, network address is {}.", ieeeAddress, deviceStatus,
+        logger.debug("[{}]: {}: nodeStatusUpdate - node status is {}, network address is {}.", networkManagerId, ieeeAddress, deviceStatus,
                 String.format("%04X", networkAddress));
 
         // This method should only be called when the transport layer has authoritative information about
@@ -1253,7 +1257,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     node = getNode(networkAddress);
                 }
                 if (node == null) {
-                    logger.debug("{}: Node has left, but wasn't found in the network.", networkAddress);
+                    logger.debug("[{}]: {}: Node has left, but wasn't found in the network.", networkManagerId, networkAddress);
                 } else {
                     // Mark the node as OFFLINE
                     ZigBeeNode updatedNode = new ZigBeeNode(this, node.getIeeeAddress());
@@ -1266,7 +1270,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             case UNSECURED_JOIN:
             case UNSECURED_JOIN_OR_REJOIN:
                 // We only care about devices that have joined or rejoined
-                logger.debug("{}: Device status updated. NWK={}", ieeeAddress, String.format("%04X", networkAddress));
+                logger.debug("[{}]: {}: Device status updated. NWK={}", networkManagerId, ieeeAddress, String.format("%04X", networkAddress));
                 ZigBeeNode updatedNode = new ZigBeeNode(this, ieeeAddress, networkAddress);
                 updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
                 updateNode(updatedNode);
@@ -1316,7 +1320,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // Filter out unwanted transport state changes
         synchronized (validTransportStateTransitions) {
             if (!validTransportStateTransitions.get(transportState).contains(state)) {
-                logger.debug("Ignoring invalid transport state transition from {} to {}", transportState, state);
+                logger.debug("[{}]: Ignoring invalid transport state transition from {} to {}", networkManagerId, transportState, state);
                 return;
             }
             transportState = state;
@@ -1324,7 +1328,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         // Process the network state given the updated transport layer state
         if (networkState != ZigBeeNetworkState.INITIALISING && networkState != ZigBeeNetworkState.SHUTDOWN) {
-            logger.debug("ZigBeeNetworkManager transport state updated to {}", state);
+            logger.debug("[{}]: ZigBeeNetworkManager transport state updated to {}", networkManagerId, state);
             setNetworkState(ZigBeeNetworkState.valueOf(state.toString()));
         }
     }
@@ -1335,7 +1339,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return;
         }
         networkState = state;
-        logger.debug("Network state is updated to {}", networkState);
+        logger.debug("[{}]: Network state is updated to {}", networkManagerId, networkState);
 
         // If the state has changed to online, then we need to add any pending nodes,
         // and ensure that the local node is added.
@@ -1362,7 +1366,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
 
     private void setNetworkStateOnline() {
-        logger.debug("Network state ONLINE: Process running. {} Nodes in network.", networkNodes.size());
+        logger.debug("[{}]: Network state ONLINE: Process running. {} Nodes in network.", networkManagerId, networkNodes.size());
 
         localNwkAddress = transport.getNwkAddress();
         localIeeeAddress = transport.getIeeeAddress();
@@ -1385,7 +1389,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // Notify all listeners of the nodes in the network,
         // and provide all known NodeDescriptors to the transport layer
         for (final ZigBeeNode node : networkNodes.values()) {
-            logger.debug("Network state ONLINE: Notifying node {} [{}]", node.getIeeeAddress(),
+            logger.debug("[{}]: Network state ONLINE: Notifying node {} [{}]", networkManagerId, node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
             if (node.getNodeDescriptor() != null) {
                 notificationService.execute(new Runnable() {
@@ -1445,10 +1449,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
         if (duration < 0 || duration >= 255) {
-            logger.debug("Permit join to {} invalid period of {} seconds.", destination, duration);
+            logger.debug("[{}]: Permit join to {} invalid period of {} seconds.", networkManagerId, destination, duration);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
-        logger.debug("Permit join to {} for {} seconds.", destination, duration);
+        logger.debug("[{}]: Permit join to {} for {} seconds.", networkManagerId, destination, duration);
 
         ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest(duration, true);
         command.setDestinationAddress(destination);
@@ -1512,20 +1516,20 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                         if (response.getStatusCode() == 0) {
                             removeNode(node);
                         } else {
-                            logger.debug("{}: No successful response received to leave command (status code {})",
-                                    leaveAddress, response.getStatusCode());
+                            logger.debug("[{}]: {}: No successful response received to leave command (status code {})",
+                                    networkManagerId, leaveAddress, response.getStatusCode());
                             if (forceNodeRemoval) {
                                 logger.debug(
-                                        "{}: Force-removing node from the node list after unsuccessful leave request",
-                                        leaveAddress);
+                                        "[{}]: {}: Force-removing node from the node list after unsuccessful leave request",
+                                        networkManagerId, leaveAddress);
                                 removeNode(node);
                             }
                         }
                     } else {
-                        logger.debug("{}: No node found after leave command", leaveAddress);
+                        logger.debug("[{}]: {}: No node found after leave command", networkManagerId, leaveAddress);
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("Error sending leave command.", e);
+                    logger.debug("[{}]: Error sending leave command.", networkManagerId, e);
                 }
             }
         }.start();
@@ -1666,7 +1670,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return;
         }
 
-        logger.debug("{}: Node {} is removed from the network", node.getIeeeAddress(),
+        logger.debug("[{}]: {}: Node {} is removed from the network", networkManagerId, node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
 
         // Don't update if the node is not known
@@ -1707,7 +1711,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return;
         }
 
-        logger.debug("{}: Updating node NWK={}", node.getIeeeAddress(),
+        logger.debug("[{}]: {}: Updating node NWK={}", networkManagerId, node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
 
         // Don't add if the node is already known
@@ -1758,21 +1762,21 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         if (node == null) {
             return null;
         }
-        logger.debug("{}: Node update. NWK Address={}", node.getIeeeAddress(),
+        logger.debug("[{}]: {}: Node update. NWK Address={}", networkManagerId, node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
 
         final ZigBeeNode currentNode = networkNodes.get(node.getIeeeAddress());
 
         // Return if we don't know this node
         if (currentNode == null) {
-            logger.debug("{}: Node {} is not known - can't be updated", node.getIeeeAddress(),
+            logger.debug("[{}]: {}: Node {} is not known - can't be updated", networkManagerId, node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
             return null;
         }
 
         // Return if there were no updates
         if (!currentNode.updateNode(node)) {
-            logger.debug("{}: Node {} is not updated", node.getIeeeAddress(),
+            logger.debug("[{}]: {}: Node {} is not updated", networkManagerId, node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
             return null;
         }
@@ -1800,7 +1804,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     notificationService.execute(new Runnable() {
                         @Override
                         public void run() {
-                            logger.debug("node updated call - refreshNode");
+                            logger.debug("[{}]: node updated call - refreshNode", networkManagerId);
                             listener.nodeUpdated(currentNode);
                             latch.countDown();
                         }
@@ -1811,15 +1815,15 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             try {
                 // TODO: Set the timer properly
                 if (latch.await(2, TimeUnit.SECONDS)) {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", currentNode.getIeeeAddress());
+                    logger.trace("[{}]: {}: Refresh Node notifyListener LATCH Complete", networkManagerId, currentNode.getIeeeAddress());
                     return true;
                 } else {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", currentNode.getIeeeAddress(),
+                    logger.trace("[{}]: {}: Refresh Node notifyListener LATCH Timeout, remaining = {}", networkManagerId, currentNode.getIeeeAddress(),
                             latch.getCount());
                     return false;
                 }
             } catch (InterruptedException e) {
-                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", currentNode.getIeeeAddress(),
+                logger.trace("[{}]: {}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", networkManagerId, currentNode.getIeeeAddress(),
                         latch.getCount());
                 return false;
             }
@@ -1836,7 +1840,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     @Deprecated
     public void addSupportedCluster(int cluster) {
-        logger.debug("Adding supported cluster {}", String.format("%04X", cluster));
+        logger.debug("[{}]: Adding supported cluster {}", networkManagerId, String.format("%04X", cluster));
         addSupportedClientCluster(cluster);
     }
 
@@ -1851,12 +1855,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus addSupportedClientCluster(int cluster) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("Cannot add supported client cluster {} when network state is {}",
+            logger.error("[{}]: Cannot add supported client cluster {} when network state is {}", networkManagerId,
                     String.format("%04X", cluster), networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
 
-        logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
+        logger.debug("[{}]: Adding supported client cluster {}", networkManagerId, String.format("%04X", cluster));
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this, localEndpointId, defaultProfileId);
         }
@@ -1875,12 +1879,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus addSupportedServerCluster(int cluster) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("Cannot add supported server cluster {} when network state is {}",
+            logger.error("[{}]: Cannot add supported server cluster {} when network state is {}", networkManagerId,
                     String.format("%04X", cluster), networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
 
-        logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
+        logger.debug("[{}]: Adding supported server cluster {}", networkManagerId, String.format("%04X", cluster));
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this, localEndpointId, defaultProfileId);
         }
@@ -1923,7 +1927,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus addExtension(ZigBeeNetworkExtension extension) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("Cannot add extension {} when network state is {}", extension.getClass().getSimpleName(),
+            logger.error("[{}]: Cannot add extension {} when network state is {}", networkManagerId, extension.getClass().getSimpleName(),
                     networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
@@ -2022,7 +2026,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     @Override
     public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
-        logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
+        logger.debug("[{}]: RX STA: msgTag={} state={}", networkManagerId, String.format("%02X", msgTag), state);
         txRxLogger.debug("[" + networkManagerId + "] RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
         if (apsDataEntity.receiveCommandState(msgTag, state)) {
             // Pass the update to the transaction if this is NACK or ACK for last/only fragment

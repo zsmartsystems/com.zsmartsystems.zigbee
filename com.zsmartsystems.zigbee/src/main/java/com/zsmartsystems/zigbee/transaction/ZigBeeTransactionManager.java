@@ -192,7 +192,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Shuts down the manager and releases all resources
      */
     public void shutdown() {
-        logger.debug("Transaction Manager: Shutdown");
+        logger.debug("[{}]: Transaction Manager: Shutdown", networkManager.getNetworkManagerId());
         isShutdown = true;
         executorService.shutdown();
         networkManager.removeNetworkNodeListener(this);
@@ -361,7 +361,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private ZigBeeTransactionFuture queueTransaction(ZigBeeTransactionQueue queue, ZigBeeTransaction transaction) {
         if (isShutdown) {
-            logger.debug("Transaction Manager is shutdown. Transaction not sent: {}", transaction);
+            logger.debug("[{}]: Transaction Manager is shutdown. Transaction not sent: {}", networkManager.getNetworkManagerId(), transaction);
             return null;
         }
 
@@ -389,13 +389,13 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             // Get the IEEE address
             ZigBeeNode node = networkManager.getNode(address.getAddress());
             if (node == null) {
-                logger.debug("Attempt to send command with unknown destination: {}", transaction);
+                logger.debug("[{}]: Attempt to send command with unknown destination: {}", networkManager.getNetworkManagerId(), transaction);
                 return defaultQueue;
             }
             // Add the transaction to the device queue - if it doesn't currently exist, create it
             ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
             if (queue == null && createIfNotExist) {
-                logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
+                logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
                 queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(), node.getIeeeAddress());
                 setQueueType(node, queue);
 
@@ -438,7 +438,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         if (transaction.getTransactionId() == null) {
             transaction.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
         }
-        logger.debug("{}: Sending {}", transaction.getDestinationAddress(), transaction);
+        logger.debug("[{}]: {}: Sending {}", networkManager.getNetworkManagerId(), transaction.getDestinationAddress(), transaction);
         addTransactionListener(transaction);
         networkManager.sendCommand(transaction.startTransaction());
     }
@@ -476,7 +476,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             outstandingTransactions.add(transaction);
         }
-        logger.debug("transactionListenerAdded: {} outstanding", outstandingTransactions.size());
+        logger.debug("[{}]: transactionListenerAdded: {} outstanding", networkManager.getNetworkManagerId(), outstandingTransactions.size());
     }
 
     /**
@@ -490,7 +490,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             outstandingTransactions.remove(transaction);
         }
-        logger.debug("transactionListenerRemoved: {} outstanding", outstandingTransactions.size());
+        logger.debug("[{}]: transactionListenerRemoved: {} outstanding", networkManager.getNetworkManagerId(), outstandingTransactions.size());
     }
 
     /**
@@ -511,7 +511,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        logger.debug("Transaction complete: {}", transaction);
+        logger.debug("[{}]: Transaction complete: {}", networkManager.getNetworkManagerId(), transaction);
         removeTransactionListener(transaction);
 
         if (isShutdown) {
@@ -521,7 +521,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (this) {
             ZigBeeTransactionQueue queue = getTransactionQueue(transaction, false);
             if (queue == null) {
-                logger.debug("Transaction complete: No queue found {}", transaction);
+                logger.debug("[{}]: Transaction complete: No queue found {}", networkManager.getNetworkManagerId(), transaction);
             } else {
                 queue.transactionComplete(transaction, state);
 
@@ -546,11 +546,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param command the {@link ZigBeeCommand} to send to the transactions
      */
     private void notifyTransactionCommand(final ZigBeeCommand command) {
-        logger.debug("notifyTransactionCommand: {} ", command);
+        logger.debug("[{}]: notifyTransactionCommand: {} ", networkManager.getNetworkManagerId(), command);
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                logger.trace("notifyTransactionCommand: {} {}", command, transaction);
+                logger.trace("[{}]: notifyTransactionCommand: {} {}", networkManager.getNetworkManagerId(), command, transaction);
                 networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -568,7 +568,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the current {@link ZigBeeTransportProgressState} for the transaction
      */
     private void notifyTransactionProgress(final int transactionId, ZigBeeTransportProgressState state) {
-        logger.debug("notifyTransactionProgress: TID={}, state={}, outstanding={}",
+        logger.debug("[{}]: notifyTransactionProgress: TID={}, state={}, outstanding={}", networkManager.getNetworkManagerId(),
                 String.format("%02X", transactionId), state, outstandingTransactions.size());
         synchronized (outstandingTransactions) {
             // Notify the listeners
@@ -606,7 +606,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         }
         queue.shutdown();
 
-        logger.debug("{}: Removing queue from transaction manager", address);
+        logger.debug("[{}]: {}: Removing queue from transaction manager", networkManager.getNetworkManagerId(), address);
 
         // Remove any outstanding transactions from this queue that have already been sent
         synchronized (outstandingTransactions) {
@@ -631,8 +631,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private void sendNextTransaction() {
         synchronized (this) {
             logger.debug(
-                    "Transaction Manager: Send Next transaction. outstandingTransactions={}, outstandingQueues={}, sleepy={}/{}",
-                    outstandingTransactions.size(), outstandingQueues.size(), sleepyTransactions,
+                    "[{}]: Transaction Manager: Send Next transaction. outstandingTransactions={}, outstandingQueues={}, sleepy={}/{}",
+                    networkManager.getNetworkManagerId(), outstandingTransactions.size(), outstandingQueues.size(), sleepyTransactions,
                     maxSleepyTransactions);
             stopRequeueTimer();
 
@@ -661,12 +661,16 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 for (ZigBeeTransactionQueue queue : outstandingQueues) {
                     // Check if we've reached the maximum number of commands we can send
                     if (outstandingTransactions.size() >= maxOutstandingTransactions) {
+                        logger.debug("[{}]: Transaction Manager: Max outstanding transactions reached {}/{}", networkManager.getNetworkManagerId(), outstandingTransactions.size(),
+                                maxOutstandingTransactions);
                         sendDone = true;
                         break;
                     }
 
                     // If this is a sleepy queue, and we've exceeded the sleepy transmissions, then ignore the queue
                     if (queue.isSleepy() && sleepyTransactions >= maxSleepyTransactions) {
+                        logger.debug("[{}]: Transaction Manager: Max sleepy transactions reached {}/{}", networkManager.getNetworkManagerId(), sleepyTransactions,
+                                maxSleepyTransactions);
                         continue;
                     }
 
@@ -722,7 +726,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 }
             }, timeout);
         } catch (RejectedExecutionException e) {
-            logger.debug("Unable to start requeue timer.");
+            logger.debug("[{}]: Unable to start requeue timer.", networkManager.getNetworkManagerId());
         }
     }
 
@@ -756,8 +760,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             for (ZigBeeTransaction transaction : outstandingTransactions) {
                 if (Objects.equals(transaction.getIeeeAddress(), node.getIeeeAddress()) && !Objects
                         .equals(transaction.getDestinationAddress().getAddress(), node.getNetworkAddress())) {
-                    logger.debug("Rewriting outstandingTransaction destination address from {} to {} in transaction={}",
-                            transaction.getDestinationAddress().getAddress(), node.getNetworkAddress(), transaction);
+                    logger.debug("[{}]: Rewriting outstandingTransaction destination address from {} to {} in transaction={}",
+                            networkManager.getNetworkManagerId(), transaction.getDestinationAddress().getAddress(), node.getNetworkAddress(), transaction);
                     transaction.getDestinationAddress().setAddress(node.getNetworkAddress());
                 }
             }
@@ -774,7 +778,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                         continue;
                     }
                 }
-                logger.debug("Sleepy transaction count resynchronised: was {}, now {}", sleepyCnt, sleepyTransactions);
+                logger.debug("[{}]: Sleepy transaction count resynchronised: was {}, now {}", networkManager.getNetworkManagerId(), sleepyCnt, sleepyTransactions);
                 sleepyTransactions = sleepyCnt;
             }
         }
