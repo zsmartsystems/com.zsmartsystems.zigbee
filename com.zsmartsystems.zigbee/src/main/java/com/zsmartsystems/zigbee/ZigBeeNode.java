@@ -245,7 +245,11 @@ public class ZigBeeNode {
     }
 
     public void setMacCapabilities(Set<MacCapabilitiesType> macCapabilities) {
-        this.macCapabilities = new TreeSet<>(macCapabilities);
+        if(macCapabilities != null) {
+            this.macCapabilities = new TreeSet<>(macCapabilities);
+        } else {
+            this.macCapabilities = null;
+        }
     }
 
     public Set<MacCapabilitiesType> getMacCapabilities() {
