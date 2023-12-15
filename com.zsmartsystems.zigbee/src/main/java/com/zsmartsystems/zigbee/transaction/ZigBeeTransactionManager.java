@@ -669,8 +669,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
                     // If this is a sleepy queue, and we've exceeded the sleepy transmissions, then ignore the queue
                     if (queue.isSleepy() && sleepyTransactions >= maxSleepyTransactions) {
-                        logger.debug("[{}]: Transaction Manager: Max sleepy transactions reached {}/{}", networkManager.getNetworkManagerId(), sleepyTransactions,
-                                maxSleepyTransactions);
+                        logger.debug("[{}]: Transaction Manager: Max sleepy transactions reached {}/{} for queue {}", networkManager.getNetworkManagerId(), sleepyTransactions,
+                                maxSleepyTransactions, queue.getQueueName());
                         continue;
                     }
 
