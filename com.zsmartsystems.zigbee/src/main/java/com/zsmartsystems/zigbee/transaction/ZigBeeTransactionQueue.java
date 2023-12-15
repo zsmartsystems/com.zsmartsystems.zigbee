@@ -142,6 +142,15 @@ public class ZigBeeTransactionQueue {
     }
 
     /**
+     * Gets the name of the queue
+     *
+     * @return the name of the queue
+     */
+    public String getQueueName() {
+        return queueName;
+    }
+
+    /**
      * Set the {@link ZigBeeTransactionProfile} for this queue
      *
      * @param profile the {@link ZigBeeTransactionProfile} for this queue
