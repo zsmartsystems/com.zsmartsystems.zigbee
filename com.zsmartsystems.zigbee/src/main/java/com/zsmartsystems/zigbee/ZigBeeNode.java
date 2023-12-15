@@ -77,7 +77,7 @@ public class ZigBeeNode {
      * The MAC capability flags field is eight bits in length and specifies the node capabilities, as required by the
      * IEEE 802.15.4-2003 MAC sub-layer.
      */
-    private final Set<MacCapabilitiesType> macCapabilities = new TreeSet<>();
+    private Set<MacCapabilitiesType> macCapabilities;
 
     /**
      * The {@link NodeDescriptor} for the node.
@@ -223,29 +223,29 @@ public class ZigBeeNode {
     }
 
     public void setMacCapabilities(int macCapabilities) {
-        this.macCapabilities.clear();
+        TreeSet<MacCapabilitiesType> newMacCapabilities = new TreeSet<>();
         if ((macCapabilities & 0x01) != 0) {
-            this.macCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
+            newMacCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
         }
         if ((macCapabilities & 0x02) != 0) {
-            this.macCapabilities.add(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
+            newMacCapabilities.add(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
         } else {
-            this.macCapabilities.add(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
+            newMacCapabilities.add(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
         }
         if ((macCapabilities & 0x04) != 0) {
-            this.macCapabilities.add(MacCapabilitiesType.MAINS_POWER);
+            newMacCapabilities.add(MacCapabilitiesType.MAINS_POWER);
         }
         if ((macCapabilities & 0x08) != 0) {
-            this.macCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+            newMacCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
         }
         if ((macCapabilities & 0x40) != 0) {
-            this.macCapabilities.add(MacCapabilitiesType.SECURITY_CAPABLE);
+            newMacCapabilities.add(MacCapabilitiesType.SECURITY_CAPABLE);
         }
+        this.macCapabilities = newMacCapabilities;
     }
 
     public void setMacCapabilities(Set<MacCapabilitiesType> macCapabilities) {
-        this.macCapabilities.clear();
-        this.macCapabilities.addAll(macCapabilities);
+        this.macCapabilities = new TreeSet<>(macCapabilities);
     }
 
     public Set<MacCapabilitiesType> getMacCapabilities() {
@@ -854,8 +854,7 @@ public class ZigBeeNode {
             logger.debug("{}: MAC capabilities updated from {} to {}", ieeeAddress, macCapabilities,
                     node.getMacCapabilities());
             updated = true;
-            macCapabilities.clear();
-            macCapabilities.addAll(node.getMacCapabilities());
+            macCapabilities = new TreeSet<>(node.getMacCapabilities());
         }
 
         if (node.getNodeDescriptor() != null
