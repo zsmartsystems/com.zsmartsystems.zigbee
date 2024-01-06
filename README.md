@@ -393,10 +393,6 @@ The library is published directly to the maven central repository, and the follo
 
 ## Gradle
 
-```
-gradlew clean build
-```
-
 Gradle build dependencies:
 
 ```
