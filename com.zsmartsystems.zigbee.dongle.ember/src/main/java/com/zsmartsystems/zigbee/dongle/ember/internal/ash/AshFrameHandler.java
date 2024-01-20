@@ -194,7 +194,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         while (!closeHandler) {
             int val = port.read();
-            logger.trace("ASH RX: {}", String.format("%02X", val));
+            if (logger.isTraceEnabled()) {
+                logger.trace("ASH RX: {}", String.format("%02X", val));
+            }
             switch (val) {
                 case ASH_CANCEL_BYTE:
                     // Cancel Byte: Terminates a frame in progress. A Cancel Byte causes all data received since the
@@ -278,7 +280,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
                     final AshFrame packet = AshFrame.createFromInput(packetData);
                     AshFrame responseFrame = null;
                     if (packet == null) {
-                        logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
+                        }
 
                         // Send a NAK and set rejection condition
                         if (!rejectionCondition) {
@@ -286,7 +290,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                             responseFrame = new AshFrameNak(ackNum);
                         }
                     } else {
-                        logger.debug("<-- RX ASH frame: {}", packet.toString());
+                        logger.debug("<-- RX ASH frame: {}", packet);
 
                         // Reset the exception counter
                         exceptionCnt = 0;
