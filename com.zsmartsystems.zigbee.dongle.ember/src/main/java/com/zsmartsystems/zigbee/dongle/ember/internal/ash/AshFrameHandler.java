@@ -73,6 +73,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private static final int T_RX_ACK_MIN = 400;
     private static final int T_RX_ACK_INIT = 1600;
     private static final int T_RX_ACK_MAX = 3200;
+    private static final int T_RSTACK_MAX = 3200;
     private int receiveTimeout = T_RX_ACK_INIT;
 
     private static final int T_CON_HOLDOFF = 1250;
@@ -576,6 +577,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         // Only start the timer for data and reset frames
         if (ashFrame instanceof AshFrameData || ashFrame instanceof AshFrameRst) {
+            if (ashFrame instanceof AshFrameRst) {
+                // Set the timeout to allow for the stack reset time
+                receiveTimeout = T_RSTACK_MAX;
+            }
             sentTime = System.nanoTime();
             startRetryTimer();
         }
