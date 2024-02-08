@@ -94,6 +94,9 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
                 }
             }
             EzspCustomFrameResponse response = ncp.sendCustomFrame(frame);
+            if (response == null || response.getStatus() == null) {
+                throw new IllegalArgumentException("whitelist seems not supported by this NCP " + ncp.getIeeeAddress());
+            }
             if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
                 throw new RuntimeException("fail to add allowed devices");
             }
