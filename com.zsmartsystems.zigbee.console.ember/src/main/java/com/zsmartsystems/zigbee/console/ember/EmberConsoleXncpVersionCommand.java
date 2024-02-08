@@ -7,27 +7,21 @@
  */
 package com.zsmartsystems.zigbee.console.ember;
 
-import java.io.PrintStream;
-
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 
-/**
- *
- * @author Chris Jackson
- *
- */
-public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
+import java.io.PrintStream;
+
+public class EmberConsoleXncpVersionCommand extends EmberConsoleAbstractCommand {
     @Override
     public String getCommand() {
-        return "ncpversion";
+        return "xncpversion";
     }
 
     @Override
     public String getDescription() {
-        return "Gets the NCP firmware version";
+        return "If exists gets the XNCP version and the manufactured ID";
     }
 
     @Override
@@ -45,23 +39,22 @@ public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
             throws IllegalArgumentException {
         EmberNcp ncp = getEmberNcp(networkManager);
 
-        EzspVersionResponse version = ncp.getVersion();
-        String bootloaderVersion = getVersionString(ncp.getBootloaderVersion());
-        out.println("Ember NCP version " + getVersionString(version.getStackVersion()) +
-                    ", EZSP version " + version.getProtocolVersion() +
-                    ", Bootloader version " + bootloaderVersion.replaceFirst("(\\..*?)\\.", "$1 build ").replaceAll("\\.(?!.*\\.)", ""));
+
+        EzspGetXncpInfoResponse xncpInfo = ncp.getXncpInfo();
+        if (xncpInfo != null) {
+            out.println("Ember NCP xncpInfo " + getAsString(xncpInfo.getVersionNumber()) + ", manufacturer ID "
+                + getAsString(xncpInfo.getManufacturerId()));
+        } else {
+            out.println("XNCP extension is not supported");
+        }
     }
 
-    private String getVersionString(int value) {
+    private String getAsString(int value) {
         StringBuilder builder = new StringBuilder(16);
         for (int cnt = 3; cnt >= 0; cnt--) {
             builder.append((value >> (cnt * 4)) & 0x0F);
-            if (cnt != 0) {
-                builder.append('.');
-            }
         }
 
         return builder.toString();
     }
-
 }

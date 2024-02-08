@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.app.pollcontrol.ZclPollControlExtension;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleXncpVersionCommand;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import org.apache.commons.cli.CommandLine;
@@ -338,6 +339,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpTokenCommand.class);
             commands.add(EmberConsoleNcpRoutingCommand.class);
             commands.add(EmberConsoleWhitelistCommand.class);
+            commands.add(EmberConsoleXncpVersionCommand.class);
 
             emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
 
