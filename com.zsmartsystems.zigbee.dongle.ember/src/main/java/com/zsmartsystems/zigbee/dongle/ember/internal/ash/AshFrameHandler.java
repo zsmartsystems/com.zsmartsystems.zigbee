@@ -432,6 +432,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
         } else {
             logger.debug("ASH: Invalid version");
         }
+
+        // We used a longer timeout when sending the RESET, so set the timeout to the initial value
+        receiveTimeout = T_RX_ACK_INIT;
     }
 
     private void handleError(AshFrameError packet) {
