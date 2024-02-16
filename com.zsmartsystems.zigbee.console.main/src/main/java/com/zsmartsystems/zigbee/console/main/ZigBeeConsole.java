@@ -82,6 +82,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.console.ember.WhiteListException;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
@@ -416,6 +417,8 @@ public final class ZigBeeConsole {
             } catch (IllegalArgumentException | IllegalStateException e) {
                 out.println("Error executing command: " + e.getMessage());
                 out.println(newCommand.getCommand() + " " + newCommand.getSyntax());
+            } catch (WhiteListException e) {
+                out.println("Error executing command: " + e);
             } catch (Exception e) {
                 out.println("Error executing command: " + e);
                 e.printStackTrace(out);
