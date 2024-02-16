@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.app.pollcontrol.ZclPollControlExtension;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
-import com.zsmartsystems.zigbee.console.ember.EmberConsoleXncpVersionCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpxVersionCommand;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import org.apache.commons.cli.CommandLine;
@@ -43,7 +43,6 @@ import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
-import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
@@ -339,7 +338,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpTokenCommand.class);
             commands.add(EmberConsoleNcpRoutingCommand.class);
             commands.add(EmberConsoleWhitelistCommand.class);
-            commands.add(EmberConsoleXncpVersionCommand.class);
+            commands.add(EmberConsoleNcpxVersionCommand.class);
 
             emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
 

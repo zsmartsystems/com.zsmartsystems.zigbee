@@ -13,10 +13,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRespons
 
 import java.io.PrintStream;
 
-public class EmberConsoleXncpVersionCommand extends EmberConsoleAbstractCommand {
+public class EmberConsoleNcpxVersionCommand extends EmberConsoleAbstractCommand {
     @Override
     public String getCommand() {
-        return "xncpversion";
+        return "ncpxversion";
     }
 
     @Override

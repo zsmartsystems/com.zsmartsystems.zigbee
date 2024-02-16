@@ -1089,6 +1089,10 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetXncpInfoResponse.class));
         EzspGetXncpInfoResponse response = (EzspGetXncpInfoResponse) transaction.getResponse();
+        if (response == null) {
+            logger.debug("Error sending xncp, response is null");
+            return null;
+        }
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error sending xncp info: {}", response);
             return null;
