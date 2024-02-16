@@ -98,7 +98,7 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
                 throw new NullPointerException(String.format("Error sending custom frame: %s", response));
             }
             if (response.getStatus() == EmberStatus.EMBER_INVALID_CALL) {
-                throw new IllegalArgumentException("Whitelist is not supported.");
+                throw new RuntimeException("Whitelist is not supported.");
             }
             if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
                 throw new RuntimeException("fail to add allowed devices");
