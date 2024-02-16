@@ -865,7 +865,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout) {
-        String message = "[{}] TX EZSP: {}";
+        String message = "[{}]: TX EZSP: {}";
         ezspDongleLogger.debug(message, frameHandler.getHandlerIdentifier(), ezspTransaction.getRequest());
         txRxLogger.debug(message, frameHandler.getHandlerIdentifier(), ezspTransaction.getRequest());
         logger.debug(message, frameHandler.getHandlerIdentifier(), ezspTransaction.getRequest());

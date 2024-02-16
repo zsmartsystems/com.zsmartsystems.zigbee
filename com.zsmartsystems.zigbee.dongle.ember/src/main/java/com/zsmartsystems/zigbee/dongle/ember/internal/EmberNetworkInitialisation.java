@@ -299,7 +299,7 @@ public class EmberNetworkInitialisation {
         protocolHandler.sendEzspTransaction(transaction);
         EzspGetNetworkParametersResponse getNetworkParametersResponse = (EzspGetNetworkParametersResponse) transaction
                 .getResponse();
-        logger.debug(getNetworkParametersResponse.toString());
+//        logger.debug(getNetworkParametersResponse.toString());
         if (getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error during retrieval of network parameters: {}", getNetworkParametersResponse);
             return null;
@@ -345,7 +345,7 @@ public class EmberNetworkInitialisation {
         protocolHandler.sendEzspTransaction(transaction);
         EzspSetInitialSecurityStateResponse securityStateResponse = (EzspSetInitialSecurityStateResponse) transaction
                 .getResponse();
-        logger.debug(securityStateResponse.toString());
+//        logger.debug(securityStateResponse.toString());
         if (securityStateResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error during retrieval of network parameters: {}", securityStateResponse);
             return false;
@@ -387,7 +387,7 @@ public class EmberNetworkInitialisation {
                 EzspFormNetworkResponse.class);
         protocolHandler.sendEzspTransaction(transaction);
         EzspFormNetworkResponse formNetworkResponse = (EzspFormNetworkResponse) transaction.getResponse();
-        logger.debug(formNetworkResponse.toString());
+//        logger.debug(formNetworkResponse.toString());
         if (formNetworkResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error forming network: {}", formNetworkResponse);
             return false;
@@ -413,7 +413,7 @@ public class EmberNetworkInitialisation {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspJoinNetworkResponse joinNetworkResponse = (EzspJoinNetworkResponse) transaction.getResponse();
-        logger.debug(joinNetworkResponse.toString());
+//        logger.debug(joinNetworkResponse.toString());
         if (joinNetworkResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error joining network: {}", joinNetworkResponse);
             return false;
@@ -439,7 +439,7 @@ public class EmberNetworkInitialisation {
 
         EzspFindAndRejoinNetworkResponse rejoinNetworkResponse = (EzspFindAndRejoinNetworkResponse) transaction
                 .getResponse();
-        logger.debug(rejoinNetworkResponse.toString());
+//        logger.debug(rejoinNetworkResponse.toString());
         if (rejoinNetworkResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error rejoining network: {}", rejoinNetworkResponse);
             return false;

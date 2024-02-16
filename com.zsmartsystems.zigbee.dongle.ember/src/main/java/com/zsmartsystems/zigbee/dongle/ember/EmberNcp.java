@@ -93,7 +93,6 @@ public class EmberNcp {
             logger.debug("No response from ezspVersion command");
             return null;
         }
-        logger.debug(response.toString());
 
         return response;
     }
@@ -113,7 +112,7 @@ public class EmberNcp {
         if (response == null) {
             return EmberStatus.UNKNOWN;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
 
         return response.getStatus();
     }
@@ -136,7 +135,7 @@ public class EmberNcp {
         if (response == null) {
             return EmberStatus.UNKNOWN;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
 
         return response.getStatus();
     }
@@ -154,7 +153,6 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
         return response.getState();
     }
 
@@ -234,7 +232,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
@@ -269,7 +267,7 @@ public class EmberNcp {
             return EzspStatus.UNKNOWN;
         }
 
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
 
         return response.getStatus();
     }
@@ -287,7 +285,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         return response.getValues();
     }
 
@@ -304,7 +302,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         return response.getStatus();
     }
 
@@ -323,7 +321,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
@@ -345,7 +343,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
@@ -369,7 +367,6 @@ public class EmberNcp {
         if (response == null || response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             return null;
         }
-        logger.debug(response.toString());
 
         return response.getValue();
     }
@@ -385,7 +382,6 @@ public class EmberNcp {
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
         request.setConfigId(configId);
         request.setValue(value);
-        logger.debug(request.toString());
 
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler().sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspSetConfigurationValueResponse.class));
@@ -394,8 +390,6 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-
-        logger.debug(response.toString());
 
         return response.getStatus();
     }
@@ -417,7 +411,7 @@ public class EmberNcp {
         if (setPolicyResponse == null) {
             return EzspStatus.UNKNOWN;
         }
-        logger.debug(setPolicyResponse.toString());
+
         if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error during setting policy: {}", setPolicyResponse);
         }
@@ -466,7 +460,7 @@ public class EmberNcp {
         if (getPolicyResponse == null) {
             return null;
         }
-        logger.debug(getPolicyResponse.toString());
+
         if (getPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error getting policy: {}", getPolicyResponse);
             return null;
@@ -492,7 +486,7 @@ public class EmberNcp {
         if (response == null) {
             return EzspStatus.UNKNOWN;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error setting value: {}", response);
         }
@@ -515,7 +509,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error getting value: {}", response);
             return null;
@@ -543,7 +537,7 @@ public class EmberNcp {
         if (response == null) {
             return EmberStatus.UNKNOWN;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error setting transient key: {}", response);
         }
@@ -568,7 +562,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
@@ -591,7 +585,7 @@ public class EmberNcp {
         if (response == null) {
             return null;
         }
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
@@ -662,7 +656,7 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAesMmoHashResponse.class));
         EzspAesMmoHashResponse response = (EzspAesMmoHashResponse) transaction.getResponse();
-        logger.debug(response.toString());
+        // logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error performing AES MMO hash: {}", response);
         }
