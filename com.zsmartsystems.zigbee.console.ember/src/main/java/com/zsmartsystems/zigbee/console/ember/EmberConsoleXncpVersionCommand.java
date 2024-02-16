@@ -42,19 +42,9 @@ public class EmberConsoleXncpVersionCommand extends EmberConsoleAbstractCommand 
 
         EzspGetXncpInfoResponse xncpInfo = ncp.getXncpInfo();
         if (xncpInfo != null) {
-            out.println("Ember NCP xncpInfo " + getAsString(xncpInfo.getVersionNumber()) + ", manufacturer ID "
-                + getAsString(xncpInfo.getManufacturerId()));
+            out.println(String.format("Ember xNCP information: manufacturerId=0x%04X, versionNumber=0x%04X", xncpInfo.getManufacturerId(), xncpInfo.getVersionNumber()));
         } else {
             out.println("XNCP extension is not supported");
         }
-    }
-
-    private String getAsString(int value) {
-        StringBuilder builder = new StringBuilder(16);
-        for (int cnt = 3; cnt >= 0; cnt--) {
-            builder.append((value >> (cnt * 4)) & 0x0F);
-        }
-
-        return builder.toString();
     }
 }

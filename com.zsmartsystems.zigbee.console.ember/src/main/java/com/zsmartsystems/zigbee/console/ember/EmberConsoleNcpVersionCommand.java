@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
  *
  */
 public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
+    private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
     @Override
     public String getCommand() {
         return "ncpversion";
@@ -61,6 +62,21 @@ public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
             }
         }
 
+        return builder.toString();
+    }
+
+    private String getBootLoaderVersion(int bootloaderVersion) {
+        StringBuilder builder = new StringBuilder();
+        if (bootloaderVersion == BOOTLOADER_INVALID_VERSION) {
+            builder.append("NONE");
+        } else {
+            builder.append((bootloaderVersion >> 12) & 0x0F);
+            builder.append('.');
+            builder.append((bootloaderVersion >> 8) & 0x0F);
+
+            builder.append(" build ");
+            builder.append(bootloaderVersion & 0xFF);
+        }
         return builder.toString();
     }
 
