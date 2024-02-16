@@ -1107,10 +1107,7 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspCustomFrameResponse.class));
         EzspCustomFrameResponse response = (EzspCustomFrameResponse) transaction.getResponse();
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error sending custom frame: {}", response);
-            return null;
-        }
+
         return response;
     }
 
