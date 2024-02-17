@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -192,6 +194,7 @@ public class EmberNcp {
      * @param protocolHandler the {@link EzspFrameHandler} used for communicating with the NCP
      */
     public EmberNcp(EzspProtocolHandler protocolHandler) {
+        requireNonNull(protocolHandler, "Protocol handler cannot be null");
         this.protocolHandler = protocolHandler;
     }
 
