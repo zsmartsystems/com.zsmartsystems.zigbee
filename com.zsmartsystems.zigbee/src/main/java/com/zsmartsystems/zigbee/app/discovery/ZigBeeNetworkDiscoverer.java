@@ -7,12 +7,15 @@
  */
 package com.zsmartsystems.zigbee.app.discovery;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +62,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     /**
      * The ZigBee network manager.
      */
-    private ZigBeeNetworkManager networkManager;
+    private final ZigBeeNetworkManager networkManager;
 
     /**
      * The minimum time before performing a requery
@@ -82,6 +85,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      * @param networkManager the {@link ZigBeeNetworkManager}
      */
     protected ZigBeeNetworkDiscoverer(final ZigBeeNetworkManager networkManager) {
+        requireNonNull(networkManager, "Network manager cannot be null");
         this.networkManager = networkManager;
     }
 
@@ -379,13 +383,17 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     private boolean getAssociatedNodes(final int networkAddress) throws InterruptedException, ExecutionException {
         Integer startIndex = 0;
         int totalAssociatedDevices = 0;
-        Set<Integer> associatedDevices = new HashSet<Integer>();
+        Set<Integer> associatedDevices = new HashSet<>();
 
         do {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(networkAddress, 1, startIndex);
             ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-            CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
+            final Future<CommandResult> resultFuture = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest);
+            if (resultFuture == null) {
+                return false;
+            }
+            final CommandResult response = resultFuture.get();
             if (response.isError()) {
                 return false;
             }
