@@ -396,7 +396,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
             if (queue == null && createIfNotExist) {
                 logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
-                queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(), node.getIeeeAddress());
+                queue = new ZigBeeTransactionQueue(networkManager.getNetworkManagerId() + " - " + node.getIeeeAddress().toString(), node.getIeeeAddress());
                 setQueueType(node, queue);
 
                 nodeQueue.put(node.getIeeeAddress(), queue);
