@@ -35,11 +35,14 @@ simple-network.xml
 *.gbl
 *.s37
 
-com.zsmartsystems.zigbee.console.main/database/
-
 
 # Gradle
 .gradle
 build/
 .gradletasknamecache
 !gradle-wrapper.jar
+
+#runtime
+com.zsmartsystems.zigbee.console.main/database/
+database/
+log4j.xml*
