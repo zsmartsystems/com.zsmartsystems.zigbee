@@ -861,8 +861,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("[{}]: RX EZSP: {}", handlerIdentifier, response);
-            txRxLogger.debug("[" + handlerIdentifier + "] RX EZSP: {}", response);
+            String message = "[{}]: RX EZSP: {}";
+            logger.debug(message, handlerIdentifier, response);
+            txRxLogger.debug(message, handlerIdentifier, response);
         }
 
         if (response instanceof EzspIncomingMessageHandler) {
