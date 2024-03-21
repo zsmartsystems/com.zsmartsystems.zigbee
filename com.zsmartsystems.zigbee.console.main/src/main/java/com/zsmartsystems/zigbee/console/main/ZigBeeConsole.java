@@ -284,21 +284,18 @@ public final class ZigBeeConsole {
             }
         });
 
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                shutdown = true;
-                try {
-                    System.in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    mainThread.interrupt();
-                    mainThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            shutdown = true;
+            try {
+                System.in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                mainThread.interrupt();
+                mainThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }));
     }
@@ -945,74 +942,62 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int cnt = 0;
-                    while (true) {
-                        print("STRESSING 1 CNT: " + cnt++, out);
-                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
-                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
-                        cluster.onCommand();
-                        try {
-                            Thread.sleep(167);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            new Thread(() -> {
+                int cnt = 0;
+                while (true) {
+                    print("STRESSING 1 CNT: " + cnt++, out);
+                    ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                            .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    cluster.onCommand();
+                    try {
+                        Thread.sleep(167);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }).start();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int cnt = 0;
-                    while (true) {
-                        print("STRESSING 2 CNT: " + cnt++, out);
-                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
-                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
-                        cluster.onCommand();
-                        try {
-                            Thread.sleep(107);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            new Thread(() -> {
+                int cnt = 0;
+                while (true) {
+                    print("STRESSING 2 CNT: " + cnt++, out);
+                    ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                            .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    cluster.onCommand();
+                    try {
+                        Thread.sleep(107);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }).start();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int cnt = 0;
-                    while (true) {
-                        print("STRESSING 3 CNT: " + cnt++, out);
-                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
-                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
-                        cluster.onCommand();
-                        try {
-                            Thread.sleep(131);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            new Thread(() -> {
+                int cnt = 0;
+                while (true) {
+                    print("STRESSING 3 CNT: " + cnt++, out);
+                    ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                            .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    cluster.onCommand();
+                    try {
+                        Thread.sleep(131);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }).start();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int cnt = 0;
-                    while (true) {
-                        print("STRESSING 4 CNT: " + cnt++, out);
-                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
-                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
-                        cluster.onCommand();
-                        try {
-                            Thread.sleep(187);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            new Thread(() -> {
+                int cnt = 0;
+                while (true) {
+                    print("STRESSING 4 CNT: " + cnt++, out);
+                    ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                            .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    cluster.onCommand();
+                    try {
+                        Thread.sleep(187);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }).start();
@@ -1089,46 +1074,42 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int cnts = 1000;
-                    int errors = 0;
-                    int cnt = 0;
-                    List<Integer> lqi = new ArrayList<>();
-                    while (cnt < cnts) {
-                        print("LQI Poll CNT: " + cnt++, out);
-                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest(0);
-                        neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
+            new Thread(() -> {
+                int cnts = 1000;
+                int errors = 0;
+                int cnt = 0;
+                List<Integer> lqi = new ArrayList<>();
+                while (cnt < cnts) {
+                    print("LQI Poll CNT: " + cnt++, out);
+                    final ManagementLqiRequest neighborRequest = new ManagementLqiRequest(0);
+                    neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
 
-                        CommandResult response;
-                        try {
-                            response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
-                            final ManagementLqiResponse neighborResponse = response.getResponse();
+                    CommandResult response;
+                    try {
+                        response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
+                        final ManagementLqiResponse neighborResponse = response.getResponse();
 
-                            if (neighborResponse == null || neighborResponse.getStatus() != ZdoStatus.SUCCESS) {
-                                errors++;
-                                continue;
-                            }
-                            if (neighborResponse.getNeighborTableList().isEmpty()) {
-                                print("No neighbors", out);
-                                continue;
-                            }
-                            lqi.add(neighborResponse.getNeighborTableList().get(0).getLqi());
-                        } catch (InterruptedException | ExecutionException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                        if (neighborResponse == null || neighborResponse.getStatus() != ZdoStatus.SUCCESS) {
+                            errors++;
+                            continue;
                         }
+                        if (neighborResponse.getNeighborTableList().isEmpty()) {
+                            print("No neighbors", out);
+                            continue;
+                        }
+                        lqi.add(neighborResponse.getNeighborTableList().get(0).getLqi());
+                    } catch (InterruptedException | ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
-                    IntSummaryStatistics stats = lqi.stream().mapToInt((x) -> x).summaryStatistics();
-
-                    print("LQI Polling Complete", out);
-                    print("Errors: " + errors, out);
-                    print("Min   : " + stats.getMin(), out);
-                    print("Max   : " + stats.getMax(), out);
-                    print("Avg   : " + stats.getAverage(), out);
-
                 }
+                IntSummaryStatistics stats = lqi.stream().mapToInt((x) -> x).summaryStatistics();
+
+                print("LQI Polling Complete", out);
+                print("Errors: " + errors, out);
+                print("Min   : " + stats.getMin(), out);
+                print("Max   : " + stats.getMax(), out);
+                print("Avg   : " + stats.getAverage(), out);
             }).start();
 
             return true;
@@ -1157,12 +1138,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    networkManager.reinitialize();
-                }
-            }).start();
+            new Thread(networkManager::reinitialize).start();
 
             return true;
         }

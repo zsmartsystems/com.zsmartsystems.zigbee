@@ -60,11 +60,8 @@ public class ZigBeeCommandNotifier {
     public synchronized void notifyCommandListeners(final ZigBeeCommand command) {
         // Notify the listeners
         for (final ZigBeeCommandListener commandListener : commandListeners) {
-            networkManager.getNotificationService().execute(new Runnable() {
-                @Override
-                public void run() {
-                    commandListener.commandReceived(command);
-                }
+            networkManager.getNotificationService().execute(() -> {
+                commandListener.commandReceived(command);
             });
         }
     }

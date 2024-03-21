@@ -339,23 +339,20 @@ public class ZigBeeDiscoveryExtension
     protected void startScheduler(int initialPeriod) {
         stopScheduler();
 
-        Runnable meshUpdateThread = new Runnable() {
-            @Override
-            public void run() {
-                synchronized (nodeDiscovery) {
-                    logger.debug("DISCOVERY Extension: Starting mesh update");
-                    for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
-                        logger.debug("{}: DISCOVERY Extension: Starting mesh update", node.getNode().getIeeeAddress());
-                        node.setUpdateMeshTasks(meshUpdateTasks);
-                        node.updateMesh();
-                    }
-                }
-            }
-        };
-
-        futureTask = networkManager.scheduleTask(meshUpdateThread, initialPeriod,
+        futureTask = networkManager.scheduleTask(this::meshUpdateThread, initialPeriod,
                 TimeUnit.SECONDS.toMillis(updatePeriod));
     }
+
+    private void meshUpdateThread() {
+        synchronized (nodeDiscovery) {
+            logger.debug("DISCOVERY Extension: Starting mesh update");
+            for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
+                logger.debug("{}: DISCOVERY Extension: Starting mesh update", node.getNode().getIeeeAddress());
+                node.setUpdateMeshTasks(meshUpdateTasks);
+                node.updateMesh();
+            }
+        }
+    };
 
     /**
      * Gets the Collection of {@link ZigBeeNodeServiceDiscoverer}s for all nodes
