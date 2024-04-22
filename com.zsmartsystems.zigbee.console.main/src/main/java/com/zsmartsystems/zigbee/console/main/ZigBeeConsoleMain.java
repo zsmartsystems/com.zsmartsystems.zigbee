@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -352,7 +353,7 @@ public class ZigBeeConsoleMain {
             if (cmdline.hasOption("pan")) {
                 pan = parseDecimalOrHexInt(cmdline.getOptionValue("pan"));
             } else {
-                pan = 1;
+                pan = ThreadLocalRandom.current().nextInt(1, 0x10000);
             }
             if (cmdline.hasOption("epan")) {
                 extendedPan = new ExtendedPanId(cmdline.getOptionValue("epan"));
