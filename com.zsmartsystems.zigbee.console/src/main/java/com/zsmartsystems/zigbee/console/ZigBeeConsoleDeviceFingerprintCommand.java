@@ -354,7 +354,7 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
                 name = "Manufacturer Name          ";
                 break;
             case ZclBasicCluster.ATTR_MODELIDENTIFIER:
-                name = "Model Indentifier          ";
+                name = "Model Identifier           ";
                 break;
             case ZclBasicCluster.ATTR_PRODUCTCODE:
                 name = "Product Code               ";
