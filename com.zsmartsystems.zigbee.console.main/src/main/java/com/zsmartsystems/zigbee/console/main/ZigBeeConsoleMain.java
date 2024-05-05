@@ -129,7 +129,7 @@ public class ZigBeeConsoleMain {
                         ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclBallastConfigurationCluster.CLUSTER_ID, ZclOtaUpgradeCluster.CLUSTER_ID,
-                        ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
+                        ZclBinaryInputBasicCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID, 1000, 0xff17)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
@@ -142,7 +142,8 @@ public class ZigBeeConsoleMain {
                         ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
                         ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
-                        ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
+                        ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID,
+                        ZclBallastConfigurationCluster.CLUSTER_ID, 1000, 0xff17)
                 .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();

@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeAddCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -44,6 +45,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCbkeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleChannelCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleClusterCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleColorCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
@@ -224,6 +226,9 @@ public final class ZigBeeConsole {
         newCommands.put("firmware", new ZigBeeConsoleFirmwareCommand());
         newCommands.put("identify", new ZigBeeConsoleIdentifyCommand());
         newCommands.put("reset", new ZigBeeConsoleNodeResetCommand());
+
+        newCommands.put("cluster", new ZigBeeConsoleClusterCommand());
+        newCommands.put("attadd", new ZigBeeConsoleAttributeAddCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 

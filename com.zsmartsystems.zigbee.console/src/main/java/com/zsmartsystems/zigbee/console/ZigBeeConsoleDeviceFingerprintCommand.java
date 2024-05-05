@@ -204,7 +204,11 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
         out.println(
                 "| | | |>| Cluster " + String.format("%04X", cluster.getClusterId()) + " " + cluster.getClusterName());
         out.println("| | | | |> Type                 " + (cluster.isClient() ? "Client [Output]" : "Server [Input]"));
-        out.println("| | | | |> Manufacturer Spec.   " + (cluster.isManufacturerSpecific() ? "Yes" : "No"));
+        out.print("| | | | |> Manufacturer Spec.   " + (cluster.isManufacturerSpecific() ? "Yes" : "No"));
+        if (cluster.isManufacturerSpecific()) {
+            out.print(" [" + String.format("%04X", cluster.getManufacturerCode()) + "]");
+        }
+        out.println();
 
         if ((cluster.isClient() && !networkManager.isClientClusterSupported(cluster.getClusterId())) ||
                 (cluster.isServer() && !networkManager.isServerClusterSupported(cluster.getClusterId()))) {
