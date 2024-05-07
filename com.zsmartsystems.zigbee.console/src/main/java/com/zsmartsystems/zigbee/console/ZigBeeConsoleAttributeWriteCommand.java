@@ -41,7 +41,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTEID (VALUE [TYPE] | {VALUE1 VALUE2 ... VALUEN} TYPE)";
+        return "ENDPOINT CLUSTER ATTRIBUTEID (VALUE [TYPE] | {VALUE1 VALUE2 ... VALUEn} TYPE)";
     }
 
     @Override

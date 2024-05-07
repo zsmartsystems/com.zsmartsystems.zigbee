@@ -1921,7 +1921,25 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Indicates whether this is a manufacturer-specific attribute. Default is not manufacturer-specific.
+     * Set the manufacturer code; must be non-null for manufacturer-specific clusters.
+     *
+     * @param manufacturerCode the new manufacturer code - must be non-null for a manufacturer specific cluster
+     * @return true if the manufacturer code was updated. If the cluster already has a manufacturer specific code set,
+     *         this will return false
+     */
+    public boolean setManufacturerCode(int manufacturerCode) {
+        if (this.manufacturerCode != null) {
+            return false;
+        }
+
+        this.manufacturerCode = manufacturerCode;
+        return true;
+    }
+
+    /**
+     * Indicates whether this is a manufacturer-specific cluster. Default is not manufacturer-specific.
+     *
+     * @return true if this is a manufacturer-specific cluster
      */
     public boolean isManufacturerSpecific() {
         return getManufacturerCode() != null;
@@ -1929,6 +1947,8 @@ public abstract class ZclCluster {
 
     /**
      * Returns the manufacturer code; must be non-null for manufacturer-specific clusters.
+     *
+     * @return the manufacturer code or null if this is not a manufacturer specific cluster
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
