@@ -18,6 +18,8 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithTimedOffCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.ZclOnOffCommand;
 
 /**
  * Uses the OnOff cluster to switch a device on
@@ -33,12 +35,12 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Switches a device ON";
+        return "Switches a device ON. Second parameter sets off time and uses OnWithTimedOff command.";
     }
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT";
+        return "ENDPOINT [OFF TIME]";
     }
 
     @Override
@@ -51,6 +53,11 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
             throws IllegalArgumentException {
         if (args.length < 2) {
             throw new IllegalArgumentException("Invalid number of arguments");
+        }
+
+        Integer offTime = null;
+        if (args.length == 3) {
+            offTime = parseInteger(args[2]);
         }
 
         List<ZclOnOffCluster> clusters = new ArrayList<>();
@@ -66,7 +73,12 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
         } else {
             ZigBeeGroup group = getGroup(networkManager, args[1]);
             if (group != null) {
-                OnCommand command = new OnCommand();
+                ZclOnOffCommand command;
+                if (offTime != null) {
+                    command = new OnWithTimedOffCommand(0, offTime, 0);
+                } else {
+                    command = new OnCommand();
+                }
                 group.sendCommand(command);
                 return;
             }
@@ -80,12 +92,18 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
 
         CommandResult result;
         for (ZclOnOffCluster cluster : clusters) {
-            OnCommand command = new OnCommand();
+            ZclOnOffCommand command;
+            if (offTime != null) {
+                command = new OnWithTimedOffCommand(0, offTime, 0);
+            } else {
+                command = new OnCommand();
+            }
             try {
                 result = cluster.sendCommand(command).get();
             } catch (Exception e) {
                 out.println(
-                        "[Endpoint: " + cluster.getZigBeeAddress() + "] Fail to send command [" + e.getMessage() + "]");
+                        "[Endpoint: " + cluster.getZigBeeAddress() + "] Failed to send command [" + e.getMessage()
+                                + "]");
                 return;
             }
             if (result.isError() || result.isTimeout()) {
