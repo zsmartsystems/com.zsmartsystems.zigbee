@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclDehumidificationControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -276,8 +276,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRhDehumidificationSetpoint(final Integer value) {
-        return write(serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT), value);
+    public Future<CommandResult> setRhDehumidificationSetpoint(final Integer rhDehumidificationSetpoint) {
+        return write(serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT), rhDehumidificationSetpoint);
     }
 
     /**
@@ -345,8 +345,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRelativeHumidityMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE), value);
+    public Future<CommandResult> setRelativeHumidityMode(final Integer relativeHumidityMode) {
+        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE), relativeHumidityMode);
     }
 
     /**
@@ -412,8 +412,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDehumidificationLockout(final Integer value) {
-        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT), value);
+    public Future<CommandResult> setDehumidificationLockout(final Integer dehumidificationLockout) {
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT), dehumidificationLockout);
     }
 
     /**
@@ -479,8 +479,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDehumidificationHysteresis(final Integer value) {
-        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS), value);
+    public Future<CommandResult> setDehumidificationHysteresis(final Integer dehumidificationHysteresis) {
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS), dehumidificationHysteresis);
     }
 
     /**
@@ -546,8 +546,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDehumidificationMaxCool(final Integer value) {
-        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL), value);
+    public Future<CommandResult> setDehumidificationMaxCool(final Integer dehumidificationMaxCool) {
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL), dehumidificationMaxCool);
     }
 
     /**
@@ -613,8 +613,8 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRelativeHumidityDisplay(final Integer value) {
-        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY), value);
+    public Future<CommandResult> setRelativeHumidityDisplay(final Integer relativeHumidityDisplay) {
+        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY), relativeHumidityDisplay);
     }
 
     /**

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclBallastConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -394,8 +394,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMinLevel(final Integer value) {
-        return write(serverAttributes.get(ATTR_MINLEVEL), value);
+    public Future<CommandResult> setMinLevel(final Integer minLevel) {
+        return write(serverAttributes.get(ATTR_MINLEVEL), minLevel);
     }
 
     /**
@@ -480,8 +480,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMaxLevel(final Integer value) {
-        return write(serverAttributes.get(ATTR_MAXLEVEL), value);
+    public Future<CommandResult> setMaxLevel(final Integer maxLevel) {
+        return write(serverAttributes.get(ATTR_MAXLEVEL), maxLevel);
     }
 
     /**
@@ -560,8 +560,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPowerOnLevel(final Integer value) {
-        return write(serverAttributes.get(ATTR_POWERONLEVEL), value);
+    public Future<CommandResult> setPowerOnLevel(final Integer powerOnLevel) {
+        return write(serverAttributes.get(ATTR_POWERONLEVEL), powerOnLevel);
     }
 
     /**
@@ -624,8 +624,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPowerOnFadeTime(final Integer value) {
-        return write(serverAttributes.get(ATTR_POWERONFADETIME), value);
+    public Future<CommandResult> setPowerOnFadeTime(final Integer powerOnFadeTime) {
+        return write(serverAttributes.get(ATTR_POWERONFADETIME), powerOnFadeTime);
     }
 
     /**
@@ -691,8 +691,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setIntrinsicBallastFactor(final Integer value) {
-        return write(serverAttributes.get(ATTR_INTRINSICBALLASTFACTOR), value);
+    public Future<CommandResult> setIntrinsicBallastFactor(final Integer intrinsicBallastFactor) {
+        return write(serverAttributes.get(ATTR_INTRINSICBALLASTFACTOR), intrinsicBallastFactor);
     }
 
     /**
@@ -769,8 +769,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBallastFactorAdjustment(final Integer value) {
-        return write(serverAttributes.get(ATTR_BALLASTFACTORADJUSTMENT), value);
+    public Future<CommandResult> setBallastFactorAdjustment(final Integer ballastFactorAdjustment) {
+        return write(serverAttributes.get(ATTR_BALLASTFACTORADJUSTMENT), ballastFactorAdjustment);
     }
 
     /**
@@ -851,8 +851,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampQuantity(final Integer value) {
-        return write(serverAttributes.get(ATTR_LAMPQUANTITY), value);
+    public Future<CommandResult> setLampQuantity(final Integer lampQuantity) {
+        return write(serverAttributes.get(ATTR_LAMPQUANTITY), lampQuantity);
     }
 
     /**
@@ -920,8 +920,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampType(final String value) {
-        return write(serverAttributes.get(ATTR_LAMPTYPE), value);
+    public Future<CommandResult> setLampType(final String lampType) {
+        return write(serverAttributes.get(ATTR_LAMPTYPE), lampType);
     }
 
     /**
@@ -987,8 +987,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampManufacturer(final String value) {
-        return write(serverAttributes.get(ATTR_LAMPMANUFACTURER), value);
+    public Future<CommandResult> setLampManufacturer(final String lampManufacturer) {
+        return write(serverAttributes.get(ATTR_LAMPMANUFACTURER), lampManufacturer);
     }
 
     /**
@@ -1056,8 +1056,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampRatedHours(final Integer value) {
-        return write(serverAttributes.get(ATTR_LAMPRATEDHOURS), value);
+    public Future<CommandResult> setLampRatedHours(final Integer lampRatedHours) {
+        return write(serverAttributes.get(ATTR_LAMPRATEDHOURS), lampRatedHours);
     }
 
     /**
@@ -1134,8 +1134,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampBurnHours(final Integer value) {
-        return write(serverAttributes.get(ATTR_LAMPBURNHOURS), value);
+    public Future<CommandResult> setLampBurnHours(final Integer lampBurnHours) {
+        return write(serverAttributes.get(ATTR_LAMPBURNHOURS), lampBurnHours);
     }
 
     /**
@@ -1217,8 +1217,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampAlarmMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_LAMPALARMMODE), value);
+    public Future<CommandResult> setLampAlarmMode(final Integer lampAlarmMode) {
+        return write(serverAttributes.get(ATTR_LAMPALARMMODE), lampAlarmMode);
     }
 
     /**
@@ -1295,8 +1295,8 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLampBurnHoursTripPoint(final Integer value) {
-        return write(serverAttributes.get(ATTR_LAMPBURNHOURSTRIPPOINT), value);
+    public Future<CommandResult> setLampBurnHoursTripPoint(final Integer lampBurnHoursTripPoint) {
+        return write(serverAttributes.get(ATTR_LAMPBURNHOURSTRIPPOINT), lampBurnHoursTripPoint);
     }
 
     /**

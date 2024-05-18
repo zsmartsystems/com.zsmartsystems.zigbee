@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:58:44Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -4804,24 +4804,24 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Tier {{count}} Price Label</i> attribute [attribute ID <b>0x0000</b>].
+     * Set the <i>Tier  Price Label</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
-     * @param tier{{count}}PriceLabel the {@link String} attribute value to be set
+     * @param tierPriceLabel the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTierPriceLabel(final int arrayOffset, final String value) {
-        return write(serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset), value);
+    public Future<CommandResult> setTierPriceLabel(final int arrayOffset, final String tierPriceLabel) {
+        return write(serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset), tierPriceLabel);
     }
 
     /**
-     * Get the <i>Tier {{count}} Price Label</i> attribute [attribute ID <b>0x0000</b>].
+     * Get the <i>Tier  Price Label</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The attribute is of type {@link String}.
      * <p>
@@ -4841,7 +4841,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier {{count}} Price Label</i> attribute [attribute ID <b>0x0000</b>].
+     * Synchronously get the <i>Tier  Price Label</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -4869,7 +4869,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Block {{count}} Threshold</i> attribute [attribute ID <b>0x0100</b>].
+     * Get the <i>Block  Threshold</i> attribute [attribute ID <b>0x0100</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -4897,7 +4897,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Block {{count}} Threshold</i> attribute [attribute ID <b>0x0100</b>].
+     * Synchronously get the <i>Block  Threshold</i> attribute [attribute ID <b>0x0100</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -4985,7 +4985,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 1 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0110</b>].
+     * Get the <i>Tier 1 Block  Threshold</i> attribute [attribute ID <b>0x0110</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5013,7 +5013,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 1 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0110</b>].
+     * Synchronously get the <i>Tier 1 Block  Threshold</i> attribute [attribute ID <b>0x0110</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5101,7 +5101,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 2 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0120</b>].
+     * Get the <i>Tier 2 Block  Threshold</i> attribute [attribute ID <b>0x0120</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5129,7 +5129,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 2 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0120</b>].
+     * Synchronously get the <i>Tier 2 Block  Threshold</i> attribute [attribute ID <b>0x0120</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5217,7 +5217,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 3 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0130</b>].
+     * Get the <i>Tier 3 Block  Threshold</i> attribute [attribute ID <b>0x0130</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5245,7 +5245,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 3 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0130</b>].
+     * Synchronously get the <i>Tier 3 Block  Threshold</i> attribute [attribute ID <b>0x0130</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5333,7 +5333,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 4 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0140</b>].
+     * Get the <i>Tier 4 Block  Threshold</i> attribute [attribute ID <b>0x0140</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5361,7 +5361,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 4 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0140</b>].
+     * Synchronously get the <i>Tier 4 Block  Threshold</i> attribute [attribute ID <b>0x0140</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5449,7 +5449,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 5 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0150</b>].
+     * Get the <i>Tier 5 Block  Threshold</i> attribute [attribute ID <b>0x0150</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5477,7 +5477,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 5 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0150</b>].
+     * Synchronously get the <i>Tier 5 Block  Threshold</i> attribute [attribute ID <b>0x0150</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5565,7 +5565,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 6 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0160</b>].
+     * Get the <i>Tier 6 Block  Threshold</i> attribute [attribute ID <b>0x0160</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5593,7 +5593,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 6 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0160</b>].
+     * Synchronously get the <i>Tier 6 Block  Threshold</i> attribute [attribute ID <b>0x0160</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5681,7 +5681,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 7 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0170</b>].
+     * Get the <i>Tier 7 Block  Threshold</i> attribute [attribute ID <b>0x0170</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5709,7 +5709,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 7 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0170</b>].
+     * Synchronously get the <i>Tier 7 Block  Threshold</i> attribute [attribute ID <b>0x0170</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5797,7 +5797,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 8 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0180</b>].
+     * Get the <i>Tier 8 Block  Threshold</i> attribute [attribute ID <b>0x0180</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5825,7 +5825,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 8 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0180</b>].
+     * Synchronously get the <i>Tier 8 Block  Threshold</i> attribute [attribute ID <b>0x0180</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5913,7 +5913,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 9 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0190</b>].
+     * Get the <i>Tier 9 Block  Threshold</i> attribute [attribute ID <b>0x0190</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -5941,7 +5941,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 9 Block {{count}} Threshold</i> attribute [attribute ID <b>0x0190</b>].
+     * Synchronously get the <i>Tier 9 Block  Threshold</i> attribute [attribute ID <b>0x0190</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6029,7 +6029,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 10 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01A0</b>].
+     * Get the <i>Tier 10 Block  Threshold</i> attribute [attribute ID <b>0x01A0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6057,7 +6057,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 10 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01A0</b>].
+     * Synchronously get the <i>Tier 10 Block  Threshold</i> attribute [attribute ID <b>0x01A0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6145,7 +6145,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 11 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01B0</b>].
+     * Get the <i>Tier 11 Block  Threshold</i> attribute [attribute ID <b>0x01B0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6173,7 +6173,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 11 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01B0</b>].
+     * Synchronously get the <i>Tier 11 Block  Threshold</i> attribute [attribute ID <b>0x01B0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6261,7 +6261,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 12 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01C0</b>].
+     * Get the <i>Tier 12 Block  Threshold</i> attribute [attribute ID <b>0x01C0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6289,7 +6289,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 12 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01C0</b>].
+     * Synchronously get the <i>Tier 12 Block  Threshold</i> attribute [attribute ID <b>0x01C0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6377,7 +6377,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 13 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01D0</b>].
+     * Get the <i>Tier 13 Block  Threshold</i> attribute [attribute ID <b>0x01D0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6405,7 +6405,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 13 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01D0</b>].
+     * Synchronously get the <i>Tier 13 Block  Threshold</i> attribute [attribute ID <b>0x01D0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6493,7 +6493,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 14 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01E0</b>].
+     * Get the <i>Tier 14 Block  Threshold</i> attribute [attribute ID <b>0x01E0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6521,7 +6521,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 14 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01E0</b>].
+     * Synchronously get the <i>Tier 14 Block  Threshold</i> attribute [attribute ID <b>0x01E0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6609,7 +6609,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 15 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01F0</b>].
+     * Get the <i>Tier 15 Block  Threshold</i> attribute [attribute ID <b>0x01F0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -6637,7 +6637,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 15 Block {{count}} Threshold</i> attribute [attribute ID <b>0x01F0</b>].
+     * Synchronously get the <i>Tier 15 Block  Threshold</i> attribute [attribute ID <b>0x01F0</b>].
      * <p>
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -7297,7 +7297,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>No Tier Block {{count}} Price</i> attribute [attribute ID <b>0x0400</b>].
+     * Get the <i>No Tier Block  Price</i> attribute [attribute ID <b>0x0400</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7317,7 +7317,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>No Tier Block {{count}} Price</i> attribute [attribute ID <b>0x0400</b>].
+     * Synchronously get the <i>No Tier Block  Price</i> attribute [attribute ID <b>0x0400</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7345,7 +7345,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 1 Block {{count}} Price</i> attribute [attribute ID <b>0x0410</b>].
+     * Get the <i>Tier 1 Block  Price</i> attribute [attribute ID <b>0x0410</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7365,7 +7365,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 1 Block {{count}} Price</i> attribute [attribute ID <b>0x0410</b>].
+     * Synchronously get the <i>Tier 1 Block  Price</i> attribute [attribute ID <b>0x0410</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7393,7 +7393,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 2 Block {{count}} Price</i> attribute [attribute ID <b>0x0420</b>].
+     * Get the <i>Tier 2 Block  Price</i> attribute [attribute ID <b>0x0420</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7413,7 +7413,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 2 Block {{count}} Price</i> attribute [attribute ID <b>0x0420</b>].
+     * Synchronously get the <i>Tier 2 Block  Price</i> attribute [attribute ID <b>0x0420</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7441,7 +7441,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 3 Block {{count}} Price</i> attribute [attribute ID <b>0x0430</b>].
+     * Get the <i>Tier 3 Block  Price</i> attribute [attribute ID <b>0x0430</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7461,7 +7461,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 3 Block {{count}} Price</i> attribute [attribute ID <b>0x0430</b>].
+     * Synchronously get the <i>Tier 3 Block  Price</i> attribute [attribute ID <b>0x0430</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7489,7 +7489,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 4 Block {{count}} Price</i> attribute [attribute ID <b>0x0440</b>].
+     * Get the <i>Tier 4 Block  Price</i> attribute [attribute ID <b>0x0440</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7509,7 +7509,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 4 Block {{count}} Price</i> attribute [attribute ID <b>0x0440</b>].
+     * Synchronously get the <i>Tier 4 Block  Price</i> attribute [attribute ID <b>0x0440</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7537,7 +7537,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 5 Block {{count}} Price</i> attribute [attribute ID <b>0x0450</b>].
+     * Get the <i>Tier 5 Block  Price</i> attribute [attribute ID <b>0x0450</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7557,7 +7557,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 5 Block {{count}} Price</i> attribute [attribute ID <b>0x0450</b>].
+     * Synchronously get the <i>Tier 5 Block  Price</i> attribute [attribute ID <b>0x0450</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7585,7 +7585,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 6 Block {{count}} Price</i> attribute [attribute ID <b>0x0460</b>].
+     * Get the <i>Tier 6 Block  Price</i> attribute [attribute ID <b>0x0460</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7605,7 +7605,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 6 Block {{count}} Price</i> attribute [attribute ID <b>0x0460</b>].
+     * Synchronously get the <i>Tier 6 Block  Price</i> attribute [attribute ID <b>0x0460</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7633,7 +7633,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 7 Block {{count}} Price</i> attribute [attribute ID <b>0x0470</b>].
+     * Get the <i>Tier 7 Block  Price</i> attribute [attribute ID <b>0x0470</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7653,7 +7653,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 7 Block {{count}} Price</i> attribute [attribute ID <b>0x0470</b>].
+     * Synchronously get the <i>Tier 7 Block  Price</i> attribute [attribute ID <b>0x0470</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7681,7 +7681,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 8 Block {{count}} Price</i> attribute [attribute ID <b>0x0480</b>].
+     * Get the <i>Tier 8 Block  Price</i> attribute [attribute ID <b>0x0480</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7701,7 +7701,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 8 Block {{count}} Price</i> attribute [attribute ID <b>0x0480</b>].
+     * Synchronously get the <i>Tier 8 Block  Price</i> attribute [attribute ID <b>0x0480</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7729,7 +7729,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 9 Block {{count}} Price</i> attribute [attribute ID <b>0x0490</b>].
+     * Get the <i>Tier 9 Block  Price</i> attribute [attribute ID <b>0x0490</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7749,7 +7749,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 9 Block {{count}} Price</i> attribute [attribute ID <b>0x0490</b>].
+     * Synchronously get the <i>Tier 9 Block  Price</i> attribute [attribute ID <b>0x0490</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7777,7 +7777,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 10 Block {{count}} Price</i> attribute [attribute ID <b>0x04A0</b>].
+     * Get the <i>Tier 10 Block  Price</i> attribute [attribute ID <b>0x04A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7797,7 +7797,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 10 Block {{count}} Price</i> attribute [attribute ID <b>0x04A0</b>].
+     * Synchronously get the <i>Tier 10 Block  Price</i> attribute [attribute ID <b>0x04A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7825,7 +7825,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 11 Block {{count}} Price</i> attribute [attribute ID <b>0x04B0</b>].
+     * Get the <i>Tier 11 Block  Price</i> attribute [attribute ID <b>0x04B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7845,7 +7845,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 11 Block {{count}} Price</i> attribute [attribute ID <b>0x04B0</b>].
+     * Synchronously get the <i>Tier 11 Block  Price</i> attribute [attribute ID <b>0x04B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7873,7 +7873,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 12 Block {{count}} Price</i> attribute [attribute ID <b>0x04C0</b>].
+     * Get the <i>Tier 12 Block  Price</i> attribute [attribute ID <b>0x04C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7893,7 +7893,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 12 Block {{count}} Price</i> attribute [attribute ID <b>0x04C0</b>].
+     * Synchronously get the <i>Tier 12 Block  Price</i> attribute [attribute ID <b>0x04C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7921,7 +7921,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 13 Block {{count}} Price</i> attribute [attribute ID <b>0x04D0</b>].
+     * Get the <i>Tier 13 Block  Price</i> attribute [attribute ID <b>0x04D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7941,7 +7941,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 13 Block {{count}} Price</i> attribute [attribute ID <b>0x04D0</b>].
+     * Synchronously get the <i>Tier 13 Block  Price</i> attribute [attribute ID <b>0x04D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -7969,7 +7969,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 14 Block {{count}} Price</i> attribute [attribute ID <b>0x04E0</b>].
+     * Get the <i>Tier 14 Block  Price</i> attribute [attribute ID <b>0x04E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -7989,7 +7989,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 14 Block {{count}} Price</i> attribute [attribute ID <b>0x04E0</b>].
+     * Synchronously get the <i>Tier 14 Block  Price</i> attribute [attribute ID <b>0x04E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -8017,7 +8017,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tier 15 Block {{count}} Price</i> attribute [attribute ID <b>0x04F0</b>].
+     * Get the <i>Tier 15 Block  Price</i> attribute [attribute ID <b>0x04F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -8037,7 +8037,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tier 15 Block {{count}} Price</i> attribute [attribute ID <b>0x04F0</b>].
+     * Synchronously get the <i>Tier 15 Block  Price</i> attribute [attribute ID <b>0x04F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -8065,7 +8065,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Price Tier {{count}}</i> attribute [attribute ID <b>0x050F</b>].
+     * Get the <i>Price Tier </i> attribute [attribute ID <b>0x050F</b>].
      * <p>
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
@@ -8089,7 +8089,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Price Tier {{count}}</i> attribute [attribute ID <b>0x050F</b>].
+     * Synchronously get the <i>Price Tier </i> attribute [attribute ID <b>0x050F</b>].
      * <p>
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
@@ -9817,24 +9817,24 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Received Tier {{count}} Price Label</i> attribute [attribute ID <b>0x8000</b>].
+     * Set the <i>Received Tier  Price Label</i> attribute [attribute ID <b>0x8000</b>].
      * <p>
      * The attribute is of type {@link ByteArray}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
-     * @param receivedTier{{count}}PriceLabel the {@link ByteArray} attribute value to be set
+     * @param receivedTierPriceLabel the {@link ByteArray} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setReceivedTierPriceLabel(final int arrayOffset, final ByteArray value) {
-        return write(serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset), value);
+    public Future<CommandResult> setReceivedTierPriceLabel(final int arrayOffset, final ByteArray receivedTierPriceLabel) {
+        return write(serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset), receivedTierPriceLabel);
     }
 
     /**
-     * Get the <i>Received Tier {{count}} Price Label</i> attribute [attribute ID <b>0x8000</b>].
+     * Get the <i>Received Tier  Price Label</i> attribute [attribute ID <b>0x8000</b>].
      * <p>
      * The attribute is of type {@link ByteArray}.
      * <p>
@@ -9854,7 +9854,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Received Tier {{count}} Price Label</i> attribute [attribute ID <b>0x8000</b>].
+     * Synchronously get the <i>Received Tier  Price Label</i> attribute [attribute ID <b>0x8000</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -9882,7 +9882,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Received Block {{count}} Threshold</i> attribute [attribute ID <b>0x8100</b>].
+     * Get the <i>Received Block  Threshold</i> attribute [attribute ID <b>0x8100</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -9902,7 +9902,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Received Block {{count}} Threshold</i> attribute [attribute ID <b>0x8100</b>].
+     * Synchronously get the <i>Received Block  Threshold</i> attribute [attribute ID <b>0x8100</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10098,7 +10098,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx No Tier Block {{count}} Price</i> attribute [attribute ID <b>0x8400</b>].
+     * Get the <i>Rx No Tier Block  Price</i> attribute [attribute ID <b>0x8400</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10118,7 +10118,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx No Tier Block {{count}} Price</i> attribute [attribute ID <b>0x8400</b>].
+     * Synchronously get the <i>Rx No Tier Block  Price</i> attribute [attribute ID <b>0x8400</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10146,7 +10146,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 1 Block {{count}} Price</i> attribute [attribute ID <b>0x8410</b>].
+     * Get the <i>Rx Tier 1 Block  Price</i> attribute [attribute ID <b>0x8410</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10166,7 +10166,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 1 Block {{count}} Price</i> attribute [attribute ID <b>0x8410</b>].
+     * Synchronously get the <i>Rx Tier 1 Block  Price</i> attribute [attribute ID <b>0x8410</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10194,7 +10194,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 2 Block {{count}} Price</i> attribute [attribute ID <b>0x8420</b>].
+     * Get the <i>Rx Tier 2 Block  Price</i> attribute [attribute ID <b>0x8420</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10214,7 +10214,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 2 Block {{count}} Price</i> attribute [attribute ID <b>0x8420</b>].
+     * Synchronously get the <i>Rx Tier 2 Block  Price</i> attribute [attribute ID <b>0x8420</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10242,7 +10242,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 3 Block {{count}} Price</i> attribute [attribute ID <b>0x8430</b>].
+     * Get the <i>Rx Tier 3 Block  Price</i> attribute [attribute ID <b>0x8430</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10262,7 +10262,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 3 Block {{count}} Price</i> attribute [attribute ID <b>0x8430</b>].
+     * Synchronously get the <i>Rx Tier 3 Block  Price</i> attribute [attribute ID <b>0x8430</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10290,7 +10290,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 4 Block {{count}} Price</i> attribute [attribute ID <b>0x8440</b>].
+     * Get the <i>Rx Tier 4 Block  Price</i> attribute [attribute ID <b>0x8440</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10310,7 +10310,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 4 Block {{count}} Price</i> attribute [attribute ID <b>0x8440</b>].
+     * Synchronously get the <i>Rx Tier 4 Block  Price</i> attribute [attribute ID <b>0x8440</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10338,7 +10338,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 5 Block {{count}} Price</i> attribute [attribute ID <b>0x8450</b>].
+     * Get the <i>Rx Tier 5 Block  Price</i> attribute [attribute ID <b>0x8450</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10358,7 +10358,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 5 Block {{count}} Price</i> attribute [attribute ID <b>0x8450</b>].
+     * Synchronously get the <i>Rx Tier 5 Block  Price</i> attribute [attribute ID <b>0x8450</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10386,7 +10386,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 6 Block {{count}} Price</i> attribute [attribute ID <b>0x8460</b>].
+     * Get the <i>Rx Tier 6 Block  Price</i> attribute [attribute ID <b>0x8460</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10406,7 +10406,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 6 Block {{count}} Price</i> attribute [attribute ID <b>0x8460</b>].
+     * Synchronously get the <i>Rx Tier 6 Block  Price</i> attribute [attribute ID <b>0x8460</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10434,7 +10434,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 7 Block {{count}} Price</i> attribute [attribute ID <b>0x8470</b>].
+     * Get the <i>Rx Tier 7 Block  Price</i> attribute [attribute ID <b>0x8470</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10454,7 +10454,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 7 Block {{count}} Price</i> attribute [attribute ID <b>0x8470</b>].
+     * Synchronously get the <i>Rx Tier 7 Block  Price</i> attribute [attribute ID <b>0x8470</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10482,7 +10482,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 8 Block {{count}} Price</i> attribute [attribute ID <b>0x8480</b>].
+     * Get the <i>Rx Tier 8 Block  Price</i> attribute [attribute ID <b>0x8480</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10502,7 +10502,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 8 Block {{count}} Price</i> attribute [attribute ID <b>0x8480</b>].
+     * Synchronously get the <i>Rx Tier 8 Block  Price</i> attribute [attribute ID <b>0x8480</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10530,7 +10530,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 9 Block {{count}} Price</i> attribute [attribute ID <b>0x8490</b>].
+     * Get the <i>Rx Tier 9 Block  Price</i> attribute [attribute ID <b>0x8490</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10550,7 +10550,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 9 Block {{count}} Price</i> attribute [attribute ID <b>0x8490</b>].
+     * Synchronously get the <i>Rx Tier 9 Block  Price</i> attribute [attribute ID <b>0x8490</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10578,7 +10578,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 10 Block {{count}} Price</i> attribute [attribute ID <b>0x84A0</b>].
+     * Get the <i>Rx Tier 10 Block  Price</i> attribute [attribute ID <b>0x84A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10598,7 +10598,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 10 Block {{count}} Price</i> attribute [attribute ID <b>0x84A0</b>].
+     * Synchronously get the <i>Rx Tier 10 Block  Price</i> attribute [attribute ID <b>0x84A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10626,7 +10626,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 11 Block {{count}} Price</i> attribute [attribute ID <b>0x84B0</b>].
+     * Get the <i>Rx Tier 11 Block  Price</i> attribute [attribute ID <b>0x84B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10646,7 +10646,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 11 Block {{count}} Price</i> attribute [attribute ID <b>0x84B0</b>].
+     * Synchronously get the <i>Rx Tier 11 Block  Price</i> attribute [attribute ID <b>0x84B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10674,7 +10674,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 12 Block {{count}} Price</i> attribute [attribute ID <b>0x84C0</b>].
+     * Get the <i>Rx Tier 12 Block  Price</i> attribute [attribute ID <b>0x84C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10694,7 +10694,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 12 Block {{count}} Price</i> attribute [attribute ID <b>0x84C0</b>].
+     * Synchronously get the <i>Rx Tier 12 Block  Price</i> attribute [attribute ID <b>0x84C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10722,7 +10722,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 13 Block {{count}} Price</i> attribute [attribute ID <b>0x84D0</b>].
+     * Get the <i>Rx Tier 13 Block  Price</i> attribute [attribute ID <b>0x84D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10742,7 +10742,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 13 Block {{count}} Price</i> attribute [attribute ID <b>0x84D0</b>].
+     * Synchronously get the <i>Rx Tier 13 Block  Price</i> attribute [attribute ID <b>0x84D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10770,7 +10770,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 14 Block {{count}} Price</i> attribute [attribute ID <b>0x84E0</b>].
+     * Get the <i>Rx Tier 14 Block  Price</i> attribute [attribute ID <b>0x84E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10790,7 +10790,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 14 Block {{count}} Price</i> attribute [attribute ID <b>0x84E0</b>].
+     * Synchronously get the <i>Rx Tier 14 Block  Price</i> attribute [attribute ID <b>0x84E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10818,7 +10818,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Rx Tier 15 Block {{count}} Price</i> attribute [attribute ID <b>0x84F0</b>].
+     * Get the <i>Rx Tier 15 Block  Price</i> attribute [attribute ID <b>0x84F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10838,7 +10838,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Rx Tier 15 Block {{count}} Price</i> attribute [attribute ID <b>0x84F0</b>].
+     * Synchronously get the <i>Rx Tier 15 Block  Price</i> attribute [attribute ID <b>0x84F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -10866,7 +10866,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Received Price Tier {{count}}</i> attribute [attribute ID <b>0x850F</b>].
+     * Get the <i>Received Price Tier </i> attribute [attribute ID <b>0x850F</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -10886,7 +10886,7 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Received Price Tier {{count}}</i> attribute [attribute ID <b>0x850F</b>].
+     * Synchronously get the <i>Received Price Tier </i> attribute [attribute ID <b>0x850F</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received

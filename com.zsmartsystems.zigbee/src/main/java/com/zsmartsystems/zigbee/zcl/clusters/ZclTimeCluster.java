@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclTimeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -177,8 +177,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTime(final Calendar value) {
-        return write(serverAttributes.get(ATTR_TIME), value);
+    public Future<CommandResult> setTime(final Calendar time) {
+        return write(serverAttributes.get(ATTR_TIME), time);
     }
 
     /**
@@ -279,8 +279,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTimeStatus(final Integer value) {
-        return write(serverAttributes.get(ATTR_TIMESTATUS), value);
+    public Future<CommandResult> setTimeStatus(final Integer timeStatus) {
+        return write(serverAttributes.get(ATTR_TIMESTATUS), timeStatus);
     }
 
     /**
@@ -344,8 +344,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTimeZone(final Integer value) {
-        return write(serverAttributes.get(ATTR_TIMEZONE), value);
+    public Future<CommandResult> setTimeZone(final Integer timeZone) {
+        return write(serverAttributes.get(ATTR_TIMEZONE), timeZone);
     }
 
     /**
@@ -411,8 +411,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDstStart(final Calendar value) {
-        return write(serverAttributes.get(ATTR_DSTSTART), value);
+    public Future<CommandResult> setDstStart(final Calendar dstStart) {
+        return write(serverAttributes.get(ATTR_DSTSTART), dstStart);
     }
 
     /**
@@ -489,8 +489,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDstEnd(final Calendar value) {
-        return write(serverAttributes.get(ATTR_DSTEND), value);
+    public Future<CommandResult> setDstEnd(final Calendar dstEnd) {
+        return write(serverAttributes.get(ATTR_DSTEND), dstEnd);
     }
 
     /**
@@ -583,8 +583,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDstShift(final Integer value) {
-        return write(serverAttributes.get(ATTR_DSTSHIFT), value);
+    public Future<CommandResult> setDstShift(final Integer dstShift) {
+        return write(serverAttributes.get(ATTR_DSTSHIFT), dstShift);
     }
 
     /**
@@ -817,8 +817,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setValidUntilTime(final Calendar value) {
-        return write(serverAttributes.get(ATTR_VALIDUNTILTIME), value);
+    public Future<CommandResult> setValidUntilTime(final Calendar validUntilTime) {
+        return write(serverAttributes.get(ATTR_VALIDUNTILTIME), validUntilTime);
     }
 
     /**

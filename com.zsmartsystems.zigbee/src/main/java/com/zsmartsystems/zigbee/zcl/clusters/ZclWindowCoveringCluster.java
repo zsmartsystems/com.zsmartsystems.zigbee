@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1295,8 +1295,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setVelocityLift(final Integer value) {
-        return write(serverAttributes.get(ATTR_VELOCITYLIFT), value);
+    public Future<CommandResult> setVelocityLift(final Integer velocityLift) {
+        return write(serverAttributes.get(ATTR_VELOCITYLIFT), velocityLift);
     }
 
     /**
@@ -1362,8 +1362,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setAccelerationTimeLift(final Integer value) {
-        return write(serverAttributes.get(ATTR_ACCELERATIONTIMELIFT), value);
+    public Future<CommandResult> setAccelerationTimeLift(final Integer accelerationTimeLift) {
+        return write(serverAttributes.get(ATTR_ACCELERATIONTIMELIFT), accelerationTimeLift);
     }
 
     /**
@@ -1429,8 +1429,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDecelerationTimeLift(final Integer value) {
-        return write(serverAttributes.get(ATTR_DECELERATIONTIMELIFT), value);
+    public Future<CommandResult> setDecelerationTimeLift(final Integer decelerationTimeLift) {
+        return write(serverAttributes.get(ATTR_DECELERATIONTIMELIFT), decelerationTimeLift);
     }
 
     /**
@@ -1497,8 +1497,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_MODE), value);
+    public Future<CommandResult> setMode(final Integer mode) {
+        return write(serverAttributes.get(ATTR_MODE), mode);
     }
 
     /**
@@ -1568,8 +1568,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setIntermediateSetpointsLift(final ByteArray value) {
-        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT), value);
+    public Future<CommandResult> setIntermediateSetpointsLift(final ByteArray intermediateSetpointsLift) {
+        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT), intermediateSetpointsLift);
     }
 
     /**
@@ -1641,8 +1641,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setIntermediateSetpointsTilt(final ByteArray value) {
-        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT), value);
+    public Future<CommandResult> setIntermediateSetpointsTilt(final ByteArray intermediateSetpointsTilt) {
+        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT), intermediateSetpointsTilt);
     }
 
     /**

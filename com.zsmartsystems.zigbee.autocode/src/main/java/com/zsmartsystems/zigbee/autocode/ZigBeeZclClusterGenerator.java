@@ -300,17 +300,22 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 outputAttributeJavaDoc(out, "Set", attribute, zclDataType);
                 out.println("    @Deprecated");
                 if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
-                    String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
-                    out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name).replace("_", "")
-                            + "(final int arrayOffset, final " + getDataTypeClass(attribute) + " value) {");
-                    name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
+                    String baseName = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
                     out.println(
-                            "        return write(serverAttributes.get(" + getEnum(name) + " + arrayOffset), value);");
+                            "    public Future<CommandResult> set" + stringToUpperCamelCase(baseName).replace("_", "")
+                                    + "(final int arrayOffset, final " + getDataTypeClass(attribute) + " "
+                                    + stringToLowerCamelCase(baseName) + ") {");
+                    String name = attribute.name.replaceAll("\\{\\{count\\}\\}",
+                            Integer.toString(attribute.arrayStart));
+                    out.println(
+                            "        return write(serverAttributes.get(" + getEnum(name) + " + arrayOffset), "
+                                    + stringToLowerCamelCase(baseName) + ");");
                 } else {
                     out.println("    public Future<CommandResult> set"
                             + stringToUpperCamelCase(attribute.name).replace("_", "") + "(final "
-                            + getDataTypeClass(attribute) + " value) {");
-                    out.println("        return write(serverAttributes.get(" + getEnum(attribute.name) + "), value);");
+                            + getDataTypeClass(attribute) + " " + stringToLowerCamelCase(attribute.name) + ") {");
+                    out.println("        return write(serverAttributes.get(" + getEnum(attribute.name) + "), "
+                            + stringToLowerCamelCase(attribute.name) + ");");
                 }
                 out.println("    }");
             }

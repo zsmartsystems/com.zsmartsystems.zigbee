@@ -162,7 +162,7 @@ public class ZclKeyEstablishmentServer implements ZclCommandListener {
      */
     public boolean setCryptoSuite(ZigBeeCryptoSuites requestedCryptoSuite) {
         if (cbkeProvider == null || !cbkeProvider.getAvailableCryptoSuites().contains(requestedCryptoSuite)) {
-            logger.debug("{}: CBKE Key Establishment Server: Failed to set crypto suite to unsupported value {}",
+            logger.debug("{}: CBKE Key Establishment Server: Failed to set crypto suite to unsupported value {} {}",
                     ieeeAddress, requestedCryptoSuite,
                     cbkeProvider == null ? "[]" : cbkeProvider.getAvailableCryptoSuites());
             return false;
