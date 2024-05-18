@@ -375,7 +375,9 @@ public class XBeeFrameHandler {
             logger.debug("TX XBEE Data:{}", builder.toString());
 
             int[] outputBuffer = new int[data.size()];
-            for(int i = 0; i < data.size(); ++i) outputBuffer[i] = data.get(i);
+            for (int i = 0; i < data.size(); ++i) {
+                outputBuffer[i] = data.get(i);
+            }
             serialPort.write(outputBuffer);
 
             // Start the timeout
@@ -584,9 +586,9 @@ public class XBeeFrameHandler {
     }
 
     /**
-     * Sends a XBee request to the NCP without waiting for the response.
+     * Waits for a reponse of the requested class
      *
-     * @param command Request {@link XBeeCommand} to send
+     * @param eventClass the class to wait for
      * @return response {@link Future} {@link XBeeCommand}
      */
     private Future<XBeeEvent> waitEventAsync(final Class<?> eventClass) {

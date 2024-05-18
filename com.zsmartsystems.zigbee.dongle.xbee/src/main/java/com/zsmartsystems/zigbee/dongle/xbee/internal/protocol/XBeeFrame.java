@@ -133,15 +133,6 @@ public class XBeeFrame {
     }
 
     /**
-     * Serializes a {@link ExtendedPanId}
-     *
-     * @param address the {@link ExtendedPanId}
-     */
-    // protected void serializeExtendedPanId(ExtendedPanId epanId) {
-    // serializeUpperCaseString(epanId.toString());
-    // }
-
-    /**
      * Deserializes a {@link ExtendedPanId}
      *
      * @return the {@link ExtendedPanId}
