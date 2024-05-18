@@ -280,7 +280,7 @@ public class ZigBeeOtaFile {
 
             // The length dictates the length of the rest of the data within the sub-element in bytes. It does not
             // include the size of the Tag ID or the Length Fields.
-            long tagLength = readUnsigned32();
+            int tagLength = readUnsigned32();
             logger.debug("Reading OTA image tag {}[{}] ({} bytes long)", tagType, String.format("%04X", tagId),
                     tagLength);
 
