@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclPowerConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -381,8 +381,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMainsAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_MAINSALARMMASK), value);
+    public Future<CommandResult> setMainsAlarmMask(final Integer mainsAlarmMask) {
+        return write(serverAttributes.get(ATTR_MAINSALARMMASK), mainsAlarmMask);
     }
 
     /**
@@ -459,8 +459,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMainsVoltageMinThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD), value);
+    public Future<CommandResult> setMainsVoltageMinThreshold(final Integer mainsVoltageMinThreshold) {
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD), mainsVoltageMinThreshold);
     }
 
     /**
@@ -559,8 +559,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMainsVoltageMaxThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD), value);
+    public Future<CommandResult> setMainsVoltageMaxThreshold(final Integer mainsVoltageMaxThreshold) {
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD), mainsVoltageMaxThreshold);
     }
 
     /**
@@ -652,8 +652,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setMainsVoltageDwellTripPoint(final Integer value) {
-        return write(serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT), value);
+    public Future<CommandResult> setMainsVoltageDwellTripPoint(final Integer mainsVoltageDwellTripPoint) {
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT), mainsVoltageDwellTripPoint);
     }
 
     /**
@@ -819,8 +819,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryManufacturer(final String value) {
-        return write(serverAttributes.get(ATTR_BATTERYMANUFACTURER), value);
+    public Future<CommandResult> setBatteryManufacturer(final String batteryManufacturer) {
+        return write(serverAttributes.get(ATTR_BATTERYMANUFACTURER), batteryManufacturer);
     }
 
     /**
@@ -886,8 +886,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatterySize(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYSIZE), value);
+    public Future<CommandResult> setBatterySize(final Integer batterySize) {
+        return write(serverAttributes.get(ATTR_BATTERYSIZE), batterySize);
     }
 
     /**
@@ -953,8 +953,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryAHrRating(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYAHRRATING), value);
+    public Future<CommandResult> setBatteryAHrRating(final Integer batteryAHrRating) {
+        return write(serverAttributes.get(ATTR_BATTERYAHRRATING), batteryAHrRating);
     }
 
     /**
@@ -1020,8 +1020,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryQuantity(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYQUANTITY), value);
+    public Future<CommandResult> setBatteryQuantity(final Integer batteryQuantity) {
+        return write(serverAttributes.get(ATTR_BATTERYQUANTITY), batteryQuantity);
     }
 
     /**
@@ -1087,8 +1087,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryRatedVoltage(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE), value);
+    public Future<CommandResult> setBatteryRatedVoltage(final Integer batteryRatedVoltage) {
+        return write(serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE), batteryRatedVoltage);
     }
 
     /**
@@ -1154,8 +1154,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYALARMMASK), value);
+    public Future<CommandResult> setBatteryAlarmMask(final Integer batteryAlarmMask) {
+        return write(serverAttributes.get(ATTR_BATTERYALARMMASK), batteryAlarmMask);
     }
 
     /**
@@ -1229,8 +1229,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryVoltageMinThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD), value);
+    public Future<CommandResult> setBatteryVoltageMinThreshold(final Integer batteryVoltageMinThreshold) {
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD), batteryVoltageMinThreshold);
     }
 
     /**
@@ -1312,8 +1312,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryVoltageThreshold1(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1), value);
+    public Future<CommandResult> setBatteryVoltageThreshold1(final Integer batteryVoltageThreshold1) {
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1), batteryVoltageThreshold1);
     }
 
     /**
@@ -1379,8 +1379,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryVoltageThreshold2(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2), value);
+    public Future<CommandResult> setBatteryVoltageThreshold2(final Integer batteryVoltageThreshold2) {
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2), batteryVoltageThreshold2);
     }
 
     /**
@@ -1446,8 +1446,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryVoltageThreshold3(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3), value);
+    public Future<CommandResult> setBatteryVoltageThreshold3(final Integer batteryVoltageThreshold3) {
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3), batteryVoltageThreshold3);
     }
 
     /**
@@ -1513,8 +1513,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryPercentageMinThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD), value);
+    public Future<CommandResult> setBatteryPercentageMinThreshold(final Integer batteryPercentageMinThreshold) {
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD), batteryPercentageMinThreshold);
     }
 
     /**
@@ -1580,8 +1580,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryPercentageThreshold1(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1), value);
+    public Future<CommandResult> setBatteryPercentageThreshold1(final Integer batteryPercentageThreshold1) {
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1), batteryPercentageThreshold1);
     }
 
     /**
@@ -1647,8 +1647,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryPercentageThreshold2(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2), value);
+    public Future<CommandResult> setBatteryPercentageThreshold2(final Integer batteryPercentageThreshold2) {
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2), batteryPercentageThreshold2);
     }
 
     /**
@@ -1714,8 +1714,8 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setBatteryPercentageThreshold3(final Integer value) {
-        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3), value);
+    public Future<CommandResult> setBatteryPercentageThreshold3(final Integer batteryPercentageThreshold3) {
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3), batteryPercentageThreshold3);
     }
 
     /**

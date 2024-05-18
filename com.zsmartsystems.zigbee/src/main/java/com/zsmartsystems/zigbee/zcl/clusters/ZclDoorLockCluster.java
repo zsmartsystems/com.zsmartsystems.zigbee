@@ -101,7 +101,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T05:41:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -791,8 +791,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDoorOpenEvents(final Integer value) {
-        return write(serverAttributes.get(ATTR_DOOROPENEVENTS), value);
+    public Future<CommandResult> setDoorOpenEvents(final Integer doorOpenEvents) {
+        return write(serverAttributes.get(ATTR_DOOROPENEVENTS), doorOpenEvents);
     }
 
     /**
@@ -858,8 +858,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDoorClosedEvents(final Integer value) {
-        return write(serverAttributes.get(ATTR_DOORCLOSEDEVENTS), value);
+    public Future<CommandResult> setDoorClosedEvents(final Integer doorClosedEvents) {
+        return write(serverAttributes.get(ATTR_DOORCLOSEDEVENTS), doorClosedEvents);
     }
 
     /**
@@ -925,8 +925,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setOpenPeriod(final Integer value) {
-        return write(serverAttributes.get(ATTR_OPENPERIOD), value);
+    public Future<CommandResult> setOpenPeriod(final Integer openPeriod) {
+        return write(serverAttributes.get(ATTR_OPENPERIOD), openPeriod);
     }
 
     /**
@@ -1754,8 +1754,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setEnableLogging(final Boolean value) {
-        return write(serverAttributes.get(ATTR_ENABLELOGGING), value);
+    public Future<CommandResult> setEnableLogging(final Boolean enableLogging) {
+        return write(serverAttributes.get(ATTR_ENABLELOGGING), enableLogging);
     }
 
     /**
@@ -1829,8 +1829,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLanguage(final String value) {
-        return write(serverAttributes.get(ATTR_LANGUAGE), value);
+    public Future<CommandResult> setLanguage(final String language) {
+        return write(serverAttributes.get(ATTR_LANGUAGE), language);
     }
 
     /**
@@ -1899,8 +1899,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setLedSettings(final Integer value) {
-        return write(serverAttributes.get(ATTR_LEDSETTINGS), value);
+    public Future<CommandResult> setLedSettings(final Integer ledSettings) {
+        return write(serverAttributes.get(ATTR_LEDSETTINGS), ledSettings);
     }
 
     /**
@@ -1965,8 +1965,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setAutoRelockTime(final Integer value) {
-        return write(serverAttributes.get(ATTR_AUTORELOCKTIME), value);
+    public Future<CommandResult> setAutoRelockTime(final Integer autoRelockTime) {
+        return write(serverAttributes.get(ATTR_AUTORELOCKTIME), autoRelockTime);
     }
 
     /**
@@ -2033,8 +2033,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setSoundVolume(final Integer value) {
-        return write(serverAttributes.get(ATTR_SOUNDVOLUME), value);
+    public Future<CommandResult> setSoundVolume(final Integer soundVolume) {
+        return write(serverAttributes.get(ATTR_SOUNDVOLUME), soundVolume);
     }
 
     /**
@@ -2097,8 +2097,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setOperatingMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_OPERATINGMODE), value);
+    public Future<CommandResult> setOperatingMode(final Integer operatingMode) {
+        return write(serverAttributes.get(ATTR_OPERATINGMODE), operatingMode);
     }
 
     /**
@@ -2326,8 +2326,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setEnableLocalProgramming(final Boolean value) {
-        return write(serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING), value);
+    public Future<CommandResult> setEnableLocalProgramming(final Boolean enableLocalProgramming) {
+        return write(serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING), enableLocalProgramming);
     }
 
     /**
@@ -2400,8 +2400,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setEnableOneTouchLocking(final Boolean value) {
-        return write(serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING), value);
+    public Future<CommandResult> setEnableOneTouchLocking(final Boolean enableOneTouchLocking) {
+        return write(serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING), enableOneTouchLocking);
     }
 
     /**
@@ -2464,8 +2464,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setEnableInsideStatusLed(final Boolean value) {
-        return write(serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED), value);
+    public Future<CommandResult> setEnableInsideStatusLed(final Boolean enableInsideStatusLed) {
+        return write(serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED), enableInsideStatusLed);
     }
 
     /**
@@ -2529,8 +2529,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setEnablePrivacyModeButton(final Boolean value) {
-        return write(serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON), value);
+    public Future<CommandResult> setEnablePrivacyModeButton(final Boolean enablePrivacyModeButton) {
+        return write(serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON), enablePrivacyModeButton);
     }
 
     /**
@@ -2597,8 +2597,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setWrongCodeEntryLimit(final Integer value) {
-        return write(serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT), value);
+    public Future<CommandResult> setWrongCodeEntryLimit(final Integer wrongCodeEntryLimit) {
+        return write(serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT), wrongCodeEntryLimit);
     }
 
     /**
@@ -2667,8 +2667,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUserCodeTemporaryDisableTime(final Integer value) {
-        return write(serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME), value);
+    public Future<CommandResult> setUserCodeTemporaryDisableTime(final Integer userCodeTemporaryDisableTime) {
+        return write(serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME), userCodeTemporaryDisableTime);
     }
 
     /**
@@ -2743,8 +2743,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setSendPinOverTheAir(final Boolean value) {
-        return write(serverAttributes.get(ATTR_SENDPINOVERTHEAIR), value);
+    public Future<CommandResult> setSendPinOverTheAir(final Boolean sendPinOverTheAir) {
+        return write(serverAttributes.get(ATTR_SENDPINOVERTHEAIR), sendPinOverTheAir);
     }
 
     /**
@@ -2825,8 +2825,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRequirePinForRfOperation(final Boolean value) {
-        return write(serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION), value);
+    public Future<CommandResult> setRequirePinForRfOperation(final Boolean requirePinForRfOperation) {
+        return write(serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION), requirePinForRfOperation);
     }
 
     /**
@@ -2982,8 +2982,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_ALARMMASK), value);
+    public Future<CommandResult> setAlarmMask(final Integer alarmMask) {
+        return write(serverAttributes.get(ATTR_ALARMMASK), alarmMask);
     }
 
     /**
@@ -3053,8 +3053,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setKeypadOperationEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK), value);
+    public Future<CommandResult> setKeypadOperationEventMask(final Integer keypadOperationEventMask) {
+        return write(serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK), keypadOperationEventMask);
     }
 
     /**
@@ -3120,8 +3120,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRfOperationEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_RFOPERATIONEVENTMASK), value);
+    public Future<CommandResult> setRfOperationEventMask(final Integer rfOperationEventMask) {
+        return write(serverAttributes.get(ATTR_RFOPERATIONEVENTMASK), rfOperationEventMask);
     }
 
     /**
@@ -3187,8 +3187,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setManualOperationEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK), value);
+    public Future<CommandResult> setManualOperationEventMask(final Integer manualOperationEventMask) {
+        return write(serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK), manualOperationEventMask);
     }
 
     /**
@@ -3254,8 +3254,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRfidOperationEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK), value);
+    public Future<CommandResult> setRfidOperationEventMask(final Integer rfidOperationEventMask) {
+        return write(serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK), rfidOperationEventMask);
     }
 
     /**
@@ -3321,8 +3321,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setKeypadProgrammingEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK), value);
+    public Future<CommandResult> setKeypadProgrammingEventMask(final Integer keypadProgrammingEventMask) {
+        return write(serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK), keypadProgrammingEventMask);
     }
 
     /**
@@ -3388,8 +3388,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRfProgrammingEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK), value);
+    public Future<CommandResult> setRfProgrammingEventMask(final Integer rfProgrammingEventMask) {
+        return write(serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK), rfProgrammingEventMask);
     }
 
     /**
@@ -3455,8 +3455,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setRfidProgrammingEventMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK), value);
+    public Future<CommandResult> setRfidProgrammingEventMask(final Integer rfidProgrammingEventMask) {
+        return write(serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK), rfidProgrammingEventMask);
     }
 
     /**

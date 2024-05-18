@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclBinaryInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -219,8 +219,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setActiveText(final String value) {
-        return write(serverAttributes.get(ATTR_ACTIVETEXT), value);
+    public Future<CommandResult> setActiveText(final String activeText) {
+        return write(serverAttributes.get(ATTR_ACTIVETEXT), activeText);
     }
 
     /**
@@ -300,8 +300,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDescription(final String value) {
-        return write(serverAttributes.get(ATTR_DESCRIPTION), value);
+    public Future<CommandResult> setDescription(final String description) {
+        return write(serverAttributes.get(ATTR_DESCRIPTION), description);
     }
 
     /**
@@ -377,8 +377,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setInactiveText(final String value) {
-        return write(serverAttributes.get(ATTR_INACTIVETEXT), value);
+    public Future<CommandResult> setInactiveText(final String inactiveText) {
+        return write(serverAttributes.get(ATTR_INACTIVETEXT), inactiveText);
     }
 
     /**
@@ -462,8 +462,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setOutOfService(final Boolean value) {
-        return write(serverAttributes.get(ATTR_OUTOFSERVICE), value);
+    public Future<CommandResult> setOutOfService(final Boolean outOfService) {
+        return write(serverAttributes.get(ATTR_OUTOFSERVICE), outOfService);
     }
 
     /**
@@ -640,8 +640,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPresentValue(final Boolean value) {
-        return write(serverAttributes.get(ATTR_PRESENTVALUE), value);
+    public Future<CommandResult> setPresentValue(final Boolean presentValue) {
+        return write(serverAttributes.get(ATTR_PRESENTVALUE), presentValue);
     }
 
     /**
@@ -748,8 +748,8 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setReliability(final Integer value) {
-        return write(serverAttributes.get(ATTR_RELIABILITY), value);
+    public Future<CommandResult> setReliability(final Integer reliability) {
+        return write(serverAttributes.get(ATTR_RELIABILITY), reliability);
     }
 
     /**

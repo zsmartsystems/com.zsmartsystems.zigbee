@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -555,8 +555,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCoordinate1(final Integer value) {
-        return write(serverAttributes.get(ATTR_COORDINATE1), value);
+    public Future<CommandResult> setCoordinate1(final Integer coordinate1) {
+        return write(serverAttributes.get(ATTR_COORDINATE1), coordinate1);
     }
 
     /**
@@ -667,8 +667,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCoordinate2(final Integer value) {
-        return write(serverAttributes.get(ATTR_COORDINATE2), value);
+    public Future<CommandResult> setCoordinate2(final Integer coordinate2) {
+        return write(serverAttributes.get(ATTR_COORDINATE2), coordinate2);
     }
 
     /**
@@ -779,8 +779,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCoordinate3(final Integer value) {
-        return write(serverAttributes.get(ATTR_COORDINATE3), value);
+    public Future<CommandResult> setCoordinate3(final Integer coordinate3) {
+        return write(serverAttributes.get(ATTR_COORDINATE3), coordinate3);
     }
 
     /**
@@ -862,8 +862,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPower(final Integer value) {
-        return write(serverAttributes.get(ATTR_POWER), value);
+    public Future<CommandResult> setPower(final Integer power) {
+        return write(serverAttributes.get(ATTR_POWER), power);
     }
 
     /**
@@ -967,8 +967,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPathLossExponent(final Integer value) {
-        return write(serverAttributes.get(ATTR_PATHLOSSEXPONENT), value);
+    public Future<CommandResult> setPathLossExponent(final Integer pathLossExponent) {
+        return write(serverAttributes.get(ATTR_PATHLOSSEXPONENT), pathLossExponent);
     }
 
     /**
@@ -1073,8 +1073,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setReportingPeriod(final Integer value) {
-        return write(serverAttributes.get(ATTR_REPORTINGPERIOD), value);
+    public Future<CommandResult> setReportingPeriod(final Integer reportingPeriod) {
+        return write(serverAttributes.get(ATTR_REPORTINGPERIOD), reportingPeriod);
     }
 
     /**
@@ -1148,8 +1148,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCalculationPeriod(final Integer value) {
-        return write(serverAttributes.get(ATTR_CALCULATIONPERIOD), value);
+    public Future<CommandResult> setCalculationPeriod(final Integer calculationPeriod) {
+        return write(serverAttributes.get(ATTR_CALCULATIONPERIOD), calculationPeriod);
     }
 
     /**
@@ -1220,8 +1220,8 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setNumberRssiMeasurements(final Integer value) {
-        return write(serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS), value);
+    public Future<CommandResult> setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
+        return write(serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS), numberRssiMeasurements);
     }
 
     /**

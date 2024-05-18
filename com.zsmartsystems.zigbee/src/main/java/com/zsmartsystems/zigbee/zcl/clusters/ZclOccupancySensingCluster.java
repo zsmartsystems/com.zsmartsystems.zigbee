@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-07-10T16:03:50Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -360,8 +360,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPirOccupiedToUnoccupiedDelay(final Integer value) {
-        return write(serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY), value);
+    public Future<CommandResult> setPirOccupiedToUnoccupiedDelay(final Integer pirOccupiedToUnoccupiedDelay) {
+        return write(serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY), pirOccupiedToUnoccupiedDelay);
     }
 
     /**
@@ -434,8 +434,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPirUnoccupiedToOccupiedDelay(final Integer value) {
-        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY), value);
+    public Future<CommandResult> setPirUnoccupiedToOccupiedDelay(final Integer pirUnoccupiedToOccupiedDelay) {
+        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY), pirUnoccupiedToOccupiedDelay);
     }
 
     /**
@@ -506,8 +506,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setPirUnoccupiedToOccupiedThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
+    public Future<CommandResult> setPirUnoccupiedToOccupiedThreshold(final Integer pirUnoccupiedToOccupiedThreshold) {
+        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD), pirUnoccupiedToOccupiedThreshold);
     }
 
     /**
@@ -582,8 +582,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUltraSonicOccupiedToUnoccupiedDelay(final Integer value) {
-        return write(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), value);
+    public Future<CommandResult> setUltraSonicOccupiedToUnoccupiedDelay(final Integer ultraSonicOccupiedToUnoccupiedDelay) {
+        return write(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), ultraSonicOccupiedToUnoccupiedDelay);
     }
 
     /**
@@ -656,8 +656,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUltraSonicUnoccupiedToOccupiedDelay(final Integer value) {
-        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), value);
+    public Future<CommandResult> setUltraSonicUnoccupiedToOccupiedDelay(final Integer ultraSonicUnoccupiedToOccupiedDelay) {
+        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), ultraSonicUnoccupiedToOccupiedDelay);
     }
 
     /**
@@ -728,8 +728,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUltrasonicUnoccupiedToOccupiedThreshold(final Integer value) {
-        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
+    public Future<CommandResult> setUltrasonicUnoccupiedToOccupiedThreshold(final Integer ultrasonicUnoccupiedToOccupiedThreshold) {
+        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD), ultrasonicUnoccupiedToOccupiedThreshold);
     }
 
     /**

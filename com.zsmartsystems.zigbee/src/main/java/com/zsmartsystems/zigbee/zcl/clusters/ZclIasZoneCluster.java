@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -402,8 +402,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setIasCieAddress(final IeeeAddress value) {
-        return write(serverAttributes.get(ATTR_IASCIEADDRESS), value);
+    public Future<CommandResult> setIasCieAddress(final IeeeAddress iasCieAddress) {
+        return write(serverAttributes.get(ATTR_IASCIEADDRESS), iasCieAddress);
     }
 
     /**
@@ -512,8 +512,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setZoneId(final Integer value) {
-        return write(serverAttributes.get(ATTR_ZONEID), value);
+    public Future<CommandResult> setZoneId(final Integer zoneId) {
+        return write(serverAttributes.get(ATTR_ZONEID), zoneId);
     }
 
     /**
@@ -687,8 +687,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentZoneSensitivityLevel(final Integer value) {
-        return write(serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL), value);
+    public Future<CommandResult> setCurrentZoneSensitivityLevel(final Integer currentZoneSensitivityLevel) {
+        return write(serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL), currentZoneSensitivityLevel);
     }
 
     /**

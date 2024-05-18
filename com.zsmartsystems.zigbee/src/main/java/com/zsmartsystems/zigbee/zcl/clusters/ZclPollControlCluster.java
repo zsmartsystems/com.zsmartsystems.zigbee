@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -235,8 +235,8 @@ public class ZclPollControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCheckinInterval(final Integer value) {
-        return write(serverAttributes.get(ATTR_CHECKININTERVAL), value);
+    public Future<CommandResult> setCheckinInterval(final Integer checkinInterval) {
+        return write(serverAttributes.get(ATTR_CHECKININTERVAL), checkinInterval);
     }
 
     /**

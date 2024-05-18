@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -344,8 +344,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setOnTime(final Integer value) {
-        return write(serverAttributes.get(ATTR_ONTIME), value);
+    public Future<CommandResult> setOnTime(final Integer onTime) {
+        return write(serverAttributes.get(ATTR_ONTIME), onTime);
     }
 
     /**
@@ -441,8 +441,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setOffWaitTime(final Integer value) {
-        return write(serverAttributes.get(ATTR_OFFWAITTIME), value);
+    public Future<CommandResult> setOffWaitTime(final Integer offWaitTime) {
+        return write(serverAttributes.get(ATTR_OFFWAITTIME), offWaitTime);
     }
 
     /**
@@ -535,8 +535,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setStartUpOnOff(final Integer value) {
-        return write(serverAttributes.get(ATTR_STARTUPONOFF), value);
+    public Future<CommandResult> setStartUpOnOff(final Integer startUpOnOff) {
+        return write(serverAttributes.get(ATTR_STARTUPONOFF), startUpOnOff);
     }
 
     /**
