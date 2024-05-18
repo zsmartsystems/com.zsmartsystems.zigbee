@@ -145,7 +145,7 @@
 		<name>Physical Environment</name>
 		<value code="0x00" name="Unspecified">
         </value>
-		<value code="0x01" name="Atrium">
+		<value code="0x01" name="Atrium Deprecated">
         </value>
 		<value code="0x02" name="Bar">
         </value>
@@ -354,6 +354,10 @@
 		<value code="0x6E" name="Medical Imaging Room">
         </value>
 		<value code="0x6F" name="Decontamination Room">
+        </value>
+		<value code="0x70" name="Atrium">
+        </value>
+		<value code="0x71" name="Mirror">
         </value>
 		<value code="0xFF" name="Unknown">
         </value>
