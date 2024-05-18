@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclFanControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -91,8 +91,8 @@ public class ZclFanControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setFanMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_FANMODE), value);
+    public Future<CommandResult> setFanMode(final Integer fanMode) {
+        return write(serverAttributes.get(ATTR_FANMODE), fanMode);
     }
 
     /**
@@ -156,8 +156,8 @@ public class ZclFanControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setFanModeSequence(final Integer value) {
-        return write(serverAttributes.get(ATTR_FANMODESEQUENCE), value);
+    public Future<CommandResult> setFanModeSequence(final Integer fanModeSequence) {
+        return write(serverAttributes.get(ATTR_FANMODESEQUENCE), fanModeSequence);
     }
 
     /**

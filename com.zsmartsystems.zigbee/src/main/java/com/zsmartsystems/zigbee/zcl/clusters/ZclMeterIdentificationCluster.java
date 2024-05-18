@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclMeterIdentificationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -343,8 +343,8 @@ public class ZclMeterIdentificationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setCustomerName(final String value) {
-        return write(serverAttributes.get(ATTR_CUSTOMERNAME), value);
+    public Future<CommandResult> setCustomerName(final String customerName) {
+        return write(serverAttributes.get(ATTR_CUSTOMERNAME), customerName);
     }
 
     /**

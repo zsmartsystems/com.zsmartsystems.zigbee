@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -106,8 +106,8 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTemperatureDisplayMode(final Integer value) {
-        return write(serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE), value);
+    public Future<CommandResult> setTemperatureDisplayMode(final Integer temperatureDisplayMode) {
+        return write(serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE), temperatureDisplayMode);
     }
 
     /**
@@ -173,8 +173,8 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setKeypadLockout(final Integer value) {
-        return write(serverAttributes.get(ATTR_KEYPADLOCKOUT), value);
+    public Future<CommandResult> setKeypadLockout(final Integer keypadLockout) {
+        return write(serverAttributes.get(ATTR_KEYPADLOCKOUT), keypadLockout);
     }
 
     /**
@@ -247,8 +247,8 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setScheduleProgrammingVisibility(final Integer value) {
-        return write(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY), value);
+    public Future<CommandResult> setScheduleProgrammingVisibility(final Integer scheduleProgrammingVisibility) {
+        return write(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY), scheduleProgrammingVisibility);
     }
 
     /**

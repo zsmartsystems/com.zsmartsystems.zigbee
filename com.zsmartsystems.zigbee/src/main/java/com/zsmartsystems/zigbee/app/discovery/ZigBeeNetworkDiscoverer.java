@@ -365,7 +365,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      * @throws InterruptedException
      */
     private boolean getAssociatedNodes(final int networkAddress) throws InterruptedException, ExecutionException {
-        Integer startIndex = 0;
+        int startIndex = 0;
         int totalAssociatedDevices = 0;
         Set<Integer> associatedDevices = new HashSet<>();
 
@@ -373,7 +373,8 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(networkAddress, 1, startIndex);
             ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-            final Future<CommandResult> resultFuture = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest);
+            final Future<CommandResult> resultFuture = networkManager.sendTransaction(ieeeAddressRequest,
+                    ieeeAddressRequest);
             if (resultFuture == null) {
                 return false;
             }
@@ -386,7 +387,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             logger.debug("NWK Discovery for {} IeeeAddressRequest returned {}", String.format("%04X", networkAddress),
                     ieeeAddressResponse);
             if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS
-                    && startIndex.equals(ieeeAddressResponse.getStartIndex())) {
+                    && startIndex == ieeeAddressResponse.getStartIndex()) {
                 associatedDevices.addAll(ieeeAddressResponse.getNwkAddrAssocDevList());
 
                 startIndex += ieeeAddressResponse.getNwkAddrAssocDevList().size();

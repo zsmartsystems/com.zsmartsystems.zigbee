@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:58:44Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -5502,7 +5502,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
+     * Get the <i>Current Tier  Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
      * <p>
      * Attributes CurrentTier1SummationDelivered through
      * CurrentTierNSummationDelivered represent the most recent summed value of Energy,
@@ -5530,7 +5530,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
+     * Synchronously get the <i>Current Tier  Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
      * <p>
      * Attributes CurrentTier1SummationDelivered through
      * CurrentTierNSummationDelivered represent the most recent summed value of Energy,
@@ -5566,7 +5566,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
+     * Set reporting for the <i>Current Tier  Summation Delivered</i> attribute [attribute ID <b>0x0100</b>].
      * <p>
      * Attributes CurrentTier1SummationDelivered through
      * CurrentTierNSummationDelivered represent the most recent summed value of Energy,
@@ -5593,7 +5593,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier {{count}} Summation Received</i> attribute [attribute ID <b>0x0101</b>].
+     * Get the <i>Current Tier  Summation Received</i> attribute [attribute ID <b>0x0101</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -5613,7 +5613,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier {{count}} Summation Received</i> attribute [attribute ID <b>0x0101</b>].
+     * Synchronously get the <i>Current Tier  Summation Received</i> attribute [attribute ID <b>0x0101</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -5641,7 +5641,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier {{count}} Summation Received</i> attribute [attribute ID <b>0x0101</b>].
+     * Set reporting for the <i>Current Tier  Summation Received</i> attribute [attribute ID <b>0x0101</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -9549,7 +9549,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Day {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
+     * Get the <i>Previous Day  Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
      * <p>
      * PreviousDayNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous 24 hour period starting at the
@@ -9574,7 +9574,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
+     * Synchronously get the <i>Previous Day  Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
      * <p>
      * PreviousDayNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous 24 hour period starting at the
@@ -9607,7 +9607,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
+     * Set reporting for the <i>Previous Day  Consumption Delivered</i> attribute [attribute ID <b>0x0420</b>].
      * <p>
      * PreviousDayNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous 24 hour period starting at the
@@ -9631,7 +9631,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Day {{count}} Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
+     * Get the <i>Previous Day  Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
      * <p>
      * PreviousDayNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous 24 hour period starting at the
@@ -9656,7 +9656,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
+     * Synchronously get the <i>Previous Day  Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
      * <p>
      * PreviousDayNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous 24 hour period starting at the
@@ -9689,7 +9689,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
+     * Set reporting for the <i>Previous Day  Consumption Received</i> attribute [attribute ID <b>0x0421</b>].
      * <p>
      * PreviousDayNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous 24 hour period starting at the
@@ -9869,7 +9869,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
+     * Get the <i>Previous Week  Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
      * <p>
      * PreviousWeekNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous week period starting at the
@@ -9894,7 +9894,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
+     * Synchronously get the <i>Previous Week  Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
      * <p>
      * PreviousWeekNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous week period starting at the
@@ -9927,7 +9927,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
+     * Set reporting for the <i>Previous Week  Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
      * <p>
      * PreviousWeekNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous week period starting at the
@@ -9951,7 +9951,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Week {{count}} Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
+     * Get the <i>Previous Week  Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
      * <p>
      * PreviousWeekNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous week period starting at the
@@ -9976,7 +9976,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
+     * Synchronously get the <i>Previous Week  Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
      * <p>
      * PreviousWeekNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous week period starting at the
@@ -10009,7 +10009,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
+     * Set reporting for the <i>Previous Week  Consumption Received</i> attribute [attribute ID <b>0x0433</b>].
      * <p>
      * PreviousWeekNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous week period starting at the
@@ -10189,7 +10189,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
+     * Get the <i>Previous Month  Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
      * <p>
      * PreviousMonthNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous Month period starting at the
@@ -10214,7 +10214,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
+     * Synchronously get the <i>Previous Month  Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
      * <p>
      * PreviousMonthNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous Month period starting at the
@@ -10247,7 +10247,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
+     * Set reporting for the <i>Previous Month  Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
      * <p>
      * PreviousMonthNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous Month period starting at the
@@ -10271,7 +10271,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
+     * Get the <i>Previous Month  Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
      * <p>
      * PreviousMonthNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous month period starting at the
@@ -10296,7 +10296,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
+     * Synchronously get the <i>Previous Month  Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
      * <p>
      * PreviousMonthNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous month period starting at the
@@ -10329,7 +10329,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
+     * Set reporting for the <i>Previous Month  Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
      * <p>
      * PreviousMonthNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous month period starting at the
@@ -11222,7 +11222,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
+     * Get the <i>Current No Tier Block  Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11242,7 +11242,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
+     * Synchronously get the <i>Current No Tier Block  Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11270,7 +11270,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
+     * Set reporting for the <i>Current No Tier Block  Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11289,7 +11289,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
+     * Get the <i>Current Tier 1 Block  Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11309,7 +11309,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
+     * Synchronously get the <i>Current Tier 1 Block  Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11337,7 +11337,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
+     * Set reporting for the <i>Current Tier 1 Block  Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11356,7 +11356,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
+     * Get the <i>Current Tier 2 Block  Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11376,7 +11376,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
+     * Synchronously get the <i>Current Tier 2 Block  Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11404,7 +11404,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
+     * Set reporting for the <i>Current Tier 2 Block  Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11423,7 +11423,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
+     * Get the <i>Current Tier 3 Block  Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11443,7 +11443,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
+     * Synchronously get the <i>Current Tier 3 Block  Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11471,7 +11471,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
+     * Set reporting for the <i>Current Tier 3 Block  Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11490,7 +11490,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
+     * Get the <i>Current Tier 4 Block  Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11510,7 +11510,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
+     * Synchronously get the <i>Current Tier 4 Block  Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11538,7 +11538,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
+     * Set reporting for the <i>Current Tier 4 Block  Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11557,7 +11557,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
+     * Get the <i>Current Tier 5 Block  Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11577,7 +11577,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
+     * Synchronously get the <i>Current Tier 5 Block  Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11605,7 +11605,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
+     * Set reporting for the <i>Current Tier 5 Block  Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11624,7 +11624,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
+     * Get the <i>Current Tier 6 Block  Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11644,7 +11644,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
+     * Synchronously get the <i>Current Tier 6 Block  Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11672,7 +11672,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
+     * Set reporting for the <i>Current Tier 6 Block  Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11691,7 +11691,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
+     * Get the <i>Current Tier 7 Block  Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11711,7 +11711,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
+     * Synchronously get the <i>Current Tier 7 Block  Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11739,7 +11739,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
+     * Set reporting for the <i>Current Tier 7 Block  Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11758,7 +11758,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
+     * Get the <i>Current Tier 8 Block  Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11778,7 +11778,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
+     * Synchronously get the <i>Current Tier 8 Block  Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11806,7 +11806,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
+     * Set reporting for the <i>Current Tier 8 Block  Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11825,7 +11825,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
+     * Get the <i>Current Tier 9 Block  Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11845,7 +11845,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
+     * Synchronously get the <i>Current Tier 9 Block  Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11873,7 +11873,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
+     * Set reporting for the <i>Current Tier 9 Block  Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11892,7 +11892,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
+     * Get the <i>Current Tier 10 Block  Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11912,7 +11912,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
+     * Synchronously get the <i>Current Tier 10 Block  Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11940,7 +11940,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
+     * Set reporting for the <i>Current Tier 10 Block  Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11959,7 +11959,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
+     * Get the <i>Current Tier 11 Block  Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11979,7 +11979,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
+     * Synchronously get the <i>Current Tier 11 Block  Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12007,7 +12007,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
+     * Set reporting for the <i>Current Tier 11 Block  Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12026,7 +12026,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
+     * Get the <i>Current Tier 12 Block  Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12046,7 +12046,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
+     * Synchronously get the <i>Current Tier 12 Block  Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12074,7 +12074,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
+     * Set reporting for the <i>Current Tier 12 Block  Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12093,7 +12093,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
+     * Get the <i>Current Tier 13 Block  Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12113,7 +12113,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
+     * Synchronously get the <i>Current Tier 13 Block  Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12141,7 +12141,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
+     * Set reporting for the <i>Current Tier 13 Block  Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12160,7 +12160,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
+     * Get the <i>Current Tier 14 Block  Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12180,7 +12180,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
+     * Synchronously get the <i>Current Tier 14 Block  Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12208,7 +12208,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
+     * Set reporting for the <i>Current Tier 14 Block  Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12227,7 +12227,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
+     * Get the <i>Current Tier 15 Block  Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12247,7 +12247,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
+     * Synchronously get the <i>Current Tier 15 Block  Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12275,7 +12275,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
+     * Set reporting for the <i>Current Tier 15 Block  Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12305,8 +12305,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setGenericAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_GENERICALARMMASK), value);
+    public Future<CommandResult> setGenericAlarmMask(final Integer genericAlarmMask) {
+        return write(serverAttributes.get(ATTR_GENERICALARMMASK), genericAlarmMask);
     }
 
     /**
@@ -12363,8 +12363,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setElectricityAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_ELECTRICITYALARMMASK), value);
+    public Future<CommandResult> setElectricityAlarmMask(final Integer electricityAlarmMask) {
+        return write(serverAttributes.get(ATTR_ELECTRICITYALARMMASK), electricityAlarmMask);
     }
 
     /**
@@ -12421,8 +12421,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setGenericFlowPressureAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_GENERICFLOWPRESSUREALARMMASK), value);
+    public Future<CommandResult> setGenericFlowPressureAlarmMask(final Integer genericFlowPressureAlarmMask) {
+        return write(serverAttributes.get(ATTR_GENERICFLOWPRESSUREALARMMASK), genericFlowPressureAlarmMask);
     }
 
     /**
@@ -12479,8 +12479,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setWaterSpecificAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_WATERSPECIFICALARMMASK), value);
+    public Future<CommandResult> setWaterSpecificAlarmMask(final Integer waterSpecificAlarmMask) {
+        return write(serverAttributes.get(ATTR_WATERSPECIFICALARMMASK), waterSpecificAlarmMask);
     }
 
     /**
@@ -12537,8 +12537,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setHeatAndCoolingSpecificAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_HEATANDCOOLINGSPECIFICALARMMASK), value);
+    public Future<CommandResult> setHeatAndCoolingSpecificAlarmMask(final Integer heatAndCoolingSpecificAlarmMask) {
+        return write(serverAttributes.get(ATTR_HEATANDCOOLINGSPECIFICALARMMASK), heatAndCoolingSpecificAlarmMask);
     }
 
     /**
@@ -12595,8 +12595,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setGasSpecificAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_GASSPECIFICALARMMASK), value);
+    public Future<CommandResult> setGasSpecificAlarmMask(final Integer gasSpecificAlarmMask) {
+        return write(serverAttributes.get(ATTR_GASSPECIFICALARMMASK), gasSpecificAlarmMask);
     }
 
     /**
@@ -12653,8 +12653,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setExtendedGenericAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_EXTENDEDGENERICALARMMASK), value);
+    public Future<CommandResult> setExtendedGenericAlarmMask(final Integer extendedGenericAlarmMask) {
+        return write(serverAttributes.get(ATTR_EXTENDEDGENERICALARMMASK), extendedGenericAlarmMask);
     }
 
     /**
@@ -12711,8 +12711,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setManufactureAlarmMask(final Integer value) {
-        return write(serverAttributes.get(ATTR_MANUFACTUREALARMMASK), value);
+    public Future<CommandResult> setManufactureAlarmMask(final Integer manufactureAlarmMask) {
+        return write(serverAttributes.get(ATTR_MANUFACTUREALARMMASK), manufactureAlarmMask);
     }
 
     /**
@@ -12758,7 +12758,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0900</b>].
+     * Get the <i>Current No Tier Block  Summation Received</i> attribute [attribute ID <b>0x0900</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12778,7 +12778,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0900</b>].
+     * Synchronously get the <i>Current No Tier Block  Summation Received</i> attribute [attribute ID <b>0x0900</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12806,7 +12806,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0900</b>].
+     * Set reporting for the <i>Current No Tier Block  Summation Received</i> attribute [attribute ID <b>0x0900</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12825,7 +12825,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0910</b>].
+     * Get the <i>Current Tier 1 Block  Summation Received</i> attribute [attribute ID <b>0x0910</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12845,7 +12845,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0910</b>].
+     * Synchronously get the <i>Current Tier 1 Block  Summation Received</i> attribute [attribute ID <b>0x0910</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12873,7 +12873,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0910</b>].
+     * Set reporting for the <i>Current Tier 1 Block  Summation Received</i> attribute [attribute ID <b>0x0910</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12892,7 +12892,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0920</b>].
+     * Get the <i>Current Tier 2 Block  Summation Received</i> attribute [attribute ID <b>0x0920</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12912,7 +12912,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0920</b>].
+     * Synchronously get the <i>Current Tier 2 Block  Summation Received</i> attribute [attribute ID <b>0x0920</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12940,7 +12940,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0920</b>].
+     * Set reporting for the <i>Current Tier 2 Block  Summation Received</i> attribute [attribute ID <b>0x0920</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12959,7 +12959,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0930</b>].
+     * Get the <i>Current Tier 3 Block  Summation Received</i> attribute [attribute ID <b>0x0930</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12979,7 +12979,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0930</b>].
+     * Synchronously get the <i>Current Tier 3 Block  Summation Received</i> attribute [attribute ID <b>0x0930</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13007,7 +13007,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0930</b>].
+     * Set reporting for the <i>Current Tier 3 Block  Summation Received</i> attribute [attribute ID <b>0x0930</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13026,7 +13026,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0940</b>].
+     * Get the <i>Current Tier 4 Block  Summation Received</i> attribute [attribute ID <b>0x0940</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13046,7 +13046,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0940</b>].
+     * Synchronously get the <i>Current Tier 4 Block  Summation Received</i> attribute [attribute ID <b>0x0940</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13074,7 +13074,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0940</b>].
+     * Set reporting for the <i>Current Tier 4 Block  Summation Received</i> attribute [attribute ID <b>0x0940</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13093,7 +13093,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0950</b>].
+     * Get the <i>Current Tier 5 Block  Summation Received</i> attribute [attribute ID <b>0x0950</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13113,7 +13113,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0950</b>].
+     * Synchronously get the <i>Current Tier 5 Block  Summation Received</i> attribute [attribute ID <b>0x0950</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13141,7 +13141,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0950</b>].
+     * Set reporting for the <i>Current Tier 5 Block  Summation Received</i> attribute [attribute ID <b>0x0950</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13160,7 +13160,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0960</b>].
+     * Get the <i>Current Tier 6 Block  Summation Received</i> attribute [attribute ID <b>0x0960</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13180,7 +13180,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0960</b>].
+     * Synchronously get the <i>Current Tier 6 Block  Summation Received</i> attribute [attribute ID <b>0x0960</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13208,7 +13208,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0960</b>].
+     * Set reporting for the <i>Current Tier 6 Block  Summation Received</i> attribute [attribute ID <b>0x0960</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13227,7 +13227,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0970</b>].
+     * Get the <i>Current Tier 7 Block  Summation Received</i> attribute [attribute ID <b>0x0970</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13247,7 +13247,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0970</b>].
+     * Synchronously get the <i>Current Tier 7 Block  Summation Received</i> attribute [attribute ID <b>0x0970</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13275,7 +13275,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0970</b>].
+     * Set reporting for the <i>Current Tier 7 Block  Summation Received</i> attribute [attribute ID <b>0x0970</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13294,7 +13294,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0980</b>].
+     * Get the <i>Current Tier 8 Block  Summation Received</i> attribute [attribute ID <b>0x0980</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13314,7 +13314,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0980</b>].
+     * Synchronously get the <i>Current Tier 8 Block  Summation Received</i> attribute [attribute ID <b>0x0980</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13342,7 +13342,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0980</b>].
+     * Set reporting for the <i>Current Tier 8 Block  Summation Received</i> attribute [attribute ID <b>0x0980</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13361,7 +13361,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0990</b>].
+     * Get the <i>Current Tier 9 Block  Summation Received</i> attribute [attribute ID <b>0x0990</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13381,7 +13381,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0990</b>].
+     * Synchronously get the <i>Current Tier 9 Block  Summation Received</i> attribute [attribute ID <b>0x0990</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13409,7 +13409,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0990</b>].
+     * Set reporting for the <i>Current Tier 9 Block  Summation Received</i> attribute [attribute ID <b>0x0990</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13428,7 +13428,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
+     * Get the <i>Current Tier 10 Block  Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13448,7 +13448,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
+     * Synchronously get the <i>Current Tier 10 Block  Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13476,7 +13476,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
+     * Set reporting for the <i>Current Tier 10 Block  Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13495,7 +13495,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
+     * Get the <i>Current Tier 11 Block  Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13515,7 +13515,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
+     * Synchronously get the <i>Current Tier 11 Block  Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13543,7 +13543,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
+     * Set reporting for the <i>Current Tier 11 Block  Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13562,7 +13562,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
+     * Get the <i>Current Tier 12 Block  Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13582,7 +13582,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
+     * Synchronously get the <i>Current Tier 12 Block  Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13610,7 +13610,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
+     * Set reporting for the <i>Current Tier 12 Block  Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13629,7 +13629,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
+     * Get the <i>Current Tier 13 Block  Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13649,7 +13649,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
+     * Synchronously get the <i>Current Tier 13 Block  Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13677,7 +13677,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
+     * Set reporting for the <i>Current Tier 13 Block  Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13696,7 +13696,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
+     * Get the <i>Current Tier 14 Block  Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13716,7 +13716,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
+     * Synchronously get the <i>Current Tier 14 Block  Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13744,7 +13744,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
+     * Set reporting for the <i>Current Tier 14 Block  Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13763,7 +13763,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
+     * Get the <i>Current Tier 15 Block  Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13783,7 +13783,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
+     * Synchronously get the <i>Current Tier 15 Block  Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13811,7 +13811,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
+     * Set reporting for the <i>Current Tier 15 Block  Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -16349,7 +16349,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
+     * Get the <i>Previous Day  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the Historical
@@ -16374,7 +16374,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
+     * Synchronously get the <i>Previous Day  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the Historical
@@ -16407,7 +16407,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
+     * Set reporting for the <i>Previous Day  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the Historical
@@ -16431,7 +16431,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
+     * Get the <i>Previous Day  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -16456,7 +16456,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
+     * Synchronously get the <i>Previous Day  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -16489,7 +16489,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
+     * Set reporting for the <i>Previous Day  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -16669,7 +16669,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
+     * Get the <i>Previous Week  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous week period starting at the Historical
@@ -16694,7 +16694,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
+     * Synchronously get the <i>Previous Week  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous week period starting at the Historical
@@ -16727,7 +16727,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
+     * Set reporting for the <i>Previous Week  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous week period starting at the Historical
@@ -16751,7 +16751,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
+     * Get the <i>Previous Week  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionReceived represents the summed value
      * received from the premises within the previous week period starting at the Historical
@@ -16776,7 +16776,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
+     * Synchronously get the <i>Previous Week  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionReceived represents the summed value
      * received from the premises within the previous week period starting at the Historical
@@ -16809,7 +16809,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
+     * Set reporting for the <i>Previous Week  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionReceived represents the summed value
      * received from the premises within the previous week period starting at the Historical
@@ -16995,7 +16995,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
+     * Get the <i>Previous Month  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -17015,7 +17015,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
+     * Synchronously get the <i>Previous Month  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -17043,7 +17043,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
+     * Set reporting for the <i>Previous Month  Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -17062,7 +17062,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
+     * Get the <i>Previous Month  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -17082,7 +17082,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
+     * Synchronously get the <i>Previous Month  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -17110,7 +17110,7 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
+     * Set reporting for the <i>Previous Month  Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>

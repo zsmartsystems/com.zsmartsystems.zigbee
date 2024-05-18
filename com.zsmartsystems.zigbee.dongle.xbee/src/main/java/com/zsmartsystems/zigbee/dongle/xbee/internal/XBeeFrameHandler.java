@@ -586,7 +586,7 @@ public class XBeeFrameHandler {
     }
 
     /**
-     * Waits for a reponse of the requested class
+     * Waits for a response of the requested class
      *
      * @param eventClass the class to wait for
      * @return response {@link Future} {@link XBeeCommand}
