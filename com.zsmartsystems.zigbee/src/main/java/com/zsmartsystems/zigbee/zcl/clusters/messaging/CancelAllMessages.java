@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.messaging;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class CancelAllMessages extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -45,7 +44,7 @@ public class CancelAllMessages extends ZclMessagingCommand {
      * A UTC Time field to indicate the date/time at which all existing display messages should
      * be cleared.
      */
-    private Calendar implementationDateTime;
+    private ZigBeeUtcTime implementationDateTime;
 
     /**
      * Default constructor.
@@ -63,10 +62,10 @@ public class CancelAllMessages extends ZclMessagingCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      */
     public CancelAllMessages(
-            Calendar implementationDateTime) {
+            ZigBeeUtcTime implementationDateTime) {
 
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
@@ -84,7 +83,7 @@ public class CancelAllMessages extends ZclMessagingCommand {
      *
      * @return the Implementation Date Time
      */
-    public Calendar getImplementationDateTime() {
+    public ZigBeeUtcTime getImplementationDateTime() {
         return implementationDateTime;
     }
 
@@ -98,7 +97,7 @@ public class CancelAllMessages extends ZclMessagingCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public void setImplementationDateTime(final ZigBeeUtcTime implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
 

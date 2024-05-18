@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ChangeSupply extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,7 +63,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      * <p>
      * A UTC Time field to indicate the date and time at which the supply change was requested.
      */
-    private Calendar requestDateTime;
+    private ZigBeeUtcTime requestDateTime;
 
     /**
      * Implementation Date Time command message field.
@@ -76,7 +75,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      * to be cancelled (the status of the supply will not change but the Proposed Change Supply
      * Implementation Time attribute shall be reset to zero).
      */
-    private Calendar implementationDateTime;
+    private ZigBeeUtcTime implementationDateTime;
 
     /**
      * Proposed Supply Status command message field.
@@ -111,16 +110,16 @@ public class ChangeSupply extends ZclMeteringCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param requestDateTime {@link Calendar} Request Date Time
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param requestDateTime {@link ZigBeeUtcTime} Request Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
      * @param supplyControlBits {@link Integer} Supply Control Bits
      */
     public ChangeSupply(
             Integer providerId,
             Integer issuerEventId,
-            Calendar requestDateTime,
-            Calendar implementationDateTime,
+            ZigBeeUtcTime requestDateTime,
+            ZigBeeUtcTime implementationDateTime,
             Integer proposedSupplyStatus,
             Integer supplyControlBits) {
 
@@ -204,7 +203,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      *
      * @return the Request Date Time
      */
-    public Calendar getRequestDateTime() {
+    public ZigBeeUtcTime getRequestDateTime() {
         return requestDateTime;
     }
 
@@ -217,7 +216,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setRequestDateTime(final Calendar requestDateTime) {
+    public void setRequestDateTime(final ZigBeeUtcTime requestDateTime) {
         this.requestDateTime = requestDateTime;
     }
 
@@ -233,7 +232,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      *
      * @return the Implementation Date Time
      */
-    public Calendar getImplementationDateTime() {
+    public ZigBeeUtcTime getImplementationDateTime() {
         return implementationDateTime;
     }
 
@@ -251,7 +250,7 @@ public class ChangeSupply extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public void setImplementationDateTime(final ZigBeeUtcTime implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
 

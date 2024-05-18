@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -33,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishConsolidatedBillCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,7 +76,7 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * required for billing purposes, it is recommended that a replacement/superseding
      * PublishConsolidatedBill command is used in place of this cancellation mechanism).
      */
-    private Calendar billingPeriodStartTime;
+    private ZigBeeUtcTime billingPeriodStartTime;
 
     /**
      * Billing Period Duration command message field.
@@ -149,7 +148,7 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param billingPeriodStartTime {@link Calendar} Billing Period Start Time
+     * @param billingPeriodStartTime {@link ZigBeeUtcTime} Billing Period Start Time
      * @param billingPeriodDuration {@link Integer} Billing Period Duration
      * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
      * @param tariffType {@link Integer} Tariff Type
@@ -160,7 +159,7 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
     public PublishConsolidatedBillCommand(
             Integer providerId,
             Integer issuerEventId,
-            Calendar billingPeriodStartTime,
+            ZigBeeUtcTime billingPeriodStartTime,
             Integer billingPeriodDuration,
             Integer billingPeriodDurationType,
             Integer tariffType,
@@ -259,7 +258,7 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      *
      * @return the Billing Period Start Time
      */
-    public Calendar getBillingPeriodStartTime() {
+    public ZigBeeUtcTime getBillingPeriodStartTime() {
         return billingPeriodStartTime;
     }
 
@@ -278,7 +277,7 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
+    public void setBillingPeriodStartTime(final ZigBeeUtcTime billingPeriodStartTime) {
         this.billingPeriodStartTime = billingPeriodStartTime;
     }
 
