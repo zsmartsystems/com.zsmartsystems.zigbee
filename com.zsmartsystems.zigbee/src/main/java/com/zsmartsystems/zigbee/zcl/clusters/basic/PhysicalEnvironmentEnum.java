@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-17T10:34:05Z")
 public enum PhysicalEnvironmentEnum {
 
     /**
@@ -549,6 +549,16 @@ public enum PhysicalEnvironmentEnum {
      * Decontamination Room, 111, 0x006F
      */
     DECONTAMINATION_ROOM(0x006F),
+
+    /**
+     * Atrium, 112, 0x0070
+     */
+    ATRIUM(0x0070),
+
+    /**
+     * Mirror, 113, 0x0071
+     */
+    MIRROR(0x0071),
 
     /**
      * Unknown, 255, 0x00FF

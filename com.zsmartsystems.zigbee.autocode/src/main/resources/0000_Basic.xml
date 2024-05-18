@@ -355,6 +355,10 @@
         </value>
 		<value code="0x6F" name="Decontamination Room">
         </value>
+		<value code="0x70" name="Atrium">
+        </value>
+		<value code="0x71" name="Mirror">
+        </value>
 		<value code="0xFF" name="Unknown">
         </value>
 	</constant>

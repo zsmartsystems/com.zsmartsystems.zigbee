@@ -18,8 +18,53 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearAllPinCodes;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearAllPinCodesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearAllRfidCodes;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearAllRfidCodesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearHolidaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearHolidayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearPinCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearPinCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearRfidCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearRfidCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearWeekDaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearWeekDayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearYearDaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ClearYearDayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetHolidaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetHolidayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetLogRecord;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetLogRecordResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetPinCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetPinCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetRfidCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetRfidCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetUserStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetUserStatusResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetUserType;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetUserTypeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetWeekDaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetWeekDayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.GetYearDaySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.OperationEventNotification;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ProgrammingEventNotification;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetHolidaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetHolidayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetPinCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetPinCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetRfidCode;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetRfidCodeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetUserStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetUserStatusResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetUserType;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetUserTypeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetWeekDaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetWeekDayScheduleResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetYearDaySchedule;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.SetYearDayScheduleResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.Toggle;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ToggleResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
@@ -56,7 +101,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T05:41:29Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -378,6 +423,30 @@ public class ZclDoorLockCluster extends ZclCluster {
         commandMap.put(0x0001, UnlockDoorResponse.class);
         commandMap.put(0x0002, ToggleResponse.class);
         commandMap.put(0x0003, UnlockWithTimeoutResponse.class);
+        commandMap.put(0x0004, GetLogRecordResponse.class);
+        commandMap.put(0x0005, SetPinCodeResponse.class);
+        commandMap.put(0x0006, GetPinCodeResponse.class);
+        commandMap.put(0x0007, ClearPinCodeResponse.class);
+        commandMap.put(0x0008, ClearAllPinCodesResponse.class);
+        commandMap.put(0x0009, SetUserStatusResponse.class);
+        commandMap.put(0x000A, GetUserStatusResponse.class);
+        commandMap.put(0x000B, SetWeekDayScheduleResponse.class);
+        commandMap.put(0x000C, GetWeekDayScheduleResponse.class);
+        commandMap.put(0x000D, ClearWeekDayScheduleResponse.class);
+        commandMap.put(0x000E, SetYearDayScheduleResponse.class);
+        commandMap.put(0x000F, SetYearDayScheduleResponse.class);
+        commandMap.put(0x0010, ClearYearDayScheduleResponse.class);
+        commandMap.put(0x0011, SetHolidayScheduleResponse.class);
+        commandMap.put(0x0012, GetHolidayScheduleResponse.class);
+        commandMap.put(0x0013, ClearHolidayScheduleResponse.class);
+        commandMap.put(0x0014, SetUserTypeResponse.class);
+        commandMap.put(0x0015, GetUserTypeResponse.class);
+        commandMap.put(0x0016, SetRfidCodeResponse.class);
+        commandMap.put(0x0017, GetRfidCodeResponse.class);
+        commandMap.put(0x0018, ClearRfidCodeResponse.class);
+        commandMap.put(0x0019, ClearAllRfidCodesResponse.class);
+        commandMap.put(0x0020, OperationEventNotification.class);
+        commandMap.put(0x0021, ProgrammingEventNotification.class);
 
         return commandMap;
     }
@@ -390,6 +459,28 @@ public class ZclDoorLockCluster extends ZclCluster {
         commandMap.put(0x0001, UnlockDoorCommand.class);
         commandMap.put(0x0002, Toggle.class);
         commandMap.put(0x0003, UnlockWithTimeout.class);
+        commandMap.put(0x0004, GetLogRecord.class);
+        commandMap.put(0x0005, SetPinCode.class);
+        commandMap.put(0x0006, GetPinCode.class);
+        commandMap.put(0x0007, ClearPinCode.class);
+        commandMap.put(0x0008, ClearAllPinCodes.class);
+        commandMap.put(0x0009, SetUserStatus.class);
+        commandMap.put(0x000A, GetUserStatus.class);
+        commandMap.put(0x000B, SetWeekDaySchedule.class);
+        commandMap.put(0x000C, GetWeekDaySchedule.class);
+        commandMap.put(0x000D, ClearWeekDaySchedule.class);
+        commandMap.put(0x000E, SetYearDaySchedule.class);
+        commandMap.put(0x000F, GetYearDaySchedule.class);
+        commandMap.put(0x0010, ClearYearDaySchedule.class);
+        commandMap.put(0x0011, SetHolidaySchedule.class);
+        commandMap.put(0x0012, GetHolidaySchedule.class);
+        commandMap.put(0x0013, ClearHolidaySchedule.class);
+        commandMap.put(0x0014, SetUserType.class);
+        commandMap.put(0x0015, GetUserType.class);
+        commandMap.put(0x0016, SetRfidCode.class);
+        commandMap.put(0x0017, GetRfidCode.class);
+        commandMap.put(0x0018, ClearRfidCode.class);
+        commandMap.put(0x0019, ClearAllRfidCodes.class);
 
         return commandMap;
     }
@@ -3539,6 +3630,623 @@ public class ZclDoorLockCluster extends ZclCluster {
     }
 
     /**
+     * The Get Log Record
+     * <p>
+     * Request a log record. Log number is between 1 – [Number of Log Records Supported
+     * attribute]. If log number 0 is requested then the most recent log entry is returned.
+     *
+     * @param logIndex {@link Integer} Log Index
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getLogRecord(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getLogRecord(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getLogRecord(Integer logIndex) {
+        GetLogRecord command = new GetLogRecord();
+
+        // Set the fields
+        command.setLogIndex(logIndex);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set PIN Code
+     * <p>
+     * Set a PIN into the lock.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @param userType {@link Integer} User Type
+     * @param pin {@link ByteArray} PIN
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setPinCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setPinCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setPinCode(Integer userId, Integer userStatus, Integer userType, ByteArray pin) {
+        SetPinCode command = new SetPinCode();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+        command.setUserType(userType);
+        command.setPin(pin);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get PIN Code
+     * <p>
+     * Retrieve a PIN Code. User ID is between 0 - [# of PIN Users Supported attribute].
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getPinCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getPinCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getPinCode(Integer userId) {
+        GetPinCode command = new GetPinCode();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear PIN Code
+     * <p>
+     * Delete a PIN. User ID is between 0 - [# of PIN Users Supported attribute].
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearPinCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearPinCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearPinCode(Integer userId) {
+        ClearPinCode command = new ClearPinCode();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear All PIN Codes
+     * <p>
+     * Set the status of a user ID. User Status value of 0x00 is not allowed. In order to clear a
+     * user id, the Clear ID Command shall be used. For user status value please refer to User
+     * Status Value.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearAllPinCodes(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearAllPinCodes(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearAllPinCodes() {
+        return sendCommand(new ClearAllPinCodes());
+    }
+
+    /**
+     * The Set User Status
+     * <p>
+     * Get the status of a user.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setUserStatus(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setUserStatus(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setUserStatus(Integer userId, Integer userStatus) {
+        SetUserStatus command = new SetUserStatus();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get User Status
+     * <p>
+     * Get the status of a user.
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getUserStatus(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getUserStatus(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getUserStatus(Integer userId) {
+        GetUserStatus command = new GetUserStatus();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Week Day Schedule
+     * <p>
+     * Set a weekly repeating schedule for a specified user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @param daysMask {@link Integer} Days Mask
+     * @param startHour {@link Integer} Start Hour
+     * @param startMinute {@link Integer} Start Minute
+     * @param endHour {@link Integer} End Hour
+     * @param endMinute {@link Integer} End Minute
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setWeekDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setWeekDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setWeekDaySchedule(Integer scheduleId, Integer userId, Integer daysMask, Integer startHour, Integer startMinute, Integer endHour, Integer endMinute) {
+        SetWeekDaySchedule command = new SetWeekDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+        command.setDaysMask(daysMask);
+        command.setStartHour(startHour);
+        command.setStartMinute(startMinute);
+        command.setEndHour(endHour);
+        command.setEndMinute(endMinute);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Week Day Schedule
+     * <p>
+     * Retrieve the specific weekly schedule for the specific user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getWeekDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getWeekDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getWeekDaySchedule(Integer scheduleId, Integer userId) {
+        GetWeekDaySchedule command = new GetWeekDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Week Day Schedule
+     * <p>
+     * Clear the specific weekly schedule for the specific user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearWeekDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearWeekDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearWeekDaySchedule(Integer scheduleId, Integer userId) {
+        ClearWeekDaySchedule command = new ClearWeekDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Year Day Schedule
+     * <p>
+     * Set a time-specific schedule ID for a specified user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @param localStartTime {@link Integer} Local Start Time
+     * @param localEndTime {@link Integer} Local End Time
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setYearDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setYearDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setYearDaySchedule(Integer scheduleId, Integer userId, Integer localStartTime, Integer localEndTime) {
+        SetYearDaySchedule command = new SetYearDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+        command.setLocalStartTime(localStartTime);
+        command.setLocalEndTime(localEndTime);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Year Day Schedule
+     * <p>
+     * Retrieve the specific year day schedule for the specific user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getYearDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getYearDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getYearDaySchedule(Integer scheduleId, Integer userId) {
+        GetYearDaySchedule command = new GetYearDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Year Day Schedule
+     * <p>
+     * Clears the specific year day schedule for the specific user.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearYearDaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearYearDaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearYearDaySchedule(Integer scheduleId, Integer userId) {
+        ClearYearDaySchedule command = new ClearYearDaySchedule();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Holiday Schedule
+     * <p>
+     * Set a time-specific schedule ID for a specified user.
+     *
+     * @param holidayScheduleId {@link Integer} Holiday Schedule ID
+     * @param localStartTime {@link Integer} Local Start Time
+     * @param localEndTime {@link Integer} Local End Time
+     * @param operatingMode {@link Integer} Operating Mode
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setHolidaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setHolidaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setHolidaySchedule(Integer holidayScheduleId, Integer localStartTime, Integer localEndTime, Integer operatingMode) {
+        SetHolidaySchedule command = new SetHolidaySchedule();
+
+        // Set the fields
+        command.setHolidayScheduleId(holidayScheduleId);
+        command.setLocalStartTime(localStartTime);
+        command.setLocalEndTime(localEndTime);
+        command.setOperatingMode(operatingMode);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Holiday Schedule
+     * <p>
+     * Get the holiday Schedule by specifying Holiday ID.
+     *
+     * @param holidayScheduleId {@link Integer} Holiday Schedule ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getHolidaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getHolidaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getHolidaySchedule(Integer holidayScheduleId) {
+        GetHolidaySchedule command = new GetHolidaySchedule();
+
+        // Set the fields
+        command.setHolidayScheduleId(holidayScheduleId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Holiday Schedule
+     * <p>
+     * Clear the holiday Schedule by specifying Holiday ID.
+     *
+     * @param holidayScheduleId {@link Integer} Holiday Schedule ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearHolidaySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearHolidaySchedule(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearHolidaySchedule(Integer holidayScheduleId) {
+        ClearHolidaySchedule command = new ClearHolidaySchedule();
+
+        // Set the fields
+        command.setHolidayScheduleId(holidayScheduleId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set User Type
+     * <p>
+     * Set the type byte for a specified user.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userType {@link Integer} User Type
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setUserType(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setUserType(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setUserType(Integer userId, Integer userType) {
+        SetUserType command = new SetUserType();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserType(userType);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get User Type
+     * <p>
+     * Retrieve the type byte for a specific user.
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getUserType(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getUserType(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getUserType(Integer userId) {
+        GetUserType command = new GetUserType();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set RFID Code
+     * <p>
+     * Set an ID for RFID access into the lock.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @param userType {@link Integer} User Type
+     * @param rfidCode {@link ByteArray} RFID Code
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setRfidCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setRfidCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setRfidCode(Integer userId, Integer userStatus, Integer userType, ByteArray rfidCode) {
+        SetRfidCode command = new SetRfidCode();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+        command.setUserType(userType);
+        command.setRfidCode(rfidCode);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get RFID Code
+     * <p>
+     * Retrieve an ID. User ID is between 0 - [# of RFID Users Supported attribute].
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getRfidCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getRfidCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getRfidCode(Integer userId) {
+        GetRfidCode command = new GetRfidCode();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear RFID Code
+     * <p>
+     * Delete an ID. User ID is between 0 - [# of RFID Users Supported attribute]. If you delete a
+     * RFID code and this user didn't have a PIN code, the user status has to be set to "0
+     * Available", the user type has to be set to the default value, and all schedules which are
+     * supported have to be set to the default values.
+     *
+     * @param userId {@link Integer} User ID
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearRfidCode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearRfidCode(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearRfidCode(Integer userId) {
+        ClearRfidCode command = new ClearRfidCode();
+
+        // Set the fields
+        command.setUserId(userId);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear All RFID Codes
+     * <p>
+     * Clear out all RFIDs on the lock. If you delete all RFID codes and this user didn't have a PIN
+     * code, the user status has to be set to "0 Available", the user type has to be set to the
+     * default value, and all schedules which are supported have to be set to the default
+     * values.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearAllRfidCodes(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearAllRfidCodes(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearAllRfidCodes() {
+        return sendCommand(new ClearAllRfidCodes());
+    }
+
+    /**
      * The Lock Door Response
      * <p>
      * This command is sent in response to a Lock command with one status byte payload. The
@@ -3657,6 +4365,717 @@ public class ZclDoorLockCluster extends ZclCluster {
 
         // Set the fields
         command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Log Record Response
+     * <p>
+     * Returns the specified log record. If an invalid log entry ID was requested, it is set to 0
+     * and the most recent log entry will be returned.
+     *
+     * @param logEntryId {@link Integer} Log Entry ID
+     * @param timestamp {@link Integer} Timestamp
+     * @param eventType {@link Integer} Event Type
+     * @param source {@link Integer} Source
+     * @param eventId {@link Integer} Event ID
+     * @param userId {@link Integer} User ID
+     * @param pin {@link ByteArray} PIN
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getLogRecordResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getLogRecordResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getLogRecordResponse(Integer logEntryId, Integer timestamp, Integer eventType, Integer source, Integer eventId, Integer userId, ByteArray pin) {
+        GetLogRecordResponse command = new GetLogRecordResponse();
+
+        // Set the fields
+        command.setLogEntryId(logEntryId);
+        command.setTimestamp(timestamp);
+        command.setEventType(eventType);
+        command.setSource(source);
+        command.setEventId(eventId);
+        command.setUserId(userId);
+        command.setPin(pin);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set PIN Code Response
+     * <p>
+     * Returns status of the PIN set command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setPinCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setPinCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setPinCodeResponse(Integer status) {
+        SetPinCodeResponse command = new SetPinCodeResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get PIN Code Response
+     * <p>
+     * Returns the PIN for the specified user ID.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @param userType {@link Integer} User Type
+     * @param code {@link ByteArray} Code
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getPinCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getPinCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getPinCodeResponse(Integer userId, Integer userStatus, Integer userType, ByteArray code) {
+        GetPinCodeResponse command = new GetPinCodeResponse();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+        command.setUserType(userType);
+        command.setCode(code);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear PIN Code Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearPinCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearPinCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearPinCodeResponse(Integer status) {
+        ClearPinCodeResponse command = new ClearPinCodeResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear All PIN Codes Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearAllPinCodesResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearAllPinCodesResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearAllPinCodesResponse(Integer status) {
+        ClearAllPinCodesResponse command = new ClearAllPinCodesResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set User Status Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setUserStatusResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setUserStatusResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setUserStatusResponse(Integer status) {
+        SetUserStatusResponse command = new SetUserStatusResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get User Status Response
+     * <p>
+     * Returns the user status for the specified user ID.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getUserStatusResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getUserStatusResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getUserStatusResponse(Integer userId, Integer userStatus) {
+        GetUserStatusResponse command = new GetUserStatusResponse();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Week Day Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setWeekDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setWeekDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setWeekDayScheduleResponse(Integer status) {
+        SetWeekDayScheduleResponse command = new SetWeekDayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Week Day Schedule Response
+     * <p>
+     * Returns the weekly repeating schedule data for the specified schedule ID.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @param status {@link Integer} Status
+     * @param daysMask {@link Integer} Days Mask
+     * @param startHour {@link Integer} Start Hour
+     * @param startMinute {@link Integer} Start Minute
+     * @param endHour {@link Integer} End Hour
+     * @param endMinute {@link Integer} End Minute
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getWeekDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getWeekDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getWeekDayScheduleResponse(Integer scheduleId, Integer userId, Integer status, Integer daysMask, Integer startHour, Integer startMinute, Integer endHour, Integer endMinute) {
+        GetWeekDayScheduleResponse command = new GetWeekDayScheduleResponse();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+        command.setStatus(status);
+        command.setDaysMask(daysMask);
+        command.setStartHour(startHour);
+        command.setStartMinute(startMinute);
+        command.setEndHour(endHour);
+        command.setEndMinute(endMinute);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Week Day Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearWeekDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearWeekDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearWeekDayScheduleResponse(Integer status) {
+        ClearWeekDayScheduleResponse command = new ClearWeekDayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Year Day Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setYearDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setYearDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setYearDayScheduleResponse(Integer status) {
+        SetYearDayScheduleResponse command = new SetYearDayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Year Day Schedule Response
+     * <p>
+     * Returns the weekly repeating schedule data for the specified schedule ID.
+     *
+     * @param scheduleId {@link Integer} Schedule ID
+     * @param userId {@link Integer} User ID
+     * @param status {@link Integer} Status
+     * @param localStartTime {@link Integer} Local Start Time
+     * @param localEndTime {@link Integer} Local End Time
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setYearDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setYearDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setYearDayScheduleResponse(Integer scheduleId, Integer userId, Integer status, Integer localStartTime, Integer localEndTime) {
+        SetYearDayScheduleResponse command = new SetYearDayScheduleResponse();
+
+        // Set the fields
+        command.setScheduleId(scheduleId);
+        command.setUserId(userId);
+        command.setStatus(status);
+        command.setLocalStartTime(localStartTime);
+        command.setLocalEndTime(localEndTime);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Year Day Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearYearDayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearYearDayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearYearDayScheduleResponse(Integer status) {
+        ClearYearDayScheduleResponse command = new ClearYearDayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set Holiday Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setHolidayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setHolidayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setHolidayScheduleResponse(Integer status) {
+        SetHolidayScheduleResponse command = new SetHolidayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get Holiday Schedule Response
+     * <p>
+     * Returns the Holiday Schedule Entry for the specified Holiday ID.
+     *
+     * @param holidayScheduleId {@link Integer} Holiday Schedule ID
+     * @param status {@link Integer} Status
+     * @param localStartTime {@link Integer} Local Start Time
+     * @param localEndTime {@link Integer} Local End Time
+     * @param operatingMode {@link Integer} Operating Mode
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getHolidayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getHolidayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getHolidayScheduleResponse(Integer holidayScheduleId, Integer status, Integer localStartTime, Integer localEndTime, Integer operatingMode) {
+        GetHolidayScheduleResponse command = new GetHolidayScheduleResponse();
+
+        // Set the fields
+        command.setHolidayScheduleId(holidayScheduleId);
+        command.setStatus(status);
+        command.setLocalStartTime(localStartTime);
+        command.setLocalEndTime(localEndTime);
+        command.setOperatingMode(operatingMode);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear Holiday Schedule Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearHolidayScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearHolidayScheduleResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearHolidayScheduleResponse(Integer status) {
+        ClearHolidayScheduleResponse command = new ClearHolidayScheduleResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set User Type Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setUserTypeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setUserTypeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setUserTypeResponse(Integer status) {
+        SetUserTypeResponse command = new SetUserTypeResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get User Type Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userType {@link Integer} User Type
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getUserTypeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getUserTypeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getUserTypeResponse(Integer userId, Integer userType) {
+        GetUserTypeResponse command = new GetUserTypeResponse();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserType(userType);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Set RFID Code Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setRfidCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setRfidCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> setRfidCodeResponse(Integer status) {
+        SetRfidCodeResponse command = new SetRfidCodeResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Get RFID Code Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param userId {@link Integer} User ID
+     * @param userStatus {@link Integer} User Status
+     * @param userType {@link Integer} User Type
+     * @param rfidCode {@link ByteArray} RFID Code
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getRfidCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getRfidCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> getRfidCodeResponse(Integer userId, Integer userStatus, Integer userType, ByteArray rfidCode) {
+        GetRfidCodeResponse command = new GetRfidCodeResponse();
+
+        // Set the fields
+        command.setUserId(userId);
+        command.setUserStatus(userStatus);
+        command.setUserType(userType);
+        command.setRfidCode(rfidCode);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear RFID Code Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearRfidCodeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearRfidCodeResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearRfidCodeResponse(Integer status) {
+        ClearRfidCodeResponse command = new ClearRfidCodeResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Clear All RFID Codes Response
+     * <p>
+     * Returns pass/fail of the command.
+     *
+     * @param status {@link Integer} Status
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearAllRfidCodesResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearAllRfidCodesResponse(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> clearAllRfidCodesResponse(Integer status) {
+        ClearAllRfidCodesResponse command = new ClearAllRfidCodesResponse();
+
+        // Set the fields
+        command.setStatus(status);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Operation Event Notification
+     * <p>
+     * The door lock server sends out operation event notification when the event is triggered
+     * by the various event sources. The specific operation event will only be sent out if the
+     * associated bitmask is enabled in the various attributes in the Event Masks Attribute
+     * Set.
+     *
+     * @param operationEventSource {@link Integer} Operation Event Source
+     * @param operationEventCode {@link Integer} Operation Event Code
+     * @param userId {@link Integer} User ID
+     * @param pin {@link ByteArray} PIN
+     * @param localTime {@link Integer} Local Time
+     * @param data {@link String} Data
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.operationEventNotification(parameters ...)</code>
+     * with <code>cluster.sendCommand(new operationEventNotification(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> operationEventNotification(Integer operationEventSource, Integer operationEventCode, Integer userId, ByteArray pin, Integer localTime, String data) {
+        OperationEventNotification command = new OperationEventNotification();
+
+        // Set the fields
+        command.setOperationEventSource(operationEventSource);
+        command.setOperationEventCode(operationEventCode);
+        command.setUserId(userId);
+        command.setPin(pin);
+        command.setLocalTime(localTime);
+        command.setData(data);
+
+        return sendCommand(command);
+    }
+
+    /**
+     * The Programming Event Notification
+     * <p>
+     * The door lock server sends out a programming event notification whenever a programming
+     * event takes place on the door lock.
+     *
+     * @param programEventSource {@link Integer} Program Event Source
+     * @param programEventCode {@link Integer} Program Event Code
+     * @param userId {@link Integer} User ID
+     * @param pin {@link ByteArray} PIN
+     * @param userType {@link Integer} User Type
+     * @param userStatus {@link Integer} User Status
+     * @param localTime {@link Integer} Local Time
+     * @param data {@link String} Data
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.programmingEventNotification(parameters ...)</code>
+     * with <code>cluster.sendCommand(new programmingEventNotification(parameters ...))</code>
+     */
+    @Deprecated
+    public Future<CommandResult> programmingEventNotification(Integer programEventSource, Integer programEventCode, Integer userId, ByteArray pin, Integer userType, Integer userStatus, Integer localTime, String data) {
+        ProgrammingEventNotification command = new ProgrammingEventNotification();
+
+        // Set the fields
+        command.setProgramEventSource(programEventSource);
+        command.setProgramEventCode(programEventCode);
+        command.setUserId(userId);
+        command.setPin(pin);
+        command.setUserType(userType);
+        command.setUserStatus(userStatus);
+        command.setLocalTime(localTime);
+        command.setData(data);
 
         return sendCommand(command);
     }

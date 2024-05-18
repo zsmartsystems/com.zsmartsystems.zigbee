@@ -38,6 +38,226 @@
             <name>PIN</name>
         </field>
     </command>
+    <command code="0x04" source="client">
+        <name>Get Log Record</name>
+        <description>Request a log record. Log number is between 1 – [Number of Log Records Supported attribute]. If log number 0 is requested then the most recent log entry is returned.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Log Index</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Set PIN Code</name>
+        <description>Set a PIN into the lock.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>PIN</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Get PIN Code</name>
+        <description>Retrieve a PIN Code. User ID is between 0 - [# of PIN Users Supported attribute].</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Clear PIN Code</name>
+        <description>Delete a PIN. User ID is between 0 - [# of PIN Users Supported attribute].</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Clear All PIN Codes</name>
+        <description>Set the status of a user ID. User Status value of 0x00 is not allowed. In order to clear a user id, the Clear ID Command SHALL be used. For user status value please refer to User Status Value.</description>
+    </command>
+    <command code="0x09" source="client">
+        <name>Set User Status</name>
+        <description>Get the status of a user.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+    </command>
+    <command code="0x0A" source="client">
+        <name>Get User Status</name>
+        <description>Get the status of a user.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x0B" source="client">
+        <name>Set Week Day Schedule</name>
+        <description>Set a weekly repeating schedule for a specified user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Days Mask</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Hour</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Minute</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>End Hour</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>End Minute</name>
+        </field>
+    </command>
+    <command code="0x0C" source="client">
+        <name>Get Week Day Schedule</name>
+        <description>Retrieve the specific weekly schedule for the specific user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x0D" source="client">
+        <name>Clear Week Day Schedule</name>
+        <description>Clear the specific weekly schedule for the specific user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x0E" source="client">
+        <name>Set Year Day Schedule</name>
+        <description>Set a time-specific schedule ID for a specified user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Start Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local End Time</name>
+        </field>
+    </command>
+    <command code="0x0F" source="client">
+        <name>Get Year Day Schedule</name>
+        <description>Retrieve the specific year day schedule for the specific user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x10" source="client">
+        <name>Clear Year Day Schedule</name>
+        <description>Clears the specific year day schedule for the specific user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x11" source="client">
+        <name>Set Holiday Schedule</name>
+        <description>Set a time-specific schedule ID for a specified user.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Holiday Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Start Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local End Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockOperatingModeEnum">
+            <name>Operating Mode</name>
+        </field>
+    </command>
+    <command code="0x12" source="client">
+        <name>Get Holiday Schedule</name>
+        <description>Get the holiday Schedule by specifying Holiday ID.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Holiday Schedule ID</name>
+        </field>
+    </command>
+    <command code="0x13" source="client">
+        <name>Clear Holiday Schedule</name>
+        <description>Clear the holiday Schedule by specifying Holiday ID.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Holiday Schedule ID</name>
+        </field>
+    </command>
+    <command code="0x14" source="client">
+        <name>Set User Type</name>
+        <description>Set the type byte for a specified user.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+    </command>
+    <command code="0x15" source="client">
+        <name>Get User Type</name>
+        <description>Retrieve the type byte for a specific user.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x16" source="client">
+        <name>Set RFID Code</name>
+        <description>Set an ID for RFID access into the lock.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>RFID Code</name>
+        </field>
+    </command>
+    <command code="0x17" source="client">
+        <name>Get RFID Code</name>
+        <description>Retrieve an ID. User ID is between 0 - [# of RFID Users Supported attribute].</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x18" source="client">
+        <name>Clear RFID Code</name>
+        <description>Delete an ID. User ID is between 0 - [# of RFID Users Supported attribute]. If you delete a RFID code and this user didn't have a PIN code, the user status has to be set to "0 Available", the user type has to be set to the default value, and all schedules which are supported have to be set to the default values.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+    </command>
+    <command code="0x19" source="client">
+        <name>Clear All RFID Codes</name>
+        <description>Clear out all RFIDs on the lock. If you delete all RFID codes and this user didn't have a PIN code, the user status has to be set to "0 Available", the user type has to be set to the default value, and all schedules which are supported have to be set to the default values.</description>
+    </command>
 
     <command code="0x00" source="server">
         <name>Lock Door Response</name>
@@ -71,6 +291,298 @@
             <name>Status</name>
         </field>
     </command>
+    <command code="0x04" source="server">
+        <name>Get Log Record Response</name>
+        <description>Returns the specified log record. If an invalid log entry ID was requested, it is set to 0 and the most recent log entry will be returned.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Log Entry ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Timestamp</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Event Type</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Source</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Event ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>PIN</name>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Set PIN Code Response</name>
+        <description>Returns status of the PIN set command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x06" source="server">
+        <name>Get PIN Code Response</name>
+        <description>Returns the PIN for the specified user ID.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Code</name>
+        </field>
+    </command>
+    <command code="0x07" source="server">
+        <name>Clear PIN Code Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x08" source="server">
+        <name>Clear All PIN Codes Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x09" source="server">
+        <name>Set User Status Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x0A" source="server">
+        <name>Get User Status Response</name>
+        <description>Returns the user status for the specified user ID.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+    </command>
+    <command code="0x0B" source="server">
+        <name>Set Week Day Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x0C" source="server">
+        <name>Get Week Day Schedule Response</name>
+        <description>Returns the weekly repeating schedule data for the specified schedule ID.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Days Mask</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Hour</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Minute</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>End Hour</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>End Minute</name>
+        </field>
+    </command>
+    <command code="0x0D" source="server">
+        <name>Clear Week Day Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0xE" source="server">
+        <name>Set Year Day Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x0F" source="server">
+        <name>Set Year Day Schedule Response</name>
+        <description>Returns the weekly repeating schedule data for the specified schedule ID.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Start Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local End Time</name>
+        </field>
+    </command>
+    <command code="0x10" source="server">
+        <name>Clear Year Day Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x11" source="server">
+        <name>Set Holiday Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x12" source="server">
+        <name>Get Holiday Schedule Response</name>
+        <description>Returns the Holiday Schedule Entry for the specified Holiday ID.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Holiday Schedule ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Start Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local End Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockOperatingModeEnum">
+            <name>Operating Mode</name>
+        </field>
+    </command>
+    <command code="0x13" source="server">
+        <name>Clear Holiday Schedule Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x14" source="server">
+        <name>Set User Type Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x15" source="server">
+        <name>Get User Type Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+    </command>
+    <command code="0x16" source="server">
+        <name>Set RFID Code Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x17" source="server">
+        <name>Get RFID Code Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>RFID Code</name>
+        </field>
+    </command>
+    <command code="0x18" source="server">
+        <name>Clear RFID Code Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x19" source="server">
+        <name>Clear All RFID Codes Response</name>
+        <description>Returns pass/fail of the command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x20" source="server">
+        <name>Operation Event Notification</name>
+        <description>The door lock server sends out operation event notification when the event is triggered by the various event sources. The specific operation event will only be sent out if the associated bitmask is enabled in the various attributes in the Event Masks Attribute Set.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockEventSource">
+            <name>Operation Event Source</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockOperationEventCode">
+            <name>Operation Event Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>PIN</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Data</name>
+        </field>
+    </command>
+    <command code="0x21" source="server">
+        <name>Programming Event Notification</name>
+        <description>The door lock server sends out a programming event notification whenever a programming event takes place on the door lock.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockEventSource">
+            <name>Program Event Source</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockProgramEventCode">
+            <name>Program Event Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>User ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>PIN</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DoorLockUserTypeEnum">
+            <name>User Type</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="DoorLockUserStatusEnum">
+            <name>User Status</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Local Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Data</name>
+        </field>
+    </command>
+
 
     <attribute code="0x0000" type="ENUMERATION_8_BIT" class="DoorLockLockStateEnum" side="server" optional="false" writable="false" reportable="false">
         <name>Lock State</name>
@@ -152,7 +664,7 @@
         <name>Language</name>
         <description>Modifies the language for the on-screen or audible user interface using three bytes from ISO-639-1. It consists of one byte of length and two bytes for the language code. For example if the language is set to English, the value would be "02 65 6E" for the language code "en"</description>
     </attribute>
-    <attribute code="0x0022" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x00" maximum="0xFF" default="0x00">
+    <attribute code="0x0022" type="UNSIGNED_8_BIT_INTEGER" class="DoorLockLedSettingsEnum" side="server" optional="true" writable="true" reportable="true" minimum="0x00" maximum="0xFF" default="0x00">
         <name>LED Settings</name>
         <description>The settings for the LED support three different modes</description>
     </attribute>
@@ -168,7 +680,7 @@
         <name>Operating Mode</name>
         <description>Shows the current operating mode</description>
     </attribute>
-    <attribute code="0x0026" type="BITMAP_16_BIT"  class="DoorLockSupportedOperatingModesBitmap" side="server" optional="false" writable="false" reportable="false" default="0x0001">
+    <attribute code="0x0026" type="BITMAP_16_BIT" class="DoorLockSupportedOperatingModesBitmap" side="server" optional="false" writable="false" reportable="false" default="0x0001">
         <name>Supported Operating Modes</name>
         <description>This bitmap contains all operating bits of the Operating Mode Attribute supported by the lock. The value of the enumeration in “Operating Mode” defines the related bit to be set, as shown in Table 7-16. All bits supported by a lock SHALL be set to zero.</description>
     </attribute>
@@ -247,5 +759,179 @@
         <name>RFID Programming Event Mask</name>
         <description>Event mask used to turn on and off RFID programming events. This mask DOES NOT apply to the storing of events in the report table.</description>
     </attribute>
+
+    <constant type="ENUMERATION_8_BIT" class="DoorLockUserStatusEnum">
+        <name>User Status</name>
+        <value code="0x00" name="Available">
+        </value>
+        <value code="0x01" name="Enabled">
+        </value>
+        <value code="0x02" name="Disabled">
+        </value>
+        <value code="0xFF" name="Not Supported">
+        </value>
+    </constant>
+
+    <constant type="ENUMERATION_8_BIT" class="DoorLockUserTypeEnum">
+        <name>User Type</name>
+        <value code="0x00" name="Unrestricted User">
+        </value>
+        <value code="0x01" name="Year Day Schedule User">
+        </value>
+        <value code="0x02" name="Week Day Schedule User">
+        </value>
+        <value code="0x03" name="Master User">
+        </value>
+        <value code="0x04" name="Non Access User">
+        </value>
+        <value code="0xFF" name="Not Supported">
+        </value>
+    </constant>
+
+    <constant type="ENUMERATION_8_BIT" class="DoorLockLockStateEnum">
+        <name>Door Lock Lock State</name>
+        <value code="0x00" name="Not Fully Locked">
+        </value>
+        <value code="0x01" name="Locked">
+        </value>
+        <value code="0x02" name="Unlocked">
+        </value>
+        <value code="0xFF" name="Undefined">
+        </value>
+    </constant>
+
+    <constant type="ENUMERATION_8_BIT" class="DoorLockLockTypeEnum">
+        <name>Door Lock Lock Type</name>
+        <value code="0x00" name="Dead Bolt">
+        </value>
+        <value code="0x01" name="Magnetic">
+        </value>
+        <value code="0x02" name="Other">
+        </value>
+        <value code="0x03" name="Mortise">
+        </value>
+        <value code="0x04" name="Rim">
+        </value>
+        <value code="0x05" name="Latch Bolt">
+        </value>
+        <value code="0x06" name="Cylindrical Lock">
+        </value>
+        <value code="0x07" name="Tubular Lock">
+        </value>
+        <value code="0x08" name="Interconnected Lock">
+        </value>
+        <value code="0x09" name="Dead Latch">
+        </value>
+        <value code="0x0A" name="Door Furniture">
+        </value>
+        <value code="0xFF" name="Undefined">
+        </value>
+    </constant>
+
+    <constant type="ENUMERATION_8_BIT" class="DoorLockOperatingModeEnum">
+        <name>Door Lock Lock Type</name>
+        <value code="0x00" name="Normal">
+        </value>
+        <value code="0x01" name="Vacation">
+        </value>
+        <value code="0x02" name="Privacy">
+        </value>
+        <value code="0x03" name="No RF Lock/Unlock">
+        </value>
+        <value code="0x04" name="Passage">
+        </value>
+    </constant>
+
+    <constant type="BITMAP_16_BIT" class="DoorLockSupportedOperatingModesBitmap">
+        <name>Door Lock Lock Type</name>
+        <value code="0x00" name="Normal">
+        </value>
+        <value code="0x01" name="Vacation">
+        </value>
+        <value code="0x02" name="Privacy">
+        </value>
+        <value code="0x03" name="No RF Lock/Unlock">
+        </value>
+        <value code="0x04" name="Passage">
+        </value>
+    </constant>
+
+    <constant type="BITMAP_16_BIT" class="DoorLockLedSettingsEnum">
+        <name>Door Lock LED Settings</name>
+        <value code="0x00" name="Never">
+        </value>
+        <value code="0x01" name="All Except Allowed Access">
+        </value>
+        <value code="0x02" name="All">
+        </value>
+    </constant>
+
+    <constant type="UNSIGNED_8_BIT_INTEGER" class="DoorLockEventSource">
+        <name>Door Lock Event Source</name>
+        <value code="0x00" name="Keypad">
+        </value>
+        <value code="0x01" name="RF">
+        </value>
+        <value code="0x02" name="Manual">
+        </value>
+        <value code="0x03" name="RFID">
+        </value>
+        <value code="0xFF" name="Indeterminate">
+        </value>
+    </constant>
+
+    <constant type="UNSIGNED_8_BIT_INTEGER" class="DoorLockOperationEventCode">
+        <name>Door Lock Operation Event Code</name>
+        <value code="0x00" name="Unknown Or Mfg Specific">
+        </value>
+        <value code="0x01" name="Lock">
+        </value>
+        <value code="0x02" name="Unlock">
+        </value>
+        <value code="0x03" name="Lock Failure Invalid PIN or ID">
+        </value>
+        <value code="0x04" name="Lock Failure Invalid Schedule">
+        </value>
+        <value code="0x05" name="Unlock Failure Invalid PIN or ID">
+        </value>
+        <value code="0x06" name="Unlock Failure Invalid Schedule">
+        </value>
+        <value code="0x07" name="One Touch Lock">
+        </value>
+        <value code="0x08" name="Key Lock">
+        </value>
+        <value code="0x09" name="Key Unlock">
+        </value>
+        <value code="0x0A" name="Auto Lock">
+        </value>
+        <value code="0x0B" name="Schedule Lock">
+        </value>
+        <value code="0x0C" name="Schedule Unlock">
+        </value>
+        <value code="0x0D" name="Manual Lock">
+        </value>
+        <value code="0x0E" name="Manual Unlock">
+        </value>
+        <value code="0x0F" name="Non Access User Event">
+        </value>
+    </constant>
+    
+    <constant type="UNSIGNED_8_BIT_INTEGER" class="DoorLockProgramEventCode">
+        <name>Door Lock Program Event Code</name>
+        <value code="0x00" name="Unknown Or Mfg Specific">
+        </value>
+        <value code="0x01" name="Master Code Changed">
+        </value>
+        <value code="0x02" name="PINCodeAdded">
+        </value>
+        <value code="0x03" name="PINCodeDeleted">
+        </value>
+        <value code="0x04" name="PINCodeChanged">
+        </value>
+        <value code="0x05" name="RFIDCodeAdded">
+        </value>
+        <value code="0x06" name="RFIDCodeDeleted">
+        </value>    
+    </constant>
 
 </cluster>
