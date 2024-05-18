@@ -1031,7 +1031,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     ZclAttribute attribute = keCluster
                             .getLocalAttribute(ZclKeyEstablishmentCluster.ATTR_SERVERKEYESTABLISHMENTSUITE);
                     if (attribute == null) {
-                        logger.debug("{}: Unable to get ATTR_SERVERKEYESTABLISHMENTSUITE");
+                        logger.debug("{}: Unable to get ATTR_SERVERKEYESTABLISHMENTSUITE", node.getIeeeAddress());
                     } else {
                         attribute.setValue(1);
                         attribute.setImplemented(true);

@@ -739,7 +739,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     || command.getHardwareVersion() > otaFile.getMaximumHardware()) {
                 logger.debug(
                         "{} OTA Error: Request is inconsistent with hardware - requested={}, file min={}, file max={}",
-                        command.getHardwareVersion(), otaFile.getMinimumHardware(), otaFile.getMaximumHardware());
+                        cluster.getZigBeeAddress(), command.getHardwareVersion(), otaFile.getMinimumHardware(),
+                        otaFile.getMaximumHardware());
                 sendNoImageAvailableResponse(command);
                 return true;
             }
@@ -748,7 +749,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         // Some devices may make further requests for files once they have been updated
         // By default, don't resend the existing file
         if (!allowExistingFile && command.getFileVersion().equals(otaFile.getFileVersion())) {
-            logger.debug("{} OTA Error: Request is for existing file version {}", command.getFileVersion());
+            logger.debug("{} OTA Error: Request is for existing file version {}", cluster.getZigBeeAddress(),
+                    command.getFileVersion());
             sendNoImageAvailableResponse(command);
             return true;
         }
