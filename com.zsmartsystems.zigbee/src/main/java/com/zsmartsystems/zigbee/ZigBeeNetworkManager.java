@@ -605,6 +605,15 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
 
     /**
+     * Gets the {@link ApdDataEntity} in use by the network manager. This allows configuration of the APSDE.
+     *
+     * @return the {@link ApdDataEntity} in use by the network manager.
+     */
+    public ApsDataEntity getApsDataEntity() {
+        return apsDataEntity;
+    }
+
+    /**
      * Set the current link key in use by the system.
      * <p>
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}

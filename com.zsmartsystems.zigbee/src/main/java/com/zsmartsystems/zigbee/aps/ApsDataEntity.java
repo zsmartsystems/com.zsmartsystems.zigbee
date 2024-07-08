@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  *
  */
 public class ApsDataEntity {
-    private static final long DUPLICATE_TIME_WINDOW = 5000;
+    private static final long DUPLICATE_TIME_WINDOW = 15000;
 
     private static final int FRAGMENTATION_LENGTH = 78;
     private static final int FRAGMENTATION_WINDOW = 1;
