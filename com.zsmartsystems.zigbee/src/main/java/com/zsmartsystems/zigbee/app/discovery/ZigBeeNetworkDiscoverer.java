@@ -386,8 +386,8 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
             logger.debug("NWK Discovery for {} IeeeAddressRequest returned {}", String.format("%04X", networkAddress),
                     ieeeAddressResponse);
-            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS
-                    && startIndex == ieeeAddressResponse.getStartIndex()) {
+            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS &&
+                    ieeeAddressResponse.getStartIndex() != null && startIndex == ieeeAddressResponse.getStartIndex()) {
                 associatedDevices.addAll(ieeeAddressResponse.getNwkAddrAssocDevList());
 
                 startIndex += ieeeAddressResponse.getNwkAddrAssocDevList().size();
