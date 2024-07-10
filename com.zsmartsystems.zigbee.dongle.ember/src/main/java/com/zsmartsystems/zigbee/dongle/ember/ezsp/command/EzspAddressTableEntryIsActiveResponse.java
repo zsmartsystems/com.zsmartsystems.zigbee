@@ -37,9 +37,9 @@ public class EzspAddressTableEntryIsActiveResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspAddressTableEntryIsActiveResponse(int[] inputBuffer) {
+    public EzspAddressTableEntryIsActiveResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         active = deserializer.deserializeBool();

@@ -168,10 +168,6 @@ public class EzspDeserializer {
         return EmberStatus.getEmberStatus(deserializeUInt8());
     }
 
-    public EmberKeyStatus deserializeEmberKeyStatus() {
-        return EmberKeyStatus.getEmberKeyStatus(deserializeUInt8());
-    }
-
     public EmberConcentratorType deserializeEmberConcentratorType() {
         return EmberConcentratorType.getEmberConcentratorType(deserializeUInt16());
     }
