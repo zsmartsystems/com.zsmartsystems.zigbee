@@ -92,6 +92,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/040D_CarbonDioxide.xml");
 
         zclParser.addFile("src/main/resources/042A_PM25Measurement.xml");
+        zclParser.addFile("src/main/resources/042B_FormaldehydeMeasurement.xml");
 
         zclParser.addFile("src/main/resources/0500_IasZone.xml");
         zclParser.addFile("src/main/resources/0501_IasAce.xml");

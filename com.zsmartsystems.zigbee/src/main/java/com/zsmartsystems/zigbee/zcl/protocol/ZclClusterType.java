@@ -29,6 +29,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclFanControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclFlowMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclFormaldehydeMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGreenPowerCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasAceCluster;
@@ -74,7 +75,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-07-16T20:26:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-07-16T22:58:38Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -116,6 +117,7 @@ public enum ZclClusterType {
     CARBON_MONOXIDE_MEASUREMENT(0x040C, ZclCarbonMonoxideMeasurementCluster.class, "Carbon Monoxide Measurement"),
     CARBON_DIOXIDE_MEASUREMENT(0x040D, ZclCarbonDioxideMeasurementCluster.class, "Carbon Dioxide Measurement"),
     PM2_5_MEASUREMENT(0x042A, ZclPm25MeasurementCluster.class, "PM2.5 Measurement"),
+    FORMALDEHYDE_MEASUREMENT(0x042B, ZclFormaldehydeMeasurementCluster.class, "Formaldehyde Measurement"),
     IAS_ZONE(0x0500, ZclIasZoneCluster.class, "IAS Zone"),
     IAS_ACE(0x0501, ZclIasAceCluster.class, "IAS ACE"),
     IAS_WD(0x0502, ZclIasWdCluster.class, "IAS WD"),
