@@ -18,6 +18,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclAnalogInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBallastConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCarbonDioxideMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCarbonMonoxideMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclCommissioningCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDehumidificationControlCluster;
@@ -48,6 +50,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclOccupancySensingCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffSwitchConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPm25MeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPowerConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPrepaymentCluster;
@@ -71,7 +74,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-08T20:56:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-07-16T20:26:44Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -110,6 +113,9 @@ public enum ZclClusterType {
     OCCUPANCY_SENSING(0x0406, ZclOccupancySensingCluster.class, "Occupancy Sensing"),
     LEAF_WETNESS_MEASUREMENT(0x0407, ZclLeafWetnessMeasurementCluster.class, "Leaf Wetness Measurement"),
     SOIL_MOISTURE_MEASUREMENT(0x0408, ZclSoilMoistureMeasurementCluster.class, "Soil Moisture Measurement"),
+    CARBON_MONOXIDE_MEASUREMENT(0x040C, ZclCarbonMonoxideMeasurementCluster.class, "Carbon Monoxide Measurement"),
+    CARBON_DIOXIDE_MEASUREMENT(0x040D, ZclCarbonDioxideMeasurementCluster.class, "Carbon Dioxide Measurement"),
+    PM2_5_MEASUREMENT(0x042A, ZclPm25MeasurementCluster.class, "PM2.5 Measurement"),
     IAS_ZONE(0x0500, ZclIasZoneCluster.class, "IAS Zone"),
     IAS_ACE(0x0501, ZclIasAceCluster.class, "IAS ACE"),
     IAS_WD(0x0502, ZclIasWdCluster.class, "IAS WD"),
