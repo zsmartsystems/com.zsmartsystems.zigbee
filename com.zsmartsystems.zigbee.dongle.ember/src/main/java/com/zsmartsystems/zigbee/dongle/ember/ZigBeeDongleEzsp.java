@@ -769,9 +769,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         emberApsFrame.setDestinationEndpoint(apsFrame.getDestinationEndpoint());
         emberApsFrame.setSequence(apsFrame.getApsCounter());
         if (apsFrame.getAckRequest()) {
-            //FIXME dans la version officielle la ligne suivante a été supprimée
-            emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
         }
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
 
