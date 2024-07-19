@@ -496,7 +496,29 @@ public abstract class EzspFrame {
         return null;
     }
 
+    /**
+     * Set the EZSP version to use
+     *
+     * @param ezspVersion the EZSP protocol version
+     * @return true if the version is supported
+     */
+    public static boolean setEzspVersion(int ezspVersion) {
+        if (ezspVersion <= EZSP_MAX_VERSION && ezspVersion >= EZSP_MIN_VERSION) {
+            EzspFrame.ezspVersion = ezspVersion;
+            return true;
+        }
 
+        return false;
+    }
+
+    /**
+     * Gets the current version of EZSP that is in use. This will default to the minimum supported version on startup
+     *
+     * @return the current version of EZSP
+     */
+    public static int getEzspVersion() {
+        return EzspFrame.ezspVersion;
+    }
 
     private static String frameToString(int[] inputBuffer) {
         StringBuilder result = new StringBuilder();
