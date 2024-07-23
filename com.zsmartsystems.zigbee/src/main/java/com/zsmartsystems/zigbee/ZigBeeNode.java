@@ -476,21 +476,6 @@ public class ZigBeeNode {
     }
 
     /**
-     * Returns true if the node's received in ON when idle.
-     *
-     * @return true if the node's received in ON when idle
-     */
-    public Boolean isReceiverOnWhenIdle() {
-        if (nodeDescriptor != null) {
-            return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
-        }
-        if(macCapabilities != null) {
-            return macCapabilities.contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
-        }
-        return null;
-    }
-
-    /**
      * Returns true if the node is the primary trust centre. This tests the {@link NodeDescriptor}.
      *
      * @return true if the node is the primary trust centre
