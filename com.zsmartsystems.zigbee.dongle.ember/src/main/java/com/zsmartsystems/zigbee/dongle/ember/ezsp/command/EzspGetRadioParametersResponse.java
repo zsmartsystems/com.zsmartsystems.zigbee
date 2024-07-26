@@ -42,9 +42,9 @@ public class EzspGetRadioParametersResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetRadioParametersResponse(int[] inputBuffer) {
+    public EzspGetRadioParametersResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
