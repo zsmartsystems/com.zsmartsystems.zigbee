@@ -79,6 +79,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDiagnosticsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasAceCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
@@ -125,6 +126,7 @@ public class ZigBeeConsoleMain {
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
                         ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
+                        ZclIasAceCluster.CLUSTER_ID,
                         ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID,
                         ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
@@ -138,7 +140,7 @@ public class ZigBeeConsoleMain {
                         ZclScenesCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
-                        ZclOtaUpgradeCluster.CLUSTER_ID, ZclMeteringCluster.CLUSTER_ID,
+                        ZclOtaUpgradeCluster.CLUSTER_ID, ZclMeteringCluster.CLUSTER_ID, ZclIasAceCluster.CLUSTER_ID,
                         ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
                         ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
