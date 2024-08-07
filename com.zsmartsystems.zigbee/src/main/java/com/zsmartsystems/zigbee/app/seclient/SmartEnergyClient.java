@@ -393,11 +393,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         synchronized (this) {
             // Notify the listeners
             for (final SmartEnergyStatusCallback statusListener : statusListeners) {
-                networkManager.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        statusListener.sepStatusUpdate(updatedStatus);
-                    }
+                networkManager.getNotificationService().execute(() -> {
+                    statusListener.sepStatusUpdate(updatedStatus);
                 });
             }
         }
@@ -465,78 +462,75 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     private void timerStart(int milliseconds) {
         logger.debug("SEP Extension: SEP discovery timer start in {}ms at state {}", milliseconds, seState);
         timerCancel();
-        timer = networkManager.scheduleTask(new Runnable() {
-            @Override
-            public void run() {
-                logger.debug("SEP Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
-                if (retryCounter++ > SEP_RETRIES) {
-                    logger.debug("SEP Extension: SEP discovery terminated - too many retries");
-                    discoveryStop();
-                    return;
-                }
-                logger.debug("SEP Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
+        timer = networkManager.scheduleTask(() -> {
+            logger.debug("SEP Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
+            if (retryCounter++ > SEP_RETRIES) {
+                logger.debug("SEP Extension: SEP discovery terminated - too many retries");
+                discoveryStop();
+                return;
+            }
+            logger.debug("SEP Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
 
-                switch (seState) {
-                    case DISCOVER_TRUST_CENTRE:
-                        if (networkManager.getNode(0) != null
-                                && networkManager.getNode(0).getLogicalType() != LogicalType.UNKNOWN) {
-                            logger.debug("SEP Extension: Trust centre already known");
-                            updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
-                            timerStart(TIMER_IMMEDIATE);
-                            break;
-                        }
-                        ZigBeeNode trustCentre = networkManager.getNode(0);
-                        if (trustCentre == null) {
-                            IeeeAddress ieeeAddress = requestIeeeAddress(0);
-                            if (ieeeAddress == null) {
-                                logger.debug("SEP Extension: SEP discovery did not find TC IEEE address");
-                                timerStart(SEP_RETRY_PERIOD);
-                                break;
-                            }
-                            logger.debug("SEP Extension: SEP discovery found TC IEEE address - {}", ieeeAddress);
-
-                            trustCentre = new ZigBeeNode(networkManager, ieeeAddress);
-                            trustCentre.setNetworkAddress(0);
-                        }
-                        try {
-                            if (requestNodeDescriptor(trustCentre)) {
-                            }
-                        } catch (InterruptedException | ExecutionException e) {
-                            logger.debug("SEP Extension: Exception getting node descriptor for address - {}",
-                                    trustCentre.getIeeeAddress());
-                        }
-                        networkManager.updateNode(trustCentre);
-
+            switch (seState) {
+                case DISCOVER_TRUST_CENTRE:
+                    if (networkManager.getNode(0) != null
+                            && networkManager.getNode(0).getLogicalType() != LogicalType.UNKNOWN) {
+                        logger.debug("SEP Extension: Trust centre already known");
                         updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
                         timerStart(TIMER_IMMEDIATE);
                         break;
-                    case DISCOVER_KEY_ESTABLISHMENT_CLUSTER:
-                        discoverKeyEstablishmentServer();
-                        // Timer restarted in discoverServices
-                        break;
-                    case PERFORM_KEY_ESTABLISHMENT:
-                        performKeyEstablishment();
-                        // Timer restarted in keyEstablishmentCallback
-                        break;
-                    case DISCOVER_METERING_SERVERS:
-                        discoverMeteringServers();
-                        // Timer restarted in discoverServices
-                        break;
-                    case DISCOVER_KEEP_ALIVE:
-                        discoverKeepAlive();
-                        // Timer restarted in discoverServices
-                        break;
-                    case DISCOVER_KEEP_ALIVE_TIMEOUT:
-                        discoverKeepAliveTimeout();
-                        // Timer restarted in updateClientState
-                        break;
-                    case KEEP_ALIVE:
-                        keepalivePoll();
-                        timerStart(keepaliveTimeout);
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    ZigBeeNode trustCentre = networkManager.getNode(0);
+                    if (trustCentre == null) {
+                        IeeeAddress ieeeAddress = requestIeeeAddress(0);
+                        if (ieeeAddress == null) {
+                            logger.debug("SEP Extension: SEP discovery did not find TC IEEE address");
+                            timerStart(SEP_RETRY_PERIOD);
+                            break;
+                        }
+                        logger.debug("SEP Extension: SEP discovery found TC IEEE address - {}", ieeeAddress);
+
+                        trustCentre = new ZigBeeNode(networkManager, ieeeAddress);
+                        trustCentre.setNetworkAddress(0);
+                    }
+                    try {
+                        if (requestNodeDescriptor(trustCentre)) {
+                        }
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.debug("SEP Extension: Exception getting node descriptor for address - {}",
+                                trustCentre.getIeeeAddress());
+                    }
+                    networkManager.updateNode(trustCentre);
+
+                    updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
+                    timerStart(TIMER_IMMEDIATE);
+                    break;
+                case DISCOVER_KEY_ESTABLISHMENT_CLUSTER:
+                    discoverKeyEstablishmentServer();
+                    // Timer restarted in discoverServices
+                    break;
+                case PERFORM_KEY_ESTABLISHMENT:
+                    performKeyEstablishment();
+                    // Timer restarted in keyEstablishmentCallback
+                    break;
+                case DISCOVER_METERING_SERVERS:
+                    discoverMeteringServers();
+                    // Timer restarted in discoverServices
+                    break;
+                case DISCOVER_KEEP_ALIVE:
+                    discoverKeepAlive();
+                    // Timer restarted in discoverServices
+                    break;
+                case DISCOVER_KEEP_ALIVE_TIMEOUT:
+                    discoverKeepAliveTimeout();
+                    // Timer restarted in updateClientState
+                    break;
+                case KEEP_ALIVE:
+                    keepalivePoll();
+                    timerStart(keepaliveTimeout);
+                    break;
+                default:
+                    break;
             }
         }, milliseconds);
     }
