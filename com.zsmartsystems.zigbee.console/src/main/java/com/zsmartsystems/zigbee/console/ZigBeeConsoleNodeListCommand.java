@@ -60,7 +60,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-9s  %-3s  %-25s  %-25s  %-15s  %-15s",
+        String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-10s  %-3s  %-25s  %-35s  %-20s  %-15s",
                 "Network", "Addr", "IEEE Address", "Logical Type", "State", "EP", "Profile", "Device Type",
                 "Manufacturer", "Model");
 
@@ -73,9 +73,9 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     private void printNode(ZigBeeNode node, PrintStream out) {
-        String nodeInfo = String.format("%7d  %04X  %-16s  %-12s  %-9s", node.getNetworkAddress(),
+        String nodeInfo = String.format("%7d  %04X  %-16s  %-12s  %-10s", node.getNetworkAddress(),
                 node.getNetworkAddress(), node.getIeeeAddress(), node.getLogicalType(), node.getNodeState());
-        String nodeInfoPadding = String.format("%7s  %4s  %16s  %12s  %9s", "", "", "", "", "");
+        String nodeInfoPadding = String.format("%7s  %4s  %16s  %12s  %10s", "", "", "", "", "");
 
         List<ZigBeeEndpoint> endpoints = new ArrayList<>(node.getEndpoints());
         Collections.sort(endpoints, (ep1, ep2) -> ep1.getEndpointId() - ep2.getEndpointId());
@@ -98,7 +98,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                         .toString();
             }
             boolean showManufacturerAndModel = endpoint.getParentNode().getNetworkAddress() != 0;
-            String endpointInfo = String.format("%3d  %-25s  %-25s  %-15s  %-15s", endpoint.getEndpointId(),
+            String endpointInfo = String.format("%3d  %-25s  %-35s  %-20s  %-15s", endpoint.getEndpointId(),
                     profileType, deviceType, showManufacturerAndModel ? getManufacturer(endpoint) : "",
                     showManufacturerAndModel ? getModel(endpoint) : "");
 
