@@ -869,17 +869,16 @@ public class AshFrameHandler implements EzspProtocolHandler {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("ASH: Error sending EZSP transaction: Future is null");
-            return null;
-        }
-
-        try {
-            futureResponse.get(timeout, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException e) {
-            futureResponse.cancel(true);
-            logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
-        } catch (TimeoutException e) {
-            futureResponse.cancel(true);
-            logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
+        } else {
+            try {
+                futureResponse.get(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException | ExecutionException e) {
+                futureResponse.cancel(true);
+                logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
+            } catch (TimeoutException e) {
+                futureResponse.cancel(true);
+                logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
+            }
         }
 
         return ezspTransaction;
