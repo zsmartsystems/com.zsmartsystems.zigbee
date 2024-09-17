@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -46,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishPriceCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -96,7 +95,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * A UTCTime field containing the current time as determined by the device. This field
      * provides an extra value-added feature for the broadcast price signals.
      */
-    private Calendar currentTime;
+    private ZigBeeUtcTime currentTime;
 
     /**
      * Unit Of Measure command message field.
@@ -153,7 +152,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * If Block Charging only is in use, the Duration in Minutes field of the Publish Price
      * command shall be set to 0xFFFF indicating the price is valid “until changed”.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Duration command message field.
@@ -284,12 +283,12 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * @param providerId {@link Integer} Provider ID
      * @param rateLabel {@link ByteArray} Rate Label
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param currentTime {@link Calendar} Current Time
+     * @param currentTime {@link ZigBeeUtcTime} Current Time
      * @param unitOfMeasure {@link Integer} Unit Of Measure
      * @param currency {@link Integer} Currency
      * @param priceTrailingDigitAndTier {@link Integer} Price Trailing Digit And Tier
      * @param numberOfPriceTiers {@link Integer} Number Of Price Tiers
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param duration {@link Integer} Duration
      * @param price {@link Integer} Price
      * @param priceRatio {@link Integer} Price Ratio
@@ -310,12 +309,12 @@ public class PublishPriceCommand extends ZclPriceCommand {
             Integer providerId,
             ByteArray rateLabel,
             Integer issuerEventId,
-            Calendar currentTime,
+            ZigBeeUtcTime currentTime,
             Integer unitOfMeasure,
             Integer currency,
             Integer priceTrailingDigitAndTier,
             Integer numberOfPriceTiers,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer duration,
             Integer price,
             Integer priceRatio,
@@ -465,7 +464,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      *
      * @return the Current Time
      */
-    public Calendar getCurrentTime() {
+    public ZigBeeUtcTime getCurrentTime() {
         return currentTime;
     }
 
@@ -479,7 +478,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setCurrentTime(final Calendar currentTime) {
+    public void setCurrentTime(final ZigBeeUtcTime currentTime) {
         this.currentTime = currentTime;
     }
 
@@ -624,7 +623,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -643,7 +642,7 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

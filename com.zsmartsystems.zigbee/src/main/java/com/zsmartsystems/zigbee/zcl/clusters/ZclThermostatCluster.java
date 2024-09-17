@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -27,6 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.thermostat.GetWeeklyScheduleRespons
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetWeeklySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetpointRaiseLowerCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.ZclThermostatCommand;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2106,7 +2106,7 @@ public class ZclThermostatCluster extends ZclCluster {
     /**
      * Get the <i>Setpoint Change Source Timestamp</i> attribute [attribute ID <b>0x0032</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -2128,21 +2128,21 @@ public class ZclThermostatCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getSetpointChangeSourceTimestamp(final long refreshPeriod) {
+    public ZigBeeUtcTime getSetpointChangeSourceTimestamp(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP));
     }
 
     /**

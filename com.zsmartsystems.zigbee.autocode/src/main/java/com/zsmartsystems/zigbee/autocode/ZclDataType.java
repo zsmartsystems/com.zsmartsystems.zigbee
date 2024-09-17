@@ -111,7 +111,7 @@ public class ZclDataType {
         dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
         dataTypeMapping.put("LONG_OCTET_STRING", new DataTypeMap("ByteArray", 0x43, -1, false));
         dataTypeMapping.put("LONG_CHARACTER_STRING", new DataTypeMap("String", 0x44, -1, false));
-        dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));
+        dataTypeMapping.put("UTCTIME", new DataTypeMap("ZigBeeUtcTime", 0xe2, 4, true, 0xffffffff));
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
         dataTypeMapping.put("ZCL_STATUS", new DataTypeMap("ZclStatus", 0, 0, false));
         dataTypeMapping.put("ZIGBEE_DATA_TYPE", new DataTypeMap("ZclDataType", 0, 0, false));

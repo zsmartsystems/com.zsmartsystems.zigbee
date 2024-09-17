@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishCo2ValueCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,7 +71,7 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * replacement/superseding PublishCO2Value command is used in place of this
      * cancellation mechanism).
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Tariff Type command message field.
@@ -127,7 +126,7 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param tariffType {@link Integer} Tariff Type
      * @param co2Value {@link Integer} CO2 Value
      * @param co2ValueUnit {@link Integer} CO2 Value Unit
@@ -136,7 +135,7 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
     public PublishCo2ValueCommand(
             Integer providerId,
             Integer issuerEventId,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer tariffType,
             Integer co2Value,
             Integer co2ValueUnit,
@@ -231,7 +230,7 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -250,7 +249,7 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 
