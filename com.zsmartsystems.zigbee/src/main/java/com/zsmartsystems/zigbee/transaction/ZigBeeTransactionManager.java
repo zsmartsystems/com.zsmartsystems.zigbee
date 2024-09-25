@@ -447,7 +447,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         if (transaction.getTransactionId() == null) {
             transaction.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
         }
-        logger.debug("{}: Sending {}", transaction.getDestinationAddress(), transaction);
+        logger.debug("{}: Sending {}", transaction.getIeeeAddress(), transaction);
         addTransactionListener(transaction);
         networkManager.sendCommand(transaction.startTransaction());
     }
@@ -485,7 +485,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             outstandingTransactions.add(transaction);
         }
-        logger.debug("transactionListenerAdded: {} outstanding", outstandingTransactions.size());
+        logger.trace("transactionListenerAdded: {} outstanding", outstandingTransactions.size());
     }
 
     /**
@@ -499,7 +499,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             outstandingTransactions.remove(transaction);
         }
-        logger.debug("transactionListenerRemoved: {} outstanding", outstandingTransactions.size());
+        logger.trace("transactionListenerRemoved: {} outstanding", outstandingTransactions.size());
     }
 
     /**
@@ -577,7 +577,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the current {@link ZigBeeTransportProgressState} for the transaction
      */
     private void notifyTransactionProgress(final int transactionId, ZigBeeTransportProgressState state) {
-        logger.debug("notifyTransactionProgress: TID={}, state={}, outstanding={}",
+        logger.trace("notifyTransactionProgress: TID={}, state={}, outstanding={}",
                 String.format("%02X", transactionId), state, outstandingTransactions.size());
         synchronized (outstandingTransactions) {
             // Notify the listeners

@@ -257,7 +257,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
 
                 if (deferredWriteTimes.get(node.getIeeeAddress()) != null
                         && deferredWriteTimes.get(node.getIeeeAddress()) < System.nanoTime()) {
-                    logger.debug("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
+                    logger.trace("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
 
                     // Run the write immediately.
                     // This is still run through the scheduler to ensure we don't make
@@ -269,7 +269,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
                 deferredWriteTimes.put(node.getIeeeAddress(), System.nanoTime() + deferredWriteTimeout);
             }
 
-            logger.debug("{}: Data store: Deferring write for {}ms.", node.getIeeeAddress(), deferredDelay);
+            logger.trace("{}: Data store: Deferring write for {}ms.", node.getIeeeAddress(), deferredDelay);
 
             CommitNodeTask commitTask = new CommitNodeTask(node);
             deferredWriteFutures.put(node.getIeeeAddress(),
