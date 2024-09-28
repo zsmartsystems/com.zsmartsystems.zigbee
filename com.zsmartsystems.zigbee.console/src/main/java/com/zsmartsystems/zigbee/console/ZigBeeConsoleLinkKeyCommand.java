@@ -28,7 +28,7 @@ public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Sets the link key int the dongle, optionally computing the MMO Hash from the join code";
+        return "Sets the link key in the dongle, optionally computing the MMO Hash from the join code";
     }
 
     @Override

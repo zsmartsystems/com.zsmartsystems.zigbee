@@ -7,7 +7,9 @@
  */
 package com.zsmartsystems.zigbee.database;
 
+import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -23,6 +25,9 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * A simple <key, value> data store is also defined to allow the system to persist system critical information between
  * restarts.
+ * <p>
+ * Backup Read and Write methods are defined to allow the system to write and restore a single, coherent set of backup
+ * data for the network.
  *
  * @author Chris Jackson
  *
@@ -82,4 +87,17 @@ public interface ZigBeeNetworkDataStore {
     default Object readObject(String key) {
         return null;
     }
+
+    default boolean writeBackup(ZigBeeNetworkBackupDao backup) {
+        return false;
+    }
+
+    default ZigBeeNetworkBackupDao readBackup(UUID uuid) {
+        return null;
+    }
+
+    default Set<ZigBeeNetworkBackupDao> listBackups() {
+        return Collections.emptySet();
+    }
+
 }
