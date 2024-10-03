@@ -95,7 +95,6 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
     protected static final int FRAME_ID_ADDRESS_TABLE_ENTRY_IS_ACTIVE = 0x5B;
     protected static final int FRAME_ID_AES_MMO_HASH = 0x6F;
-    protected static final int FRAME_ID_BECOME_TRUST_CENTER = 0x77;
     protected static final int FRAME_ID_BINDING_IS_ACTIVE = 0x2E;
     protected static final int FRAME_ID_CALCULATE_SMACS = 0x9F;
     protected static final int FRAME_ID_CALCULATE_SMACS283K1 = 0xEA;
@@ -213,6 +212,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_REMOTE_SET_BINDING_HANDLER = 0x31;
     protected static final int FRAME_ID_REMOVE_DEVICE = 0xA8;
     protected static final int FRAME_ID_REQUEST_LINK_KEY = 0x14;
+    protected static final int FRAME_ID_RESET_NODE = 0x104;
     protected static final int FRAME_ID_RESET_TO_FACTORY_DEFAULTS = 0xCC;
     protected static final int FRAME_ID_SCAN_COMPLETE_HANDLER = 0x1C;
     protected static final int FRAME_ID_SEND_BROADCAST = 0x36;
@@ -248,6 +248,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_START_SCAN = 0x1A;
     protected static final int FRAME_ID_STOP_SCAN = 0x1D;
     protected static final int FRAME_ID_SWITCH_NETWORK_KEY_HANDLER = 0x6E;
+    protected static final int FRAME_ID_TOKEN_FACTORY_RESET = 0x77;
     protected static final int FRAME_ID_TRUST_CENTER_JOIN_HANDLER = 0x24;
     protected static final int FRAME_ID_VERSION = 0x00;
     protected static final int FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER = 0x9B;
@@ -265,7 +266,6 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ADD_TRANSIENT_LINK_KEY, EzspAddTransientLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_ADDRESS_TABLE_ENTRY_IS_ACTIVE, EzspAddressTableEntryIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_AES_MMO_HASH, EzspAesMmoHashResponse.class);
-        ezspHandlerMap.put(FRAME_ID_BECOME_TRUST_CENTER, EzspBecomeTrustCenterResponse.class);
         ezspHandlerMap.put(FRAME_ID_BINDING_IS_ACTIVE, EzspBindingIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS, EzspCalculateSmacsResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS283K1, EzspCalculateSmacs283k1Response.class);
@@ -383,6 +383,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_REMOTE_SET_BINDING_HANDLER, EzspRemoteSetBindingHandler.class);
         ezspHandlerMap.put(FRAME_ID_REMOVE_DEVICE, EzspRemoveDeviceResponse.class);
         ezspHandlerMap.put(FRAME_ID_REQUEST_LINK_KEY, EzspRequestLinkKeyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_RESET_NODE, EzspResetNodeResponse.class);
         ezspHandlerMap.put(FRAME_ID_RESET_TO_FACTORY_DEFAULTS, EzspResetToFactoryDefaultsResponse.class);
         ezspHandlerMap.put(FRAME_ID_SCAN_COMPLETE_HANDLER, EzspScanCompleteHandler.class);
         ezspHandlerMap.put(FRAME_ID_SEND_BROADCAST, EzspSendBroadcastResponse.class);
@@ -418,6 +419,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_START_SCAN, EzspStartScanResponse.class);
         ezspHandlerMap.put(FRAME_ID_STOP_SCAN, EzspStopScanResponse.class);
         ezspHandlerMap.put(FRAME_ID_SWITCH_NETWORK_KEY_HANDLER, EzspSwitchNetworkKeyHandler.class);
+        ezspHandlerMap.put(FRAME_ID_TOKEN_FACTORY_RESET, EzspTokenFactoryResetResponse.class);
         ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
         ezspHandlerMap.put(FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER, EzspZigbeeKeyEstablishmentHandler.class);

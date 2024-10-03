@@ -8,8 +8,14 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkBackupDao;
+import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 
 /**
  * Console command to backup the network.
@@ -47,28 +53,58 @@ public class ZigBeeConsoleNetworkBackupCommand extends ZigBeeConsoleAbstractComm
 
         switch (args[1].toUpperCase()) {
             case "LIST":
-                listBackups();
+                listBackups(out, networkManager);
                 break;
             case "BACKUP":
-                createBackup();
+                createBackup(out, networkManager);
                 break;
             case "RESTORE":
-                restoreBackup();
+                restoreBackup(out, networkManager, UUID.fromString(args[2]));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown option '" + args[1] + "'");
         }
     }
 
-    private void listBackups() {
+    private void listBackups(PrintStream out, ZigBeeNetworkManager networkManager) {
+        Map<Long, ZigBeeNetworkBackupDao> sortedBackups = new TreeMap<>();
+        for (ZigBeeNetworkBackupDao backup : networkManager.listBackups()) {
+            sortedBackups.put(backup.getDate().getTime(), backup);
+        }
 
+        out.println(
+                "DATE                      UUID                                  PANID  EPANID            CHANNEL     COORDINATOR       NODES");
+        for (ZigBeeNetworkBackupDao backup : sortedBackups.values()) {
+            ZigBeeNodeDao coordinator = null;
+            for (ZigBeeNodeDao node : backup.getNodes()) {
+                if (node.getNetworkAddress() == 0) {
+                    coordinator = node;
+                    break;
+                }
+            }
+            out.println(
+                    String.format("%s  %s  %04X   %s  %s  %s  %d", backup.getDate().toInstant().toString(),
+                            backup.getUuid(),
+                            backup.getPan(), backup.getEpan(), backup.getChannel(),
+                            (coordinator != null ? coordinator.getIeeeAddress() : "        "),
+                            backup.getNodes().size()));
+        }
     }
 
-    private void createBackup() {
-
+    private void createBackup(PrintStream out, ZigBeeNetworkManager networkManager) {
+        UUID uuid = networkManager.createBackup();
+        if (uuid == null) {
+            out.println("Error creating backup!!");
+        } else {
+            out.println("Backup created with UUID " + uuid);
+        }
     }
 
-    private void restoreBackup() {
-
+    private void restoreBackup(PrintStream out, ZigBeeNetworkManager networkManager, UUID uuid) {
+        if (networkManager.restoreBackup(uuid) == ZigBeeStatus.SUCCESS) {
+            out.println("Backup restored from " + uuid.toString());
+        } else {
+            out.println("Error restoring backup " + uuid.toString());
+        }
     }
 }

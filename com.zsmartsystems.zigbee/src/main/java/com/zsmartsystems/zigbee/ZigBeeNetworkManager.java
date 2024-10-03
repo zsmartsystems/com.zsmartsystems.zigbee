@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -36,8 +38,10 @@ import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkBackupDao;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager.GroupSynchronizationMethod;
@@ -2047,5 +2051,120 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             // Pass the update to the transaction if this is NACK or ACK for last/only fragment
             transactionManager.receiveCommandState(msgTag, state);
         }
+    }
+
+    /**
+     * Creates a backup of the {@link ZigBeeNetworkManager}, storing it in the {@link ZigBeeNetworkDataStore}
+     *
+     * @return a unique {@link UUID} referencing the backup
+     */
+    public UUID createBackup() {
+        ZigBeeNetworkBackupDao backup = new ZigBeeNetworkBackupDao();
+
+        backup.setUuid(UUID.randomUUID());
+        backup.setDate(new Date());
+
+        backup.setPan(getZigBeePanId());
+        backup.setEpan(getZigBeeExtendedPanId());
+        backup.setChannel(getZigBeeChannel());
+        backup.setNetworkKey(getZigBeeNetworkKey());
+        backup.setLinkKey(getZigBeeLinkKey());
+
+        Set<ZigBeeNodeDao> nodesDao = new HashSet<>();
+        for (ZigBeeNode node : getNodes()) {
+            nodesDao.add(node.getDao());
+        }
+        backup.setNodes(nodesDao);
+
+        return databaseManager.writeBackup(backup) ? backup.getUuid() : null;
+    }
+
+    /**
+     * Restores the backup referenced from the provided {@link UUID}.
+     *
+     * @param uuid the unique {@link UUID} referencing the backup to restore
+     * @return ZigBeeStatus.SUCCESS if the backup was restored
+     */
+    public ZigBeeStatus restoreBackup(UUID uuid) {
+        ZigBeeNetworkBackupDao backup = databaseManager.readBackup(uuid);
+        if (backup == null) {
+            logger.debug("Unable to restore from backup {}", uuid);
+            return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
+
+        switch (getNetworkState()) {
+            case UNINITIALISED:
+                break;
+            case INITIALISING:
+                break;
+            case ONLINE:
+                break;
+            case OFFLINE:
+                break;
+            case SHUTDOWN:
+                break;
+            default:
+                break;
+        }
+
+        // Take the network offline for reconfiguration
+        transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
+
+        // To properly re-add nodes, we must be INITIALIZING
+        // To call startup, we must be INITIALIZING
+        // Setting the state to INITIALIZING should also stop listeners receiving
+        // notifications as the nodes are removed and added.
+        setNetworkState(ZigBeeNetworkState.INITIALISING);
+
+        // Find the coordinator
+        ZigBeeNodeDao coordinator = null;
+        for (ZigBeeNodeDao node : backup.getNodes()) {
+            if (node.getNetworkAddress() == 0) {
+                coordinator = node;
+                break;
+            }
+        }
+
+        // Set the coordinator address
+        if (coordinator != null) {
+            transport.setIeeeAddress(coordinator.getIeeeAddress());
+            transport.setNwkAddress(coordinator.getNetworkAddress());
+        }
+
+        // Set the network configuration
+        setZigBeePanId(backup.getPan());
+        setZigBeeExtendedPanId(backup.getEpan());
+        setZigBeeChannel(backup.getChannel());
+        setZigBeeNetworkKey(backup.getNetworkKey());
+        setZigBeeLinkKey(backup.getLinkKey());
+
+        // Remove all existing nodes
+        for (ZigBeeNode node : networkNodes.values()) {
+            removeNode(node);
+        }
+
+        // Clear the data store
+        databaseManager.clear();
+
+        // Restore
+        for (ZigBeeNodeDao nodeDao : backup.getNodes()) {
+            ZigBeeNode node = new ZigBeeNode(this, nodeDao.getIeeeAddress());
+            node.setDao(nodeDao);
+            logger.debug("{}: Data store: Node was restored from backup.", node.getIeeeAddress());
+            updateNode(node);
+        }
+
+        return startup(true);
+    }
+
+    /**
+     * Returns a list of all backups found on the system (ie in the {@link ZigBeeDataStore}).
+     * The returned Set of {@link ZigBeeNetworkBackupDao} contains only the network information, and not all the
+     * {@link ZigBeeNode} data
+     *
+     * @return Set of {@link ZigBeeNetworkBackupDao} containing the network information
+     */
+    public Set<ZigBeeNetworkBackupDao> listBackups() {
+        return databaseManager.listBackups();
     }
 }

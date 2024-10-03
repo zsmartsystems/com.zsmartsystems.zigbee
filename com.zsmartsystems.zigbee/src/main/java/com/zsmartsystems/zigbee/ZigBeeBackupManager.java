@@ -9,12 +9,12 @@ package com.zsmartsystems.zigbee;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkBackupDao;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 
 /**
@@ -22,17 +22,17 @@ import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
  */
 public class ZigBeeBackupManager {
     private final ZigBeeNetworkManager networkManager;
-    private final ZigBeeNetworkDataStore dataStore;
+    private final ZigBeeNetworkDatabaseManager databaseManager;
 
     /**
      * Instantiates the {@link ZigBeeBackupManager} class
      *
      * @param networkManager
-     * @param dataStore
+     * @param databaseManager
      */
-    public ZigBeeBackupManager(ZigBeeNetworkManager networkManager, ZigBeeNetworkDataStore dataStore) {
+    public ZigBeeBackupManager(ZigBeeNetworkManager networkManager, ZigBeeNetworkDatabaseManager databaseManager) {
         this.networkManager = networkManager;
-        this.dataStore = dataStore;
+        this.databaseManager = databaseManager;
     }
 
     /**
@@ -43,8 +43,7 @@ public class ZigBeeBackupManager {
     public UUID createBackup() {
         ZigBeeNetworkBackupDao backup = new ZigBeeNetworkBackupDao();
 
-        Random random = new Random();
-        backup.setUuid(new UUID(random.nextLong(), random.nextLong()));
+        backup.setUuid(UUID.randomUUID());
         backup.setDate(new Date());
 
         backup.setPan(networkManager.getZigBeePanId());
@@ -59,7 +58,7 @@ public class ZigBeeBackupManager {
         }
         backup.setNodes(nodesDao);
 
-        return dataStore.writeBackup(backup) ? backup.getUuid() : null;
+        return databaseManager.writeBackup(backup) ? backup.getUuid() : null;
     }
 
     /**

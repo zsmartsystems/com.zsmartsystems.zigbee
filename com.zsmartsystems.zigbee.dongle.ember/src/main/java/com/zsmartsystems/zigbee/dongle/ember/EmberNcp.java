@@ -132,6 +132,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTokenFactoryResetRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTokenFactoryResetResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
@@ -1074,6 +1076,16 @@ public class EmberNcp {
     }
 
     /**
+     * Sets the custom EUI64 (long address) from the manufacturer information block on the NCP
+     *
+     * @param address {@link IeeeAddress} containing the custom address
+     * @return {@link EmberStatus}
+     */
+    public EmberStatus setMfgCustomEui64(IeeeAddress address) {
+        return setMfgToken(EzspMfgTokenId.EZSP_MFG_CUSTOM_EUI_64, address.getValue());
+    }
+
+    /**
      * Gets the install code stored in the NCP memory
      *
      * @return {@link ByteArray} defining the install code. May be empty if no installation code is defined, or null on
@@ -1331,6 +1343,28 @@ public class EmberNcp {
             return EzspStatus.UNKNOWN;
         }
         return response.getStatus();
+    }
+
+    /**
+     * Factory reset all configured Zigbee tokens.
+     *
+     * @param excludeOutgoingFC Exclude network and APS outgoing frame counter tokens.
+     * @param excludeBootCounter Exclude stack boot counter token.
+     * @return the response {@link EzspStatus}
+     */
+    public EzspStatus tokenFactoryReset(boolean excludeOutgoingFC, boolean excludeBootCounter) {
+        EzspTokenFactoryResetRequest request = new EzspTokenFactoryResetRequest();
+        request.setExcludeOutgoingFC(excludeOutgoingFC);
+        request.setExcludeBootCounter(excludeBootCounter);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspTokenFactoryResetResponse.class));
+        EzspTokenFactoryResetResponse response = (EzspTokenFactoryResetResponse) transaction
+                .getResponse();
+        if (response == null) {
+            return EzspStatus.UNKNOWN;
+        }
+        return EzspStatus.EZSP_SUCCESS;
     }
 
     private String intArrayToString(int[] payload) {
