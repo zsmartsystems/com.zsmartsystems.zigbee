@@ -88,14 +88,31 @@ public interface ZigBeeNetworkDataStore {
         return null;
     }
 
+    /**
+     * Writes a {@link ZigBeeNetworkBackupDao} to the data store
+     *
+     * @param backup
+     * @return
+     */
     default boolean writeBackup(ZigBeeNetworkBackupDao backup) {
         return false;
     }
 
+    /**
+     * Reads a {@link ZigBeeNetworkBackupDao} from the data store
+     *
+     * @param uuid the {@link UUID} of the backup
+     * @return the restored {@link ZigBeeNetworkBackupDao} or null
+     */
     default ZigBeeNetworkBackupDao readBackup(UUID uuid) {
         return null;
     }
 
+    /**
+     * Returns a summary of all backups in the system.
+     *
+     * @return A {@link Set} of {@link ZigBeeNetworkBackupDao} containing at least the network information
+     */
     default Set<ZigBeeNetworkBackupDao> listBackups() {
         return Collections.emptySet();
     }

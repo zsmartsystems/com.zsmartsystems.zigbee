@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transport;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
@@ -81,11 +82,35 @@ public interface ZigBeeTransportTransmit {
     IeeeAddress getIeeeAddress();
 
     /**
+     * Sets the {@link IeeeAddress}. Not all devices may allow the address to be set.
+     * <b>
+     * This is used to restore the network.
+     *
+     * @param ieeeAddress the {@link IeeeAddress} to set
+     * @return true if the address was set
+     */
+    default boolean setIeeeAddress(IeeeAddress ieeeAddress) {
+        return false;
+    }
+
+    /**
      * Returns the network address of the local device
      *
      * @return the network address of the local device. May return null if the address is not known.
      */
     Integer getNwkAddress();
+
+    /**
+     * Sets the network address. Not all devices may allow the address to be set.
+     * <b>
+     * This is used to restore the network.
+     *
+     * @param networkAddress the address to set
+     * @return true if the address was set
+     */
+    default boolean setNwkAddress(int networkAddress) {
+        return false;
+    }
 
     /**
      * Sends ZigBee Cluster Library command without waiting for response. Responses are provided to the framework
@@ -238,5 +263,16 @@ public interface ZigBeeTransportTransmit {
      * @param nodeDescriptor the {@link NodeDescriptor} of the node
      */
     default void setNodeDescriptor(IeeeAddress ieeeAddress, NodeDescriptor nodeDescriptor) {
+    }
+
+    /**
+     * Allows the network manager to set the state of the dongle. This allows the network to be taken offline for
+     * reconfiguration.
+     *
+     * @param networkState the {@link ZigBeeNetworkState} to set the network
+     * @return {@link ZigBeeStatus} with the status of function
+     */
+    default ZigBeeStatus setNetworkState(ZigBeeNetworkState networkState) {
+        return ZigBeeStatus.UNSUPPORTED;
     }
 }
