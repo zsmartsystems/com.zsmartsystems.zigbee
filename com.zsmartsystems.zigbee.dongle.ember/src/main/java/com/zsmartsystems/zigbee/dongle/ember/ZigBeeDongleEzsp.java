@@ -457,7 +457,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfigurer.setPolicy(stackPolicies);
         policies = stackConfigurer.getPolicy(stackPolicies.keySet());
         for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
-            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            EzspDecisionId decisionId = null;
+            try {
+                decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            } catch (Exception e) {
+                // Eat me!
+                // This is only for logging.
+            }
             logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
                     String.format("%02X", policy.getValue()));
         }
@@ -465,13 +471,22 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberNcp ncp = getEmberNcp();
 
         // Get the current network parameters so that any configuration updates start from here
-        networkParameters = ncp.getNetworkParameters().getParameters();
+        EzspGetNetworkParametersResponse networkParametersResponse = ncp.getNetworkParameters();
+        if (networkParametersResponse == null) {
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
+        networkParameters = networkParametersResponse.getParameters();
         logger.debug("Ember initial network parameters are {}", networkParameters);
 
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("Ember local IEEE Address is {}", ieeeAddress);
 
         ncp.getNetworkParameters();
+
+        if (!frameHandler.isAlive()) {
+            logger.error("Ember frame handler is not alive after initialize!");
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
 
         isConfigured = true;
         logger.debug("EZSP Dongle: initialize done");

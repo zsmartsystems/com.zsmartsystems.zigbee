@@ -728,4 +728,55 @@ public class ZigBeeDongleEzspTest {
         assertNull(dongle.getTcLinkKey());
         assertNotNull(dongle.getZigBeeNetworkKey());
     }
+
+    @Test
+    public void initializeNoNetorkParameters() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        final EzspVersionResponse version = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(version.getProtocolVersion()).thenReturn(4);
+
+        Mockito.when(ncp.getVersion()).thenReturn(version);
+
+        final ZigBeePort port = Mockito.mock(ZigBeePort.class);
+        Mockito.when(port.open()).thenReturn(true);
+
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(port) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        final ZigBeeTransportReceive receiver = Mockito.mock(ZigBeeTransportReceive.class);
+
+        dongle.setZigBeeTransportReceive(receiver);
+        assertEquals(ZigBeeStatus.COMMUNICATION_ERROR, dongle.initialize());
+    }
+
+    @Test
+    public void initializeSuccess() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        final EzspVersionResponse version = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(version.getProtocolVersion()).thenReturn(4);
+
+        Mockito.when(ncp.getVersion()).thenReturn(version);
+        Mockito.when(ncp.getNetworkParameters()).thenReturn(Mockito.mock(EzspGetNetworkParametersResponse.class));
+
+        final ZigBeePort port = Mockito.mock(ZigBeePort.class);
+        Mockito.when(port.open()).thenReturn(true);
+
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(port) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        final ZigBeeTransportReceive receiver = Mockito.mock(ZigBeeTransportReceive.class);
+
+        dongle.setZigBeeTransportReceive(receiver);
+        assertEquals(ZigBeeStatus.SUCCESS, dongle.initialize());
+    }
 }
