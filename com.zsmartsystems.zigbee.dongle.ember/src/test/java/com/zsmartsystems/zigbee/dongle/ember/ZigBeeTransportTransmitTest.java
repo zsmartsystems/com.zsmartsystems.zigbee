@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -24,6 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmitAbstractTest;
 
 /**
@@ -52,6 +54,11 @@ public class ZigBeeTransportTransmitTest extends ZigBeeTransportTransmitAbstract
         Mockito.when(ncp.setRadioPower(ArgumentMatchers.anyInt())).thenReturn(EmberStatus.EMBER_SUCCESS);
         Mockito.when(ncp.getNwkAddress()).thenReturn(Integer.valueOf(0));
         Mockito.when(ncp.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        final EzspVersionResponse version = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(version.getProtocolVersion()).thenReturn(4);
+
+        Mockito.when(ncp.getVersion()).thenReturn(version);
+        Mockito.when(ncp.getNetworkParameters()).thenReturn(Mockito.mock(EzspGetNetworkParametersResponse.class));
 
         ZigBeePort port = Mockito.mock(ZigBeePort.class);
         Mockito.when(port.open()).thenReturn(Boolean.TRUE);
@@ -62,8 +69,13 @@ public class ZigBeeTransportTransmitTest extends ZigBeeTransportTransmitAbstract
                 return ncp;
             }
         };
+        EzspProtocolHandler frameHandler = Mockito.mock(EzspProtocolHandler.class);
+        Mockito.when(frameHandler.isAlive()).thenReturn(Boolean.TRUE);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", frameHandler);
 
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
+        final ZigBeeTransportReceive receiver = Mockito.mock(ZigBeeTransportReceive.class);
+
+        dongle.setZigBeeTransportReceive(receiver);
 
         transport = dongle;
     }
