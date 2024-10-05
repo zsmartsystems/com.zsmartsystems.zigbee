@@ -475,7 +475,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (networkParametersResponse == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
-        networkParameters = networkParametersResponse.getParameters();
+        EmberNetworkParameters localNetworkParameters = networkParametersResponse.getParameters();
+        if (localNetworkParameters != null) {
+            networkParameters = localNetworkParameters;
+        }
         logger.debug("Ember initial network parameters are {}", networkParameters);
 
         ieeeAddress = ncp.getIeeeAddress();
