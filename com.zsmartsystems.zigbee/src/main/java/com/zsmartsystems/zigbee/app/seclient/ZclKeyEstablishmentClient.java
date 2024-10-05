@@ -650,16 +650,13 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         logger.debug("{}: CBKE Key Establishment Client: Timer started for {} seconds at {}", ieeeAddress, delay,
                 state);
 
-        timer = timerService.schedule(new Runnable() {
-            @Override
-            public void run() {
-                timer = null;
-                logger.debug("{}: CBKE Key Establishment Client: Timeout waiting for message in state {}", ieeeAddress,
-                        state);
-                // Note that no TerminateKeyEstablishment message should be sent.
-                setState(KeyEstablishmentState.FAILED);
-                stopCbke(0);
-            }
+        timer = timerService.schedule(() -> {
+            timer = null;
+            logger.debug("{}: CBKE Key Establishment Client: Timeout waiting for message in state {}", ieeeAddress,
+                    state);
+            // Note that no TerminateKeyEstablishment message should be sent.
+            setState(KeyEstablishmentState.FAILED);
+            stopCbke(0);
         }, delay, TimeUnit.SECONDS);
     }
 
