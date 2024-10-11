@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -48,7 +47,7 @@ public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
      * active events to be resent. If either command has a Start Time of 0x00000000, replace
      * that Start Time with the current time stamp.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Number Of Events command message field.
@@ -77,11 +76,11 @@ public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      */
     public GetScheduledEvents(
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer numberOfEvents) {
 
         clusterId = CLUSTER_ID;
@@ -102,7 +101,7 @@ public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -117,7 +116,7 @@ public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

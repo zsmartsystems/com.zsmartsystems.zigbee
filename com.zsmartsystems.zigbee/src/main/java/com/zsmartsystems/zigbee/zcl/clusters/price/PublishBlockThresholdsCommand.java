@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.clusters.price.BlockThresholdSubPayload;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -38,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishBlockThresholdsCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,7 +73,7 @@ public class PublishBlockThresholdsCommand extends ZclPriceCommand {
      * date/time of 0x00000000 shall indicate that the command should be executed
      * immediately.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Issuer Tariff ID command message field.
@@ -142,7 +141,7 @@ public class PublishBlockThresholdsCommand extends ZclPriceCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -152,7 +151,7 @@ public class PublishBlockThresholdsCommand extends ZclPriceCommand {
     public PublishBlockThresholdsCommand(
             Integer providerId,
             Integer issuerEventId,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer issuerTariffId,
             Integer commandIndex,
             Integer totalNumberOfCommands,
@@ -237,7 +236,7 @@ public class PublishBlockThresholdsCommand extends ZclPriceCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -252,7 +251,7 @@ public class PublishBlockThresholdsCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

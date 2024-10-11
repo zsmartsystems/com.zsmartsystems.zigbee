@@ -212,6 +212,7 @@ Currently implemented extensions include -:
 - IAS CIE client (`ZigBeeIasCieExtension`)
 - OTA Upgrade Server (`ZigBeeOtaUpgradeExtension`)
 - Basic Cluster Server (`ZigBeeBasicServerExtension`)
+- Time management (`ZigBeeTimeExtension`)
 
 These provide basic functionality and can be extended as required to meet the application needs.
 
