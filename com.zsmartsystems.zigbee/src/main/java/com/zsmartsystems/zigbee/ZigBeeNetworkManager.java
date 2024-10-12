@@ -1837,14 +1837,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     return true;
                 } else {
                     logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}",
-                            currentNode.getIeeeAddress(),
-                            latch.getCount());
+                            currentNode.getIeeeAddress(), latch.getCount());
                     return false;
                 }
             } catch (InterruptedException e) {
                 logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}",
-                        currentNode.getIeeeAddress(),
-                        latch.getCount());
+                        currentNode.getIeeeAddress(), latch.getCount());
                 return false;
             }
         });
@@ -2088,9 +2086,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public ZigBeeStatus restoreBackup(UUID uuid) {
         ZigBeeNetworkBackupDao backup = databaseManager.readBackup(uuid);
         if (backup == null) {
-            logger.debug("Unable to restore from backup {}", uuid);
+            logger.debug("RestoreBackup: Failed to read {}", uuid);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
+        logger.debug("RestoreBackup: Backup read from {}", uuid);
 
         switch (getNetworkState()) {
             case UNINITIALISED:
@@ -2106,6 +2105,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             default:
                 break;
         }
+
+        logger.debug("RestoreBackup: Taking network down");
 
         // Take the network offline for reconfiguration
         transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
@@ -2125,10 +2126,24 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             }
         }
 
+        logger.debug("RestoreBackup: Coordinator {}found {}", coordinator == null ? "not " : "",
+                coordinator == null ? "" : coordinator.getIeeeAddress());
+
         // Set the coordinator address
         if (coordinator != null) {
             transport.setIeeeAddress(coordinator.getIeeeAddress());
             transport.setNwkAddress(coordinator.getNetworkAddress());
+        }
+
+        long secondsSince = new Date().getTime() - backup.getDate().getTime();
+        ZigBeeKey key = backup.getNetworkKey();
+
+        // Frame counters need to be incremented
+        if (key.hasIncomingFrameCounter()) {
+            key.setIncomingFrameCounter((int) (key.getIncomingFrameCounter() + secondsSince * 5));
+        }
+        if (key.hasOutgoingFrameCounter()) {
+            key.setOutgoingFrameCounter((int) (key.getOutgoingFrameCounter() + secondsSince * 5));
         }
 
         // Set the network configuration
@@ -2140,6 +2155,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         // Remove all existing nodes
         for (ZigBeeNode node : networkNodes.values()) {
+            logger.debug("RestoreBackup: Removing node {} [{}]", node.getIeeeAddress(), node.getNetworkAddress());
             removeNode(node);
         }
 
@@ -2150,11 +2166,22 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         for (ZigBeeNodeDao nodeDao : backup.getNodes()) {
             ZigBeeNode node = new ZigBeeNode(this, nodeDao.getIeeeAddress());
             node.setDao(nodeDao);
-            logger.debug("{}: Data store: Node was restored from backup.", node.getIeeeAddress());
+            logger.debug("{}: RestoreBackup: Node was restored from backup.", node.getIeeeAddress());
             updateNode(node);
         }
 
-        return startup(true);
+        groupManager.initialize();
+
+        // Start the transport layer
+        ZigBeeStatus status = transport.startup(true);
+        if (status != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
+        } else {
+            setNetworkState(ZigBeeNetworkState.ONLINE);
+        }
+        logger.debug("RestoreBackup: Completed from {} with state {}", uuid, status);
+
+        return status;
     }
 
     /**
