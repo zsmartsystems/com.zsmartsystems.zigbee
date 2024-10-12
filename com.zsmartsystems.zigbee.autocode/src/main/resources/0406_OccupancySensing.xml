@@ -7,7 +7,7 @@
         <description>The Occupancy attribute is a bitmap.</description>
         <description>Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied. All other bits are reserved.</description>
     </attribute>
-    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" class="OccupancySensorTypeEnum">
         <name>Occupancy Sensor Type</name>
         <description>The OccupancySensorType attribute specifies the type of the occupancy sensor.</description>
     </attribute>
@@ -28,16 +28,40 @@
         <description>The PIRUnoccupiedToOccupiedThreshold attribute is 8 bits in length and specifies the number of movement detection events that must occur in the period PIRUnoccupiedToOccupiedDelay, before the PIR sensor changes to its occupied state. This attribute is mandatory if the PIRUnoccupiedToOccupiedDelay attribute is implemented.</description>
     </attribute>
     <attribute code="0x0020" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
-        <name>Ultra Sonic Occupied To Unoccupied Delay</name>
-        <description>The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in seconds, before the ultrasonic sensor changes to its occupied state when the sensed area becomes unoccupied. This attribute, along with UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor &apos;chatter&apos; when used in an area where occupation changes frequently.</description>
+        <name>Ultrasonic Occupied To Unoccupied Delay</name>
+        <description>The UltrasonicOccupiedToUnoccupiedTime attribute specifies the time delay, in seconds, before the ultrasonic sensor changes to its occupied state when the sensed area becomes unoccupied. This attribute, along with UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor &apos;chatter&apos; when used in an area where occupation changes frequently.</description>
     </attribute>
     <attribute code="0x0021" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
-        <name>Ultra Sonic Unoccupied To Occupied Delay</name>
-        <description>The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed area becomes occupied.</description>
+        <name>Ultrasonic Unoccupied To Occupied Delay</name>
+        <description>The UltrsonicUnoccupiedToOccupiedTime attribute specifies the time delay, in seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed area becomes occupied.</description>
     </attribute>
     <attribute code="0x0022" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x01" maximum="0xFE" default="0x01">
         <name>Ultrasonic Unoccupied To Occupied Threshold</name>
         <description>The UltrasonicUnoccupiedToOccupiedThreshold attribute is 8 bits in length and specifies the number of movement detection events that must occur in the period UltrasonicUnoccupiedToOccupiedDelay, before the Ultrasonic sensor changes to its occupied state. This attribute is mandatory if the UltrasonicUnoccupiedToOccupiedDelay attribute is implemented.</description>
     </attribute>
+    <attribute code="0x0030" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
+        <name>Physical Contact Occupied To Unoccupied Delay</name>
+        <description>The PhysicalContactOccupiedToUnoccupiedDelay attribute is 16 bits in length and specifies the time delay, in seconds, before the physical contact occupancy sensor changes to its unoccupied state after detecting the unoccupied event. The value of 0xffff indicates the sensor does not report occupied to unoccupied transition.</description>
+    </attribute>
+    <attribute code="0x0031" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
+        <name>Physical Contact Unoccupied To Occupied Delay</name>
+        <description>The PhysicalContactUnoccupiedToOccupiedDelay attribute is 16 bits in length and specifies the time delay, in seconds, before the physical contact sensor changes to its occupied state after the detection of the occupied event.</description>
+    </attribute>
+    <attribute code="0x0032" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x01" maximum="0xFE" default="0x01">
+        <name>Physical Contact Unoccupied To Occupied Threshold</name>
+        <description>The PhysicalContactUnoccupiedToOccupiedThreshold attribute is 8 bits in length and specifies the number of movement detection events that must occur in the period PhysicalContactUnoccupiedToOccupiedDelay, before the PIR sensor changes to its occupied state. This attribute is mandatory if the PhysicalContactUnoccupiedToOccupiedDelay attribute is implemented.</description>
+    </attribute>
+
+    <constant type="ENUMERATION_8_BIT" class="OccupancySensorTypeEnum">
+        <name>Occupancy Sensor Type</name>
+        <value code="0x00" name="PIR">
+        </value>
+        <value code="0x01" name="Ultrasonic">
+        </value>
+        <value code="0x02" name="PIR and Ultrasonic">
+        </value>
+        <value code="0x03" name="Physical Contact">
+        </value>
+    </constant>
 
 </cluster>

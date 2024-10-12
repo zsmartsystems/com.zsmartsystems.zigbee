@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-10-12T13:08:25Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -79,7 +79,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      */
     public static final int ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0012;
     /**
-     * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * The UltrasonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its occupied state when the sensed
      * area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
@@ -87,7 +87,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      */
     public static final int ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY = 0x0020;
     /**
-     * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * The UltrsonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed
      * area becomes occupied.
      */
@@ -100,6 +100,27 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * UltrasonicUnoccupiedToOccupiedDelay attribute is implemented.
      */
     public static final int ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0022;
+    /**
+     * The PhysicalContactOccupiedToUnoccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact occupancy sensor
+     * changes to its unoccupied state after detecting the unoccupied event. The value of
+     * 0xffff indicates the sensor does not report occupied to unoccupied transition.
+     */
+    public static final int ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY = 0x0030;
+    /**
+     * The PhysicalContactUnoccupiedToOccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact sensor changes to its
+     * occupied state after the detection of the occupied event.
+     */
+    public static final int ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY = 0x0031;
+    /**
+     * The PhysicalContactUnoccupiedToOccupiedThreshold attribute is 8 bits in length and
+     * specifies the number of movement detection events that must occur in the period
+     * PhysicalContactUnoccupiedToOccupiedDelay, before the PIR sensor changes to its
+     * occupied state. This attribute is mandatory if the
+     * PhysicalContactUnoccupiedToOccupiedDelay attribute is implemented.
+     */
+    public static final int ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0032;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -118,9 +139,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         attributeMap.put(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY, "PIR Occupied To Unoccupied Delay", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY, "PIR Unoccupied To Occupied Delay", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD, new ZclAttribute(this, ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD, "PIR Unoccupied To Occupied Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY, new ZclAttribute(this, ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY, "Ultra Sonic Occupied To Unoccupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY, new ZclAttribute(this, ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY, "Ultra Sonic Unoccupied To Occupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY, new ZclAttribute(this, ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY, "Ultrasonic Occupied To Unoccupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY, new ZclAttribute(this, ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY, "Ultrasonic Unoccupied To Occupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD, new ZclAttribute(this, ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD, "Ultrasonic Unoccupied To Occupied Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY, "Physical Contact Occupied To Unoccupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY, "Physical Contact Unoccupied To Occupied Delay", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD, new ZclAttribute(this, ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD, "Physical Contact Unoccupied To Occupied Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }
@@ -565,9 +589,9 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Ultra Sonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
+     * Set the <i>Ultrasonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
      * <p>
-     * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * The UltrasonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its occupied state when the sensed
      * area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
@@ -577,19 +601,19 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param ultraSonicOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
+     * @param ultrasonicOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUltraSonicOccupiedToUnoccupiedDelay(final Integer ultraSonicOccupiedToUnoccupiedDelay) {
-        return write(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), ultraSonicOccupiedToUnoccupiedDelay);
+    public Future<CommandResult> setUltrasonicOccupiedToUnoccupiedDelay(final Integer ultrasonicOccupiedToUnoccupiedDelay) {
+        return write(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), ultrasonicOccupiedToUnoccupiedDelay);
     }
 
     /**
-     * Get the <i>Ultra Sonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
+     * Get the <i>Ultrasonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
      * <p>
-     * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * The UltrasonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its occupied state when the sensed
      * area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
@@ -603,14 +627,14 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
     @Deprecated
-    public Future<CommandResult> getUltraSonicOccupiedToUnoccupiedDelayAsync() {
+    public Future<CommandResult> getUltrasonicOccupiedToUnoccupiedDelayAsync() {
         return read(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
     /**
-     * Synchronously get the <i>Ultra Sonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
+     * Synchronously get the <i>Ultrasonic Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0020</b>].
      * <p>
-     * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * The UltrasonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its occupied state when the sensed
      * area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
@@ -632,7 +656,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Integer getUltraSonicOccupiedToUnoccupiedDelay(final long refreshPeriod) {
+    public Integer getUltrasonicOccupiedToUnoccupiedDelay(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
         }
@@ -641,9 +665,9 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Ultra Sonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
+     * Set the <i>Ultrasonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
-     * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * The UltrsonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed
      * area becomes occupied.
      * <p>
@@ -651,19 +675,19 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param ultraSonicUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
+     * @param ultrasonicUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setUltraSonicUnoccupiedToOccupiedDelay(final Integer ultraSonicUnoccupiedToOccupiedDelay) {
-        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), ultraSonicUnoccupiedToOccupiedDelay);
+    public Future<CommandResult> setUltrasonicUnoccupiedToOccupiedDelay(final Integer ultrasonicUnoccupiedToOccupiedDelay) {
+        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), ultrasonicUnoccupiedToOccupiedDelay);
     }
 
     /**
-     * Get the <i>Ultra Sonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
+     * Get the <i>Ultrasonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
-     * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * The UltrsonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed
      * area becomes occupied.
      * <p>
@@ -675,14 +699,14 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
     @Deprecated
-    public Future<CommandResult> getUltraSonicUnoccupiedToOccupiedDelayAsync() {
+    public Future<CommandResult> getUltrasonicUnoccupiedToOccupiedDelayAsync() {
         return read(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
     /**
-     * Synchronously get the <i>Ultra Sonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
+     * Synchronously get the <i>Ultrasonic Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
-     * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * The UltrsonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the sensed
      * area becomes occupied.
      * <p>
@@ -702,7 +726,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Integer getUltraSonicUnoccupiedToOccupiedDelay(final long refreshPeriod) {
+    public Integer getUltrasonicUnoccupiedToOccupiedDelay(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
         }
@@ -784,5 +808,224 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+    }
+
+    /**
+     * Set the <i>Physical Contact Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0030</b>].
+     * <p>
+     * The PhysicalContactOccupiedToUnoccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact occupancy sensor
+     * changes to its unoccupied state after detecting the unoccupied event. The value of
+     * 0xffff indicates the sensor does not report occupied to unoccupied transition.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param physicalContactOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setPhysicalContactOccupiedToUnoccupiedDelay(final Integer physicalContactOccupiedToUnoccupiedDelay) {
+        return write(serverAttributes.get(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY), physicalContactOccupiedToUnoccupiedDelay);
+    }
+
+    /**
+     * Get the <i>Physical Contact Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0030</b>].
+     * <p>
+     * The PhysicalContactOccupiedToUnoccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact occupancy sensor
+     * changes to its unoccupied state after detecting the unoccupied event. The value of
+     * 0xffff indicates the sensor does not report occupied to unoccupied transition.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getPhysicalContactOccupiedToUnoccupiedDelayAsync() {
+        return read(serverAttributes.get(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY));
+    }
+
+    /**
+     * Synchronously get the <i>Physical Contact Occupied To Unoccupied Delay</i> attribute [attribute ID <b>0x0030</b>].
+     * <p>
+     * The PhysicalContactOccupiedToUnoccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact occupancy sensor
+     * changes to its unoccupied state after detecting the unoccupied event. The value of
+     * 0xffff indicates the sensor does not report occupied to unoccupied transition.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getPhysicalContactOccupiedToUnoccupiedDelay(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_PHYSICALCONTACTOCCUPIEDTOUNOCCUPIEDDELAY));
+    }
+
+    /**
+     * Set the <i>Physical Contact Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0031</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact sensor changes to its
+     * occupied state after the detection of the occupied event.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param physicalContactUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setPhysicalContactUnoccupiedToOccupiedDelay(final Integer physicalContactUnoccupiedToOccupiedDelay) {
+        return write(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY), physicalContactUnoccupiedToOccupiedDelay);
+    }
+
+    /**
+     * Get the <i>Physical Contact Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0031</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact sensor changes to its
+     * occupied state after the detection of the occupied event.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getPhysicalContactUnoccupiedToOccupiedDelayAsync() {
+        return read(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY));
+    }
+
+    /**
+     * Synchronously get the <i>Physical Contact Unoccupied To Occupied Delay</i> attribute [attribute ID <b>0x0031</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedDelay attribute is 16 bits in length and
+     * specifies the time delay, in seconds, before the physical contact sensor changes to its
+     * occupied state after the detection of the occupied event.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getPhysicalContactUnoccupiedToOccupiedDelay(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDDELAY));
+    }
+
+    /**
+     * Set the <i>Physical Contact Unoccupied To Occupied Threshold</i> attribute [attribute ID <b>0x0032</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedThreshold attribute is 8 bits in length and
+     * specifies the number of movement detection events that must occur in the period
+     * PhysicalContactUnoccupiedToOccupiedDelay, before the PIR sensor changes to its
+     * occupied state. This attribute is mandatory if the
+     * PhysicalContactUnoccupiedToOccupiedDelay attribute is implemented.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param physicalContactUnoccupiedToOccupiedThreshold the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setPhysicalContactUnoccupiedToOccupiedThreshold(final Integer physicalContactUnoccupiedToOccupiedThreshold) {
+        return write(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD), physicalContactUnoccupiedToOccupiedThreshold);
+    }
+
+    /**
+     * Get the <i>Physical Contact Unoccupied To Occupied Threshold</i> attribute [attribute ID <b>0x0032</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedThreshold attribute is 8 bits in length and
+     * specifies the number of movement detection events that must occur in the period
+     * PhysicalContactUnoccupiedToOccupiedDelay, before the PIR sensor changes to its
+     * occupied state. This attribute is mandatory if the
+     * PhysicalContactUnoccupiedToOccupiedDelay attribute is implemented.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getPhysicalContactUnoccupiedToOccupiedThresholdAsync() {
+        return read(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+    }
+
+    /**
+     * Synchronously get the <i>Physical Contact Unoccupied To Occupied Threshold</i> attribute [attribute ID <b>0x0032</b>].
+     * <p>
+     * The PhysicalContactUnoccupiedToOccupiedThreshold attribute is 8 bits in length and
+     * specifies the number of movement detection events that must occur in the period
+     * PhysicalContactUnoccupiedToOccupiedDelay, before the PIR sensor changes to its
+     * occupied state. This attribute is mandatory if the
+     * PhysicalContactUnoccupiedToOccupiedDelay attribute is implemented.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getPhysicalContactUnoccupiedToOccupiedThreshold(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_PHYSICALCONTACTUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 }
