@@ -63,9 +63,9 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
-			<id>passman-snapshots</id>
-			<name>Passman Snapshot</name>
-			<url>https://repository.passman.fr/repository/maven-snapshots</url>
+			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/passmansa/com.zsmartsystems.zigbee</url>
 		</snapshotRepository>
 	</distributionManagement>
 
