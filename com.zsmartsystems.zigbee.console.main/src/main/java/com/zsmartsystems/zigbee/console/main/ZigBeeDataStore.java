@@ -205,7 +205,7 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
             stream.marshal(backup, new PrettyPrintWriter(writer));
             writer.close();
         } catch (Exception e) {
-            logger.error("Error writing network backup: ", backup.getUuid(), e);
+            logger.error("{}: Error writing network backup: ", backup.getUuid(), e);
             return false;
         }
 
