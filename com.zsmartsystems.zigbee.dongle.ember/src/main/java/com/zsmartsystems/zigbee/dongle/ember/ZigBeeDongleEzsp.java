@@ -436,26 +436,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(getEmberNcp());
 
+        stackConfigurer.setConfiguration(stackConfiguration);
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
             logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
         }
 
-        Map<EzspPolicyId, Integer> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
-            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
-            logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
-                    String.format("%02X", policy.getValue()));
-        }
-
-        stackConfigurer.setConfiguration(stackConfiguration);
-        configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
-            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
-        }
-
         stackConfigurer.setPolicy(stackPolicies);
-        policies = stackConfigurer.getPolicy(stackPolicies.keySet());
+        Map<EzspPolicyId, Integer> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
         for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
             EzspDecisionId decisionId = null;
             try {
