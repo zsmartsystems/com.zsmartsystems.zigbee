@@ -83,7 +83,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * Maximum number of DATA frames we can transmit without an ACK
      */
-    private final int TX_WINDOW = 1;
+    private final int TX_WINDOW = 5;
 
     private long sentTime;
 
@@ -91,7 +91,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private static final int ASH_FLAG_BYTE = 0x7E;
     private static final int ASH_SUBSTITUTE_BYTE = 0x18;
     private static final int ASH_XON_BYTE = 0x11;
-    private static final int ASH_OFF_BYTE = 0x13;
+    private static final int ASH_XOFF_BYTE = 0x13;
     private static final int ASH_TIMEOUT = -1;
 
     private static final int ASH_MAX_LENGTH = 220;
@@ -218,7 +218,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 case ASH_XON_BYTE:
                     // XON: Resume transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
                     break;
-                case ASH_OFF_BYTE:
+                case ASH_XOFF_BYTE:
                     // XOFF: Stop transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
                     break;
                 case ASH_TIMEOUT:
@@ -300,7 +300,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                                 AshFrameData dataPacket = (AshFrameData) packet;
 
-                                // Check for out of sequence frame number
+                                // Check for correct sequence frame number
                                 if (packet.getFrmNum() == ackNum) {
                                     // Clear rejection condition
                                     rejectionCondition = false;
@@ -555,19 +555,20 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private void sendRetry() {
         logger.debug("ASH: Retry Sent Queue Length {}", sentQueue.size());
-        AshFrameData ashFrame = sentQueue.peek();
-        if (ashFrame == null) {
+        if (sentQueue.isEmpty()) {
             logger.debug("ASH: Retry nothing to resend!");
             return;
         }
 
-        ashFrame.setReTx();
-        outputFrame(ashFrame);
+        for (AshFrameData ashFrame : sentQueue) {
+            ashFrame.setReTx();
+            outputFrame(ashFrame);
+        }
     }
 
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
-        ashFrame.setAckNum(ackNum);
+        ashFrame.setAckNum((ackNum + sentQueue.size() - 1) & 0x07);
         logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
