@@ -100,6 +100,8 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
             writer.println("| |> Buffer Size                " + nodeDescriptor.getBufferSize());
             writer.println("| |> Incoming Transfer Size     " + nodeDescriptor.getIncomingTransferSize());
             writer.println("| |> Outgoing Transfer Size     " + nodeDescriptor.getOutGoingTransferSize());
+            writer.println(
+                    "| |> Manufacturer Code          " + String.format("0x%04X", nodeDescriptor.getManufacturerCode()));
         }
 
         writer.println("|");
