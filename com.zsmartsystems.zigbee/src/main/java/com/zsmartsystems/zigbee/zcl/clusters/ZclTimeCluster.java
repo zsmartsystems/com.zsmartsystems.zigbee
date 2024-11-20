@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -18,6 +17,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ZclTimeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -78,9 +78,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute. The DstEnd attribute indicates
      * the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.
-     * <p>
-     * Note that this attribute should be set to a new value once every year, and should be
-     * written synchronously with the DstStart attribute
      */
     public static final int ATTR_DSTEND = 0x0004;
     /**
@@ -168,16 +165,16 @@ public class ZclTimeCluster extends ZclCluster {
      * shall set the real time clock to the written value, otherwise it cannot be written. The
      * value 0xffffffff indicates an invalid time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param time the {@link Calendar} attribute value to be set
+     * @param time the {@link ZigBeeUtcTime} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setTime(final Calendar time) {
+    public Future<CommandResult> setTime(final ZigBeeUtcTime time) {
         return write(serverAttributes.get(ATTR_TIME), time);
     }
 
@@ -192,7 +189,7 @@ public class ZclTimeCluster extends ZclCluster {
      * shall set the real time clock to the written value, otherwise it cannot be written. The
      * value 0xffffffff indicates an invalid time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -222,21 +219,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TIME));
     }
 
     /**
@@ -250,7 +247,7 @@ public class ZclTimeCluster extends ZclCluster {
      * shall set the real time clock to the written value, otherwise it cannot be written. The
      * value 0xffffffff indicates an invalid time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -402,16 +399,16 @@ public class ZclTimeCluster extends ZclCluster {
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
      * indicates an invalid DST start time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param dstStart the {@link Calendar} attribute value to be set
+     * @param dstStart the {@link ZigBeeUtcTime} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDstStart(final Calendar dstStart) {
+    public Future<CommandResult> setDstStart(final ZigBeeUtcTime dstStart) {
         return write(serverAttributes.get(ATTR_DSTSTART), dstStart);
     }
 
@@ -421,7 +418,7 @@ public class ZclTimeCluster extends ZclCluster {
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
      * indicates an invalid DST start time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -446,21 +443,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getDstStart(final long refreshPeriod) {
+    public ZigBeeUtcTime getDstStart(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_DSTSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_DSTSTART).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_DSTSTART).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_DSTSTART));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_DSTSTART));
     }
 
     /**
@@ -477,19 +474,16 @@ public class ZclTimeCluster extends ZclCluster {
      * written synchronously with the DstStart attribute. The DstEnd attribute indicates
      * the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.
      * <p>
-     * Note that this attribute should be set to a new value once every year, and should be
-     * written synchronously with the DstStart attribute
-     * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param dstEnd the {@link Calendar} attribute value to be set
+     * @param dstEnd the {@link ZigBeeUtcTime} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setDstEnd(final Calendar dstEnd) {
+    public Future<CommandResult> setDstEnd(final ZigBeeUtcTime dstEnd) {
         return write(serverAttributes.get(ATTR_DSTEND), dstEnd);
     }
 
@@ -507,10 +501,7 @@ public class ZclTimeCluster extends ZclCluster {
      * written synchronously with the DstStart attribute. The DstEnd attribute indicates
      * the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.
      * <p>
-     * Note that this attribute should be set to a new value once every year, and should be
-     * written synchronously with the DstStart attribute
-     * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -536,9 +527,6 @@ public class ZclTimeCluster extends ZclCluster {
      * written synchronously with the DstStart attribute. The DstEnd attribute indicates
      * the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.
      * <p>
-     * Note that this attribute should be set to a new value once every year, and should be
-     * written synchronously with the DstStart attribute
-     * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
      * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
@@ -546,21 +534,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getDstEnd(final long refreshPeriod) {
+    public ZigBeeUtcTime getDstEnd(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_DSTEND).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_DSTEND).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_DSTEND).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_DSTEND));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_DSTEND));
     }
 
     /**
@@ -652,7 +640,7 @@ public class ZclTimeCluster extends ZclCluster {
      * together. If implemented however, the optional StandardTime attribute indicates
      * this time directly. The value 0xffffffff indicates an invalid Standard Time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -678,21 +666,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getStandardTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getStandardTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_STANDARDTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_STANDARDTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_STANDARDTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_STANDARDTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_STANDARDTIME));
     }
 
     /**
@@ -703,7 +691,7 @@ public class ZclTimeCluster extends ZclCluster {
      * optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -730,21 +718,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getLocalTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getLocalTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_LOCALTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_LOCALTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_LOCALTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_LOCALTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_LOCALTIME));
     }
 
     /**
@@ -755,7 +743,7 @@ public class ZclTimeCluster extends ZclCluster {
      * that Time was set to). This attribute is set automatically, so is Read Only. The value
      * 0xffffffff indicates an invalid LastSetTime.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -782,21 +770,21 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getLastSetTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getLastSetTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_LASTSETTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_LASTSETTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_LASTSETTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_LASTSETTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_LASTSETTIME));
     }
 
     /**
@@ -808,16 +796,16 @@ public class ZclTimeCluster extends ZclCluster {
      * not defined by this cluster specification, but may be defined by the application
      * profile in which devices that use this cluster are specified.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param validUntilTime the {@link Calendar} attribute value to be set
+     * @param validUntilTime the {@link ZigBeeUtcTime} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
     @Deprecated
-    public Future<CommandResult> setValidUntilTime(final Calendar validUntilTime) {
+    public Future<CommandResult> setValidUntilTime(final ZigBeeUtcTime validUntilTime) {
         return write(serverAttributes.get(ATTR_VALIDUNTILTIME), validUntilTime);
     }
 
@@ -830,7 +818,7 @@ public class ZclTimeCluster extends ZclCluster {
      * not defined by this cluster specification, but may be defined by the application
      * profile in which devices that use this cluster are specified.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -858,20 +846,20 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getValidUntilTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getValidUntilTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_VALIDUNTILTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_VALIDUNTILTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_VALIDUNTILTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_VALIDUNTILTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_VALIDUNTILTIME));
     }
 }

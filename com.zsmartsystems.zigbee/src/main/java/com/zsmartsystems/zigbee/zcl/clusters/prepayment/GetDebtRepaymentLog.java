@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -41,7 +40,7 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
     /**
      * Latest End Time command message field.
      */
-    private Calendar latestEndTime;
+    private ZigBeeUtcTime latestEndTime;
 
     /**
      * Number Of Debts command message field.
@@ -69,12 +68,12 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param numberOfDebts {@link Integer} Number Of Debts
      * @param debtType {@link Integer} Debt Type
      */
     public GetDebtRepaymentLog(
-            Calendar latestEndTime,
+            ZigBeeUtcTime latestEndTime,
             Integer numberOfDebts,
             Integer debtType) {
 
@@ -93,7 +92,7 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
      *
      * @return the Latest End Time
      */
-    public Calendar getLatestEndTime() {
+    public ZigBeeUtcTime getLatestEndTime() {
         return latestEndTime;
     }
 
@@ -104,7 +103,7 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public void setLatestEndTime(final ZigBeeUtcTime latestEndTime) {
         this.latestEndTime = latestEndTime;
     }
 

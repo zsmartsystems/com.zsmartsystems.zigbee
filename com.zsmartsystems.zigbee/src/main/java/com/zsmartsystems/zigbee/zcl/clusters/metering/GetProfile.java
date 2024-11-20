@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetProfile extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -57,7 +56,7 @@ public class GetProfile extends ZclMeteringCommand {
      * End time set to the EndTime of the previous block - (number of intervals of the previous
      * block * ProfileIntervalPeriod).
      */
-    private Calendar endTime;
+    private ZigBeeUtcTime endTime;
 
     /**
      * Number Of Periods command message field.
@@ -87,12 +86,12 @@ public class GetProfile extends ZclMeteringCommand {
      * Constructor providing all required parameters.
      *
      * @param intervalChannel {@link Integer} Interval Channel
-     * @param endTime {@link Calendar} End Time
+     * @param endTime {@link ZigBeeUtcTime} End Time
      * @param numberOfPeriods {@link Integer} Number Of Periods
      */
     public GetProfile(
             Integer intervalChannel,
-            Calendar endTime,
+            ZigBeeUtcTime endTime,
             Integer numberOfPeriods) {
 
         clusterId = CLUSTER_ID;
@@ -143,7 +142,7 @@ public class GetProfile extends ZclMeteringCommand {
      *
      * @return the End Time
      */
-    public Calendar getEndTime() {
+    public ZigBeeUtcTime getEndTime() {
         return endTime;
     }
 
@@ -161,7 +160,7 @@ public class GetProfile extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEndTime(final Calendar endTime) {
+    public void setEndTime(final ZigBeeUtcTime endTime) {
         this.endTime = endTime;
     }
 

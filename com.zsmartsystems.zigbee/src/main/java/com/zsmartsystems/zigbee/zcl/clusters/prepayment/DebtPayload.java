@@ -6,13 +6,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializable;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -20,12 +19,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class DebtPayload implements ZigBeeSerializable {
     /**
      * Collection Time structure field.
      */
-    private Calendar collectionTime;
+    private ZigBeeUtcTime collectionTime;
 
     /**
      * Amount Collected structure field.
@@ -55,13 +54,13 @@ public class DebtPayload implements ZigBeeSerializable {
     /**
      * Constructor providing all required parameters.
      *
-     * @param collectionTime {@link Calendar} Collection Time
+     * @param collectionTime {@link ZigBeeUtcTime} Collection Time
      * @param amountCollected {@link Integer} Amount Collected
      * @param debtType {@link Integer} Debt Type
      * @param outstandingDebt {@link Integer} Outstanding Debt
      */
     public DebtPayload(
-            Calendar collectionTime,
+            ZigBeeUtcTime collectionTime,
             Integer amountCollected,
             Integer debtType,
             Integer outstandingDebt) {
@@ -77,7 +76,7 @@ public class DebtPayload implements ZigBeeSerializable {
      *
      * @return the Collection Time
      */
-    public Calendar getCollectionTime() {
+    public ZigBeeUtcTime getCollectionTime() {
         return collectionTime;
     }
 
@@ -88,7 +87,7 @@ public class DebtPayload implements ZigBeeSerializable {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setCollectionTime(final Calendar collectionTime) {
+    public void setCollectionTime(final ZigBeeUtcTime collectionTime) {
         this.collectionTime = collectionTime;
     }
 
