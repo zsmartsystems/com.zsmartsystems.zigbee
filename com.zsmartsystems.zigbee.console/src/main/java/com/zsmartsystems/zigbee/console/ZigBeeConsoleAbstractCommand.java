@@ -76,7 +76,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             throw new IllegalArgumentException("Invalid endpoint format '" + endpointId + "'");
         }
         ZigBeeNode node = getNode(networkManager, endpointParts[0]);
-        Integer endpointNumber;
+        int endpointNumber;
         try {
             endpointNumber = Integer.parseInt(endpointParts[1]);
         } catch (NumberFormatException e) {
