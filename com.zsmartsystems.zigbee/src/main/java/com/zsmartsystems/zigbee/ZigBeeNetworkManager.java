@@ -2091,23 +2091,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
         logger.debug("RestoreBackup: Backup read from {}", uuid);
 
-        switch (getNetworkState()) {
-            case UNINITIALISED:
-                break;
-            case INITIALISING:
-                break;
-            case ONLINE:
-                break;
-            case OFFLINE:
-                break;
-            case SHUTDOWN:
-                break;
-            default:
-                break;
-        }
-
-        logger.debug("RestoreBackup: Taking network down");
-
         // Take the network offline for reconfiguration
         transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
 
@@ -2147,11 +2130,14 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         // Set the network configuration
-        setZigBeePanId(backup.getPan());
-        setZigBeeExtendedPanId(backup.getEpan());
-        setZigBeeChannel(backup.getChannel());
-        setZigBeeNetworkKey(backup.getNetworkKey());
-        setZigBeeLinkKey(backup.getLinkKey());
+        if (setZigBeePanId(backup.getPan()) != ZigBeeStatus.SUCCESS
+                || setZigBeeExtendedPanId(backup.getEpan()) != ZigBeeStatus.SUCCESS
+                || setZigBeeChannel(backup.getChannel()) != ZigBeeStatus.SUCCESS
+                || setZigBeeNetworkKey(backup.getNetworkKey()) != ZigBeeStatus.SUCCESS
+                || setZigBeeLinkKey(backup.getLinkKey()) != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
+            return ZigBeeStatus.FAILURE;
+        }
 
         // Remove all existing nodes
         for (ZigBeeNode node : networkNodes.values()) {
