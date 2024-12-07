@@ -285,7 +285,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                             responseFrame = new AshFrameNak(ackNum);
                         }
                     } else {
-                        logger.debug("<-- RX ASH frame: {}", packet);
+                        logger.trace("<-- RX ASH frame: {}", packet);
 
                         // Reset the exception counter
                         exceptionCnt = 0;
@@ -568,7 +568,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
-        logger.debug("--> TX ASH frame: {}", ashFrame);
+        logger.trace("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
         int[] outputBuffer = ashFrame.getOutputBuffer();

@@ -225,7 +225,6 @@ public class EmberNcp {
             logger.debug("No response from ezspVersion command");
             return null;
         }
-        logger.debug(response.toString());
         lastStatus = null;
 
         return response;
@@ -528,7 +527,7 @@ public class EmberNcp {
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
         request.setConfigId(configId);
         request.setValue(value);
-        logger.debug(request.toString());
+        logger.trace(request.toString());
 
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspSetConfigurationValueResponse.class));

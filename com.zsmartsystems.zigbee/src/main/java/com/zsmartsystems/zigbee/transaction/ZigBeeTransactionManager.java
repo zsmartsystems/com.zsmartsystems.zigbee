@@ -447,7 +447,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         if (transaction.getTransactionId() == null) {
             transaction.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
         }
-        logger.debug("{}: Sending {}", transaction.getIeeeAddress(), transaction);
+        logger.trace("{}: Sending {}", transaction.getIeeeAddress(), transaction);
         addTransactionListener(transaction);
         networkManager.sendCommand(transaction.startTransaction());
     }
@@ -520,7 +520,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        logger.debug("Transaction complete: {}", transaction);
+        logger.trace("Transaction complete: {}", transaction);
         removeTransactionListener(transaction);
 
         if (isShutdown) {
@@ -555,7 +555,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param command the {@link ZigBeeCommand} to send to the transactions
      */
     private void notifyTransactionCommand(final ZigBeeCommand command) {
-        logger.debug("notifyTransactionCommand: {} ", command);
+        logger.trace("notifyTransactionCommand: {} ", command);
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
@@ -615,7 +615,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         }
         queue.shutdown();
 
-        logger.debug("{}: Removing queue from transaction manager", address);
+        logger.trace("{}: Removing queue from transaction manager", address);
 
         // Remove any outstanding transactions from this queue that have already been sent
         synchronized (outstandingTransactions) {
@@ -639,7 +639,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private void sendNextTransaction() {
         synchronized (this) {
-            logger.debug(
+            logger.trace(
                     "Transaction Manager: Send Next transaction. outstandingTransactions={}, outstandingQueues={}, sleepy={}/{}",
                     outstandingTransactions.size(), outstandingQueues.size(), sleepyTransactions,
                     maxSleepyTransactions);
