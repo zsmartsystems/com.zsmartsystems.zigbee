@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -734,8 +735,40 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
+    public boolean setIeeeAddress(IeeeAddress ieeeAddress) {
+        EmberNcp ncp = getEmberNcp();
+        if (ncp.getIeeeAddress().equals(ieeeAddress)) {
+            // Don't write the IEEE address unless it's different since there are limitations on how many times this can
+            // be changed in some firmware versions.
+            return true;
+        }
+        return ncp.setMfgCustomEui64(ieeeAddress) == EmberStatus.EMBER_SUCCESS;
+    }
+
+    @Override
     public Integer getNwkAddress() {
         return nwkAddress;
+    }
+
+    @Override
+    public ZigBeeStatus setNetworkState(ZigBeeNetworkState networkState) {
+        EmberNcp ncp = getEmberNcp();
+        switch (networkState) {
+            case UNINITIALISED:
+                // Reset the NCP to "factory default"
+                // Note that tokenFactoryReset was introduced in firmware 7.3 (approx) and older versions used the same
+                // ID for another function.
+                // We don't check the result here for that reason.
+                // Note that the impact of this function not working is that the IEEE address can only be written to the
+                // token area once - subsequent writes will fail, and therefore changing IEEE address (eg from a
+                // backup/restore) may fail.
+                ncp.tokenFactoryReset(false, false);
+                return ncp.leaveNetwork() == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+            case ONLINE:
+                return ncp.networkInit() == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+            default:
+                return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
     }
 
     @Override
