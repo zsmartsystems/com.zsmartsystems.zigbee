@@ -2092,7 +2092,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         logger.debug("RestoreBackup: Backup read from {}", uuid);
 
         // Take the network offline for reconfiguration
-        transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
+        ZigBeeStatus offlineResponse = transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
+        if (offlineResponse != ZigBeeStatus.SUCCESS) {
+            logger.error("RestoreBackup: Failed to set network to UNINITIALISED with response {}", offlineResponse);
+            return ZigBeeStatus.INVALID_STATE;
+        }
 
         // To properly re-add nodes, we must be INITIALIZING
         // To call startup, we must be INITIALIZING

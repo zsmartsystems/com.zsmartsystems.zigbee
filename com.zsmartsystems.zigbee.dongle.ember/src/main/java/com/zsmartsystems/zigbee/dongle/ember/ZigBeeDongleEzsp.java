@@ -575,7 +575,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ncp.sendManyToOneRouteRequest(concentratorType, radius);
         }
 
-        ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_PACKET_BUFFER_COUNT);
         return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 
@@ -763,7 +762,27 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 // token area once - subsequent writes will fail, and therefore changing IEEE address (eg from a
                 // backup/restore) may fail.
                 ncp.tokenFactoryReset(false, false);
-                return ncp.leaveNetwork() == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+                if (ncp.leaveNetwork() != EmberStatus.EMBER_SUCCESS) {
+                    return ZigBeeStatus.FAILURE;
+                }
+
+                // Wait for the notification from the NCP that it is offline.
+                // This comes through the EzspStackStatusHandler which is processed elsewhere
+                // and sets networkStateUp to false
+                long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
+                do {
+                    if (!networkStateUp) {
+                        return ZigBeeStatus.SUCCESS;
+                    }
+
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                } while (timer > System.currentTimeMillis());
+
+                return ZigBeeStatus.INVALID_STATE;
             case ONLINE:
                 return ncp.networkInit() == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
             default:
