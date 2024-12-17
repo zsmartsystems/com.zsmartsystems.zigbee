@@ -202,6 +202,14 @@ public class EmberFirmwareUpdateHandlerTest {
         public void purgeRxBuffer() {
         }
 
+        @Override
+        public void setDtr(boolean state) {
+        }
+
+        @Override
+        public void setRts(boolean state) {
+        }
+
         public byte[] getOutput() {
             return Arrays.copyOfRange(output, 0, cnt);
         }
