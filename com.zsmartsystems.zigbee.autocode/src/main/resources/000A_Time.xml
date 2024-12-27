@@ -24,7 +24,6 @@
         <description>The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.</description>
         <description>Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any one of them is implemented the other two must also be implemented. Note that this attribute should be set to a new value once every year.</description>
         <description>Note that this attribute should be set to a new value once every year, and should be written synchronously with the DstStart attribute. The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.</description>
-        <description>Note that this attribute should be set to a new value once every year, and should be written synchronously with the DstStart attribute</description>
     </attribute>
     <attribute code="0x0005" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
         <name>DST Shift</name>

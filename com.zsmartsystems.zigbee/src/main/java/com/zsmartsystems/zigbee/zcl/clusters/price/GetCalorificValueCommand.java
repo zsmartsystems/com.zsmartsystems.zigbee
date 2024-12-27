@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetCalorificValueCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -50,7 +49,7 @@ public class GetCalorificValueCommand extends ZclPriceCommand {
      * at or after the stated Earliest Start Time. If more than one instance is requested, the
      * active and scheduled instances shall be sent with ascending ordered Start Time.
      */
-    private Calendar earliestStartTime;
+    private ZigBeeUtcTime earliestStartTime;
 
     /**
      * Min . Issuer Event ID command message field.
@@ -87,12 +86,12 @@ public class GetCalorificValueCommand extends ZclPriceCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      */
     public GetCalorificValueCommand(
-            Calendar earliestStartTime,
+            ZigBeeUtcTime earliestStartTime,
             Integer minIssuerEventId,
             Integer numberOfCommands) {
 
@@ -117,7 +116,7 @@ public class GetCalorificValueCommand extends ZclPriceCommand {
      *
      * @return the Earliest Start Time
      */
-    public Calendar getEarliestStartTime() {
+    public ZigBeeUtcTime getEarliestStartTime() {
         return earliestStartTime;
     }
 
@@ -134,7 +133,7 @@ public class GetCalorificValueCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public void setEarliestStartTime(final ZigBeeUtcTime earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
     }
 

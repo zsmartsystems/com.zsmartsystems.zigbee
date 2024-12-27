@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -29,6 +28,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.messaging.GetMessageCancellation;
 import com.zsmartsystems.zigbee.zcl.clusters.messaging.MessageConfirmation;
 import com.zsmartsystems.zigbee.zcl.clusters.messaging.ZclMessagingCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 
 /**
  * <b>Messaging</b> cluster implementation (<i>Cluster ID 0x0703</i>).
@@ -41,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-12-09T01:34:23Z")
 public class ZclMessagingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -127,7 +127,7 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param messageId {@link Integer} Message ID
      * @param messageControl {@link Integer} Message Control
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param message {@link String} Message
      * @param extendedMessageControl {@link Integer} Extended Message Control
@@ -142,7 +142,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new displayMessageCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> displayMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
+    public Future<CommandResult> displayMessageCommand(Integer messageId, Integer messageControl, ZigBeeUtcTime startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayMessageCommand command = new DisplayMessageCommand();
 
         // Set the fields
@@ -195,7 +195,7 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param messageId {@link Integer} Message ID
      * @param messageControl {@link Integer} Message Control
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param message {@link String} Message
      * @param extendedMessageControl {@link Integer} Extended Message Control
@@ -210,7 +210,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new displayProtectedMessageCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> displayProtectedMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
+    public Future<CommandResult> displayProtectedMessageCommand(Integer messageId, Integer messageControl, ZigBeeUtcTime startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayProtectedMessageCommand command = new DisplayProtectedMessageCommand();
 
         // Set the fields
@@ -230,7 +230,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * The Cancel All Messages command indicates to a CLIENT | device that it should cancel all
      * display messages currently held by it.
      *
-     * @param implementationTime {@link Calendar} Implementation Time
+     * @param implementationTime {@link ZigBeeUtcTime} Implementation Time
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -242,7 +242,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new cancelAllMessagesCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> cancelAllMessagesCommand(Calendar implementationTime) {
+    public Future<CommandResult> cancelAllMessagesCommand(ZigBeeUtcTime implementationTime) {
         CancelAllMessagesCommand command = new CancelAllMessagesCommand();
 
         // Set the fields
@@ -260,7 +260,7 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param messageId {@link Integer} Message ID
      * @param messageControl {@link Integer} Message Control
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param message {@link String} Message
      * @param optionalExtendedMessageControl {@link Integer} Optional Extended Message Control
@@ -275,7 +275,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getLastMessage(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getLastMessage(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer optionalExtendedMessageControl) {
+    public Future<CommandResult> getLastMessage(Integer messageId, Integer messageControl, ZigBeeUtcTime startTime, Integer durationInMinutes, String message, Integer optionalExtendedMessageControl) {
         GetLastMessage command = new GetLastMessage();
 
         // Set the fields
@@ -298,7 +298,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * confirmation string.
      *
      * @param messageId {@link Integer} Message ID
-     * @param confirmationTime {@link Calendar} Confirmation Time
+     * @param confirmationTime {@link ZigBeeUtcTime} Confirmation Time
      * @param messageConfirmationControl {@link Integer} Message Confirmation Control
      * @param messageConfirmationResponse {@link ByteArray} Message Confirmation Response
      * @return the {@link Future<CommandResult>} command result future
@@ -312,7 +312,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new messageConfirmation(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> messageConfirmation(Integer messageId, Calendar confirmationTime, Integer messageConfirmationControl, ByteArray messageConfirmationResponse) {
+    public Future<CommandResult> messageConfirmation(Integer messageId, ZigBeeUtcTime confirmationTime, Integer messageConfirmationControl, ByteArray messageConfirmationResponse) {
         MessageConfirmation command = new MessageConfirmation();
 
         // Set the fields
@@ -331,7 +331,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * command held on the associated server, and which has an implementation time equal to or
      * later than the value indicated in the payload.
      *
-     * @param earliestImplementationTime {@link Calendar} Earliest Implementation Time
+     * @param earliestImplementationTime {@link ZigBeeUtcTime} Earliest Implementation Time
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -343,7 +343,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getMessageCancellation(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getMessageCancellation(Calendar earliestImplementationTime) {
+    public Future<CommandResult> getMessageCancellation(ZigBeeUtcTime earliestImplementationTime) {
         GetMessageCancellation command = new GetMessageCancellation();
 
         // Set the fields
@@ -358,7 +358,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * The CancelAllMessages command indicates to a client device that it should cancel all
      * display messages currently held by it.
      *
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -370,7 +370,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new cancelAllMessages(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> cancelAllMessages(Calendar implementationDateTime) {
+    public Future<CommandResult> cancelAllMessages(ZigBeeUtcTime implementationDateTime) {
         CancelAllMessages command = new CancelAllMessages();
 
         // Set the fields

@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class SupplyStatusResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,7 +62,7 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * <p>
      * A UTC Time field to indicate the date at which the originating command was to be applied.
      */
-    private Calendar implementationDateTime;
+    private ZigBeeUtcTime implementationDateTime;
 
     /**
      * Supply Status command message field.
@@ -91,13 +90,13 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param supplyStatus {@link Integer} Supply Status
      */
     public SupplyStatusResponse(
             Integer providerId,
             Integer issuerEventId,
-            Calendar implementationDateTime,
+            ZigBeeUtcTime implementationDateTime,
             Integer supplyStatus) {
 
         clusterId = CLUSTER_ID;
@@ -178,7 +177,7 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      *
      * @return the Implementation Date Time
      */
-    public Calendar getImplementationDateTime() {
+    public ZigBeeUtcTime getImplementationDateTime() {
         return implementationDateTime;
     }
 
@@ -191,7 +190,7 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public void setImplementationDateTime(final ZigBeeUtcTime implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
 

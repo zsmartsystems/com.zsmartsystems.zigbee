@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -52,7 +51,7 @@ public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
     /**
      * Implementation Date Time command message field.
      */
-    private Calendar implementationDateTime;
+    private ZigBeeUtcTime implementationDateTime;
 
     /**
      * Maximum Credit Level command message field.
@@ -82,14 +81,14 @@ public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param maximumCreditLevel {@link Integer} Maximum Credit Level
      * @param maximumCreditPerTopUp {@link Integer} Maximum Credit Per Top Up
      */
     public SetMaximumCreditLimit(
             Integer providerId,
             Integer issuerEventId,
-            Calendar implementationDateTime,
+            ZigBeeUtcTime implementationDateTime,
             Integer maximumCreditLevel,
             Integer maximumCreditPerTopUp) {
 
@@ -150,7 +149,7 @@ public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
      *
      * @return the Implementation Date Time
      */
-    public Calendar getImplementationDateTime() {
+    public ZigBeeUtcTime getImplementationDateTime() {
         return implementationDateTime;
     }
 
@@ -161,7 +160,7 @@ public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public void setImplementationDateTime(final ZigBeeUtcTime implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
 

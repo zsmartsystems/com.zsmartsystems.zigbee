@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
@@ -151,6 +152,12 @@ public class SerializerIntegrationTest {
     public void testDeserialize_DATA_16_BIT() {
         int valIn = 0x9119;
         testSerializer(valIn, ZclDataType.DATA_16_BIT);
+    }
+
+    @Test
+    public void testDeserialize_UTCTIME() {
+        ZigBeeUtcTime valIn = ZigBeeUtcTime.ofZigBeeSecond(12345678);
+        testSerializer(valIn, ZclDataType.UTCTIME);
     }
 
     @Test

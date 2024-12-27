@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -34,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishTariffInformationCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -84,7 +83,7 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
      * in Table D-108 (Generation Meters shall use the ‘Received’ Tariff), the most
      * significant nibble represents an enumeration specifying the charging scheme
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Tariff Type command message field.
@@ -198,7 +197,7 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param tariffType {@link Integer} Tariff Type
      * @param tariffLabel {@link ByteArray} Tariff Label
      * @param numberOfPriceTiers {@link Integer} Number Of Price Tiers
@@ -215,7 +214,7 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
             Integer providerId,
             Integer issuerEventId,
             Integer issuerTariffId,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer tariffType,
             ByteArray tariffLabel,
             Integer numberOfPriceTiers,
@@ -348,7 +347,7 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -366,7 +365,7 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

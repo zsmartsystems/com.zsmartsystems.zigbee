@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -40,6 +39,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.prepayment.SetOverallDebtCap;
 import com.zsmartsystems.zigbee.zcl.clusters.prepayment.TopUpPayload;
 import com.zsmartsystems.zigbee.zcl.clusters.prepayment.ZclPrepaymentCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1080,7 +1080,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -1104,21 +1104,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditRemainingTimestamp(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditRemainingTimestamp(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP));
     }
 
     /**
@@ -1126,7 +1126,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -1936,7 +1936,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -1960,21 +1960,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getNextFriendlyCreditPeriod(final long refreshPeriod) {
+    public ZigBeeUtcTime getNextFriendlyCreditPeriod(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
     }
 
     /**
@@ -1982,7 +1982,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2132,7 +2132,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2156,21 +2156,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTopUpDateTime1(final long refreshPeriod) {
+    public ZigBeeUtcTime getTopUpDateTime1(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TOPUPDATETIME1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME1).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TOPUPDATETIME1).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME1));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TOPUPDATETIME1));
     }
 
     /**
@@ -2178,7 +2178,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2394,7 +2394,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2418,21 +2418,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTopUpDateTime2(final long refreshPeriod) {
+    public ZigBeeUtcTime getTopUpDateTime2(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TOPUPDATETIME2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME2).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TOPUPDATETIME2).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME2));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TOPUPDATETIME2));
     }
 
     /**
@@ -2440,7 +2440,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2656,7 +2656,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2680,21 +2680,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTopUpDateTime3(final long refreshPeriod) {
+    public ZigBeeUtcTime getTopUpDateTime3(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TOPUPDATETIME3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME3).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TOPUPDATETIME3).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME3));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TOPUPDATETIME3));
     }
 
     /**
@@ -2702,7 +2702,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2918,7 +2918,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -2942,21 +2942,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTopUpDateTime4(final long refreshPeriod) {
+    public ZigBeeUtcTime getTopUpDateTime4(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TOPUPDATETIME4).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME4).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TOPUPDATETIME4).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME4));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TOPUPDATETIME4));
     }
 
     /**
@@ -2964,7 +2964,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -3180,7 +3180,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -3204,21 +3204,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getTopUpDateTime5(final long refreshPeriod) {
+    public ZigBeeUtcTime getTopUpDateTime5(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_TOPUPDATETIME5).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME5).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_TOPUPDATETIME5).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME5));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_TOPUPDATETIME5));
     }
 
     /**
@@ -3226,7 +3226,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -3638,7 +3638,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -3662,21 +3662,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getDebtRecoveryStartTime1(final long refreshPeriod) {
+    public ZigBeeUtcTime getDebtRecoveryStartTime1(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
     }
 
     /**
@@ -3684,7 +3684,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4163,7 +4163,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4187,21 +4187,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getDebtRecoveryStartTime2(final long refreshPeriod) {
+    public ZigBeeUtcTime getDebtRecoveryStartTime2(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
     }
 
     /**
@@ -4209,7 +4209,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4688,7 +4688,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4712,21 +4712,21 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getDebtRecoveryStartTime3(final long refreshPeriod) {
+    public ZigBeeUtcTime getDebtRecoveryStartTime3(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
     }
 
     /**
@@ -4734,7 +4734,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * ADDME
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -9429,7 +9429,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * FIXME: This command is sent to the Metering Device to activate the use of any Emergency
      * Credit available on the Metering Device.
      *
-     * @param commandIssueDateTime {@link Calendar} Command Issue Date Time
+     * @param commandIssueDateTime {@link ZigBeeUtcTime} Command Issue Date Time
      * @param originatingDevice {@link Integer} Originating Device
      * @param siteId {@link ByteArray} Site ID
      * @param meterSerialNumber {@link ByteArray} Meter Serial Number
@@ -9444,7 +9444,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new selectAvailableEmergencyCredit(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> selectAvailableEmergencyCredit(Calendar commandIssueDateTime, Integer originatingDevice, ByteArray siteId, ByteArray meterSerialNumber) {
+    public Future<CommandResult> selectAvailableEmergencyCredit(ZigBeeUtcTime commandIssueDateTime, Integer originatingDevice, ByteArray siteId, ByteArray meterSerialNumber) {
         SelectAvailableEmergencyCredit command = new SelectAvailableEmergencyCredit();
 
         // Set the fields
@@ -9467,7 +9467,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param debtAmount {@link Integer} Debt Amount
      * @param debtRecoveryMethod {@link Integer} Debt Recovery Method
      * @param debtAmountType {@link Integer} Debt Amount Type
-     * @param debtRecoveryStartTime {@link Calendar} Debt Recovery Start Time
+     * @param debtRecoveryStartTime {@link ZigBeeUtcTime} Debt Recovery Start Time
      * @param debtRecoveryCollectionTime {@link Integer} Debt Recovery Collection Time
      * @param debtRecoveryFrequency {@link Integer} Debt Recovery Frequency
      * @param debtRecoveryAmount {@link Integer} Debt Recovery Amount
@@ -9483,7 +9483,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new changeDebt(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> changeDebt(Integer issuerEventId, ByteArray debtLabel, Integer debtAmount, Integer debtRecoveryMethod, Integer debtAmountType, Calendar debtRecoveryStartTime, Integer debtRecoveryCollectionTime, Integer debtRecoveryFrequency, Integer debtRecoveryAmount, Integer debtRecoveryBalancePercentage) {
+    public Future<CommandResult> changeDebt(Integer issuerEventId, ByteArray debtLabel, Integer debtAmount, Integer debtRecoveryMethod, Integer debtAmountType, ZigBeeUtcTime debtRecoveryStartTime, Integer debtRecoveryCollectionTime, Integer debtRecoveryFrequency, Integer debtRecoveryAmount, Integer debtRecoveryBalancePercentage) {
         ChangeDebt command = new ChangeDebt();
 
         // Set the fields
@@ -9507,7 +9507,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * FIXME: This command is a method to set up the parameters for the emergency credit.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      * @return the {@link Future<CommandResult>} command result future
@@ -9521,7 +9521,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new emergencyCreditSetup(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> emergencyCreditSetup(Integer issuerEventId, Calendar startTime, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
+    public Future<CommandResult> emergencyCreditSetup(Integer issuerEventId, ZigBeeUtcTime startTime, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
         EmergencyCreditSetup command = new EmergencyCreditSetup();
 
         // Set the fields
@@ -9569,7 +9569,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * Prepayment meter.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param creditAdjustmentType {@link Integer} Credit Adjustment Type
      * @param creditAdjustmentValue {@link Integer} Credit Adjustment Value
      * @return the {@link Future<CommandResult>} command result future
@@ -9583,7 +9583,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new creditAdjustment(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> creditAdjustment(Integer issuerEventId, Calendar startTime, Integer creditAdjustmentType, Integer creditAdjustmentValue) {
+    public Future<CommandResult> creditAdjustment(Integer issuerEventId, ZigBeeUtcTime startTime, Integer creditAdjustmentType, Integer creditAdjustmentValue) {
         CreditAdjustment command = new CreditAdjustment();
 
         // Set the fields
@@ -9603,7 +9603,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param proposedPaymentControlConfiguration {@link Integer} Proposed Payment Control Configuration
      * @param cutOffValue {@link Integer} Cut Off Value
      * @return the {@link Future<CommandResult>} command result future
@@ -9617,7 +9617,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new changePaymentMode(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> changePaymentMode(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer proposedPaymentControlConfiguration, Integer cutOffValue) {
+    public Future<CommandResult> changePaymentMode(Integer providerId, Integer issuerEventId, ZigBeeUtcTime implementationDateTime, Integer proposedPaymentControlConfiguration, Integer cutOffValue) {
         ChangePaymentMode command = new ChangePaymentMode();
 
         // Set the fields
@@ -9635,8 +9635,8 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * FIXME: This command is used to request the cluster server for snapshot data.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param snapshotOffset {@link Integer} Snapshot Offset
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
@@ -9650,7 +9650,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getPrepaySnapshot(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getPrepaySnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
+    public Future<CommandResult> getPrepaySnapshot(ZigBeeUtcTime earliestStartTime, ZigBeeUtcTime latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetPrepaySnapshot command = new GetPrepaySnapshot();
 
         // Set the fields
@@ -9668,7 +9668,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * FIXME: This command is sent to the Metering Device to retrieve the log of Top Up codes
      * received by the meter.
      *
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -9681,7 +9681,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getTopUpLog(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getTopUpLog(Calendar latestEndTime, Integer numberOfRecords) {
+    public Future<CommandResult> getTopUpLog(ZigBeeUtcTime latestEndTime, Integer numberOfRecords) {
         GetTopUpLog command = new GetTopUpLog();
 
         // Set the fields
@@ -9723,7 +9723,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * <p>
      * FIXME: This command is used to request the contents of the repayment log.
      *
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param numberOfDebts {@link Integer} Number Of Debts
      * @param debtType {@link Integer} Debt Type
      * @return the {@link Future<CommandResult>} command result future
@@ -9737,7 +9737,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getDebtRepaymentLog(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getDebtRepaymentLog(Calendar latestEndTime, Integer numberOfDebts, Integer debtType) {
+    public Future<CommandResult> getDebtRepaymentLog(ZigBeeUtcTime latestEndTime, Integer numberOfDebts, Integer debtType) {
         GetDebtRepaymentLog command = new GetDebtRepaymentLog();
 
         // Set the fields
@@ -9756,7 +9756,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param maximumCreditLevel {@link Integer} Maximum Credit Level
      * @param maximumCreditPerTopUp {@link Integer} Maximum Credit Per Top Up
      * @return the {@link Future<CommandResult>} command result future
@@ -9770,7 +9770,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new setMaximumCreditLimit(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> setMaximumCreditLimit(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer maximumCreditLevel, Integer maximumCreditPerTopUp) {
+    public Future<CommandResult> setMaximumCreditLimit(Integer providerId, Integer issuerEventId, ZigBeeUtcTime implementationDateTime, Integer maximumCreditLevel, Integer maximumCreditPerTopUp) {
         SetMaximumCreditLimit command = new SetMaximumCreditLimit();
 
         // Set the fields
@@ -9791,7 +9791,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param overallDebtCap {@link Integer} Overall Debt Cap
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -9804,7 +9804,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new setOverallDebtCap(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> setOverallDebtCap(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer overallDebtCap) {
+    public Future<CommandResult> setOverallDebtCap(Integer providerId, Integer issuerEventId, ZigBeeUtcTime implementationDateTime, Integer overallDebtCap) {
         SetOverallDebtCap command = new SetOverallDebtCap();
 
         // Set the fields
@@ -9823,7 +9823,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * to return a single snapshot to the client.
      *
      * @param snapshotId {@link Integer} Snapshot ID
-     * @param snapshotTime {@link Calendar} Snapshot Time
+     * @param snapshotTime {@link ZigBeeUtcTime} Snapshot Time
      * @param totalSnapshotsFound {@link Integer} Total Snapshots Found
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -9841,7 +9841,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishPrepaySnapshot(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishPrepaySnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
+    public Future<CommandResult> publishPrepaySnapshot(Integer snapshotId, ZigBeeUtcTime snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishPrepaySnapshot command = new PublishPrepaySnapshot();
 
         // Set the fields

@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishCalorificValueCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -48,7 +47,7 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
     /**
      * Start Time command message field.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Calorific Value command message field.
@@ -82,14 +81,14 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Constructor providing all required parameters.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param calorificValue {@link Integer} Calorific Value
      * @param calorificValueUnit {@link Integer} Calorific Value Unit
      * @param calorificValueTrailingDigit {@link Integer} Calorific Value Trailing Digit
      */
     public PublishCalorificValueCommand(
             Integer issuerEventId,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer calorificValue,
             Integer calorificValueUnit,
             Integer calorificValueTrailingDigit) {
@@ -131,7 +130,7 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -142,7 +141,7 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

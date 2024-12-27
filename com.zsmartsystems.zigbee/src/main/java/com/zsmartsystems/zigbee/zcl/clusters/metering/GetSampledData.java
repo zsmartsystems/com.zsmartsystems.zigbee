@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetSampledData extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -55,7 +54,7 @@ public class GetSampledData extends ZclMeteringCommand {
      * timestamp equal to or greater than the specified EarliestSampleTime shall be
      * returned.
      */
-    private Calendar earliestSampleTime;
+    private ZigBeeUtcTime earliestSampleTime;
 
     /**
      * Sample Type command message field.
@@ -92,13 +91,13 @@ public class GetSampledData extends ZclMeteringCommand {
      * Constructor providing all required parameters.
      *
      * @param sampleId {@link Integer} Sample ID
-     * @param earliestSampleTime {@link Calendar} Earliest Sample Time
+     * @param earliestSampleTime {@link ZigBeeUtcTime} Earliest Sample Time
      * @param sampleType {@link Integer} Sample Type
      * @param numberOfSamples {@link Integer} Number Of Samples
      */
     public GetSampledData(
             Integer sampleId,
-            Calendar earliestSampleTime,
+            ZigBeeUtcTime earliestSampleTime,
             Integer sampleType,
             Integer numberOfSamples) {
 
@@ -148,7 +147,7 @@ public class GetSampledData extends ZclMeteringCommand {
      *
      * @return the Earliest Sample Time
      */
-    public Calendar getEarliestSampleTime() {
+    public ZigBeeUtcTime getEarliestSampleTime() {
         return earliestSampleTime;
     }
 
@@ -163,7 +162,7 @@ public class GetSampledData extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEarliestSampleTime(final Calendar earliestSampleTime) {
+    public void setEarliestSampleTime(final ZigBeeUtcTime earliestSampleTime) {
         this.earliestSampleTime = earliestSampleTime;
     }
 

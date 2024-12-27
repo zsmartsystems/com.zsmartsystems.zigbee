@@ -6,13 +6,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializable;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -20,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class SnapshotSchedulePayload implements ZigBeeSerializable {
     /**
      * Snapshot Schedule ID structure field.
@@ -30,7 +29,7 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
     /**
      * Snapshot Start Time structure field.
      */
-    private Calendar snapshotStartTime;
+    private ZigBeeUtcTime snapshotStartTime;
 
     /**
      * Snapshot Schedule structure field.
@@ -61,14 +60,14 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Constructor providing all required parameters.
      *
      * @param snapshotScheduleId {@link Integer} Snapshot Schedule ID
-     * @param snapshotStartTime {@link Calendar} Snapshot Start Time
+     * @param snapshotStartTime {@link ZigBeeUtcTime} Snapshot Start Time
      * @param snapshotSchedule {@link Integer} Snapshot Schedule
      * @param snapshotPayloadType {@link Integer} Snapshot Payload Type
      * @param snapshotCause {@link Integer} Snapshot Cause
      */
     public SnapshotSchedulePayload(
             Integer snapshotScheduleId,
-            Calendar snapshotStartTime,
+            ZigBeeUtcTime snapshotStartTime,
             Integer snapshotSchedule,
             Integer snapshotPayloadType,
             Integer snapshotCause) {
@@ -105,7 +104,7 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      *
      * @return the Snapshot Start Time
      */
-    public Calendar getSnapshotStartTime() {
+    public ZigBeeUtcTime getSnapshotStartTime() {
         return snapshotStartTime;
     }
 
@@ -116,7 +115,7 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setSnapshotStartTime(final Calendar snapshotStartTime) {
+    public void setSnapshotStartTime(final ZigBeeUtcTime snapshotStartTime) {
         this.snapshotStartTime = snapshotStartTime;
     }
 

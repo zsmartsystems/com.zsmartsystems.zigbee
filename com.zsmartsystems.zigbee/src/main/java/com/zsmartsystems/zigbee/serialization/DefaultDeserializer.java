@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
@@ -270,6 +271,8 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
             case UTCTIME:
+                value[0] = ZigBeeUtcTime.ofZigBeeSecond(payload[index++] + (payload[index++] << 8)
+                        + (payload[index++] << 16) + (payload[index++] << 24));
                 break;
             case ROUTING_TABLE:
                 RoutingTable routingTable = new RoutingTable();

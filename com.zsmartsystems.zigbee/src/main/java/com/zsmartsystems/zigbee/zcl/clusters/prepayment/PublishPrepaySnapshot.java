@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -47,7 +46,7 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
     /**
      * Snapshot Time command message field.
      */
-    private Calendar snapshotTime;
+    private ZigBeeUtcTime snapshotTime;
 
     /**
      * Total Snapshots Found command message field.
@@ -96,7 +95,7 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Constructor providing all required parameters.
      *
      * @param snapshotId {@link Integer} Snapshot ID
-     * @param snapshotTime {@link Calendar} Snapshot Time
+     * @param snapshotTime {@link ZigBeeUtcTime} Snapshot Time
      * @param totalSnapshotsFound {@link Integer} Total Snapshots Found
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -106,7 +105,7 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      */
     public PublishPrepaySnapshot(
             Integer snapshotId,
-            Calendar snapshotTime,
+            ZigBeeUtcTime snapshotTime,
             Integer totalSnapshotsFound,
             Integer commandIndex,
             Integer totalNumberOfCommands,
@@ -154,7 +153,7 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      *
      * @return the Snapshot Time
      */
-    public Calendar getSnapshotTime() {
+    public ZigBeeUtcTime getSnapshotTime() {
         return snapshotTime;
     }
 
@@ -165,7 +164,7 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setSnapshotTime(final Calendar snapshotTime) {
+    public void setSnapshotTime(final ZigBeeUtcTime snapshotTime) {
         this.snapshotTime = snapshotTime;
     }
 

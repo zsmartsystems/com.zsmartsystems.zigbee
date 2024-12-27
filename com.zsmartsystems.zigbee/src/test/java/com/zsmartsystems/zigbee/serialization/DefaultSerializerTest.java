@@ -18,6 +18,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -71,6 +72,13 @@ public class DefaultSerializerTest {
         ExtendedPanId valIn = new ExtendedPanId("1234567890123456");
         int[] valOut = { 0x56, 0x34, 0x12, 0x90, 0x78, 0x56, 0x34, 0x12 };
         testSerializedData(valIn, valOut, ZclDataType.EXTENDED_PANID);
+    }
+
+    @Test
+    public void testSerialize_UTCTIME() {
+        ZigBeeUtcTime valIn = ZigBeeUtcTime.ofZigBeeSecond(0x12345678);
+        int[] valOut = { 0x78, 0x56, 0x34, 0x12 };
+        testSerializedData(valIn, valOut, ZclDataType.UTCTIME);
     }
 
     @Test

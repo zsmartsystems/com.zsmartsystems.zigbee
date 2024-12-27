@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -24,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,7 +85,7 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Start Time of now, adjust the Duration In Minutes field to correspond to the remainder of
      * the event.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Duration In Minutes command message field.
@@ -201,7 +200,7 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param deviceClass {@link Integer} Device Class
      * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param criticalityLevel {@link Integer} Criticality Level
      * @param coolingTemperatureOffset {@link Integer} Cooling Temperature Offset
@@ -216,7 +215,7 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
             Integer issuerEventId,
             Integer deviceClass,
             Integer utilityEnrollmentGroup,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer durationInMinutes,
             Integer criticalityLevel,
             Integer coolingTemperatureOffset,
@@ -371,7 +370,7 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -387,7 +386,7 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 
