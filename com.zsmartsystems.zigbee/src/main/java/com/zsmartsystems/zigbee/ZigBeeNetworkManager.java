@@ -183,6 +183,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     private Collection<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableCollection(new HashSet<>());
 
+    private Collection<ZigBeeNetworkPermitJoinListener> permitJoinListeners = Collections.unmodifiableCollection(new HashSet<>());
+    
     /**
      * {@link AtomicInteger} used to generate APS header counters
      */
@@ -1467,6 +1469,15 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         sendTransaction(command);
+        
+        for (final ZigBeeNetworkPermitJoinListener permitJoinListener : permitJoinListeners) {
+            notificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    permitJoinListener.permitJoinExecuted(networkManagerId);
+                }
+            });
+        }
 
         // If this is a broadcast, then we send it to our own address as well
         // This seems to be required for some stacks (eg TI ZNP).
@@ -2040,5 +2051,21 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             // Pass the update to the transaction if this is NACK or ACK for last/only fragment
             transactionManager.receiveCommandState(msgTag, state);
         }
+    }
+    
+    public void addNetworkPermitJoinListener(final ZigBeeNetworkPermitJoinListener networkPermitJoinListener) {
+        if (permitJoinListeners.contains(networkPermitJoinListener)) {
+            return;
+        }
+        final Collection<ZigBeeNetworkPermitJoinListener> modifiedPermitJoinListeners = new HashSet<>(permitJoinListeners);
+        modifiedPermitJoinListeners.add(networkPermitJoinListener);
+        permitJoinListeners = Collections.unmodifiableCollection(modifiedPermitJoinListeners);
+    }
+
+    
+    public void removeNetworkPermitJoinListener(final ZigBeeNetworkPermitJoinListener networkPermitJoinListener) {
+        final List<ZigBeeNetworkPermitJoinListener> modifiedListeners = new ArrayList<>(permitJoinListeners);
+        modifiedListeners.remove(networkPermitJoinListener);
+        permitJoinListeners = Collections.unmodifiableList(modifiedListeners);
     }
 }
