@@ -10,8 +10,10 @@ package com.zsmartsystems.zigbee.dongle.ember;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -130,6 +132,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * Response to the getBootloaderVersion if no bootloader is available
      */
     private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
+    
+    private static final Set<EmberTrustCenterJoinListener> trustCenterJoinListeners = new HashSet<>();
+
 
     /**
      * The {@link Logger}.
@@ -438,6 +443,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         this.mfglibListener = mfglibListener;
 
         return new EmberMfglib(frameHandler);
+    }
+    
+    public void addTrustCenterJoinListener(EmberTrustCenterJoinListener trustCenterListener) {
+        trustCenterJoinListeners.add(trustCenterListener);
+    }
+
+    public void removeTrustCenterJoinListener(EmberTrustCenterJoinListener trustCenterListener) {
+        trustCenterJoinListeners.remove(trustCenterListener);
     }
 
     @Override
@@ -1007,6 +1020,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (response instanceof EzspTrustCenterJoinHandler) {
             EzspTrustCenterJoinHandler joinHandler = (EzspTrustCenterJoinHandler) response;
 
+            EzspTrustCenterJoinHandler EzspTrustCenterJoinresponse =  (EzspTrustCenterJoinHandler) response;
+            trustCenterJoinListeners.stream().forEach(l -> l.emberTrustCenterJoinPacketReceived(handlerIdentifier, EzspTrustCenterJoinresponse.getNewNodeEui64().toString(), EzspTrustCenterJoinresponse.getPolicyDecision()));
+        
             ZigBeeNodeStatus status;
             switch (joinHandler.getStatus()) {
                 case EMBER_HIGH_SECURITY_UNSECURED_JOIN:
