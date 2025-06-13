@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:27:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-13T08:10:08Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -62,6 +62,9 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * to the user locally at the thermostat.
      */
     public static final int ATTR_SCHEDULEPROGRAMMINGVISIBILITY = 0x0002;
+    public static final int ATTR_DISPLAYLOCALTEMPERATURE = 0x0500;
+    public static final int ATTR_DISPLAYFANCONTROL = 0x0501;
+    public static final int ATTR_DISPLAYINFORMATIONS = 0x0502;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -77,6 +80,9 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
         attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(this, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_KEYPADLOCKOUT, new ZclAttribute(this, ATTR_KEYPADLOCKOUT, "Keypad Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_SCHEDULEPROGRAMMINGVISIBILITY, new ZclAttribute(this, ATTR_SCHEDULEPROGRAMMINGVISIBILITY, "Schedule Programming Visibility", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_DISPLAYLOCALTEMPERATURE, new ZclAttribute(this, ATTR_DISPLAYLOCALTEMPERATURE, "Display Local Temperature", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_DISPLAYFANCONTROL, new ZclAttribute(this, ATTR_DISPLAYFANCONTROL, "Display Fan Control", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_DISPLAYINFORMATIONS, new ZclAttribute(this, ATTR_DISPLAYINFORMATIONS, "Display Informations", ZclDataType.ENUMERATION_8_BIT, true, true, true, true));
 
         return attributeMap;
     }
@@ -311,5 +317,232 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY));
+    }
+
+    /**
+     * Set the <i>Display Local Temperature</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param displayLocalTemperature the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayLocalTemperature(final Integer displayLocalTemperature) {
+        return write(serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE), displayLocalTemperature);
+    }
+
+    /**
+     * Get the <i>Display Local Temperature</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getDisplayLocalTemperatureAsync() {
+        return read(serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE));
+    }
+
+    /**
+     * Synchronously get the <i>Display Local Temperature</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getDisplayLocalTemperature(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE));
+    }
+
+    /**
+     * Set reporting for the <i>Display Local Temperature</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayLocalTemperatureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_DISPLAYLOCALTEMPERATURE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Display Fan Control</i> attribute [attribute ID <b>0x0501</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param displayFanControl the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayFanControl(final Integer displayFanControl) {
+        return write(serverAttributes.get(ATTR_DISPLAYFANCONTROL), displayFanControl);
+    }
+
+    /**
+     * Get the <i>Display Fan Control</i> attribute [attribute ID <b>0x0501</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getDisplayFanControlAsync() {
+        return read(serverAttributes.get(ATTR_DISPLAYFANCONTROL));
+    }
+
+    /**
+     * Synchronously get the <i>Display Fan Control</i> attribute [attribute ID <b>0x0501</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getDisplayFanControl(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_DISPLAYFANCONTROL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DISPLAYFANCONTROL).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_DISPLAYFANCONTROL));
+    }
+
+    /**
+     * Set reporting for the <i>Display Fan Control</i> attribute [attribute ID <b>0x0501</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayFanControlReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_DISPLAYFANCONTROL), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Display Informations</i> attribute [attribute ID <b>0x0502</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param displayInformations the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayInformations(final Integer displayInformations) {
+        return write(serverAttributes.get(ATTR_DISPLAYINFORMATIONS), displayInformations);
+    }
+
+    /**
+     * Get the <i>Display Informations</i> attribute [attribute ID <b>0x0502</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getDisplayInformationsAsync() {
+        return read(serverAttributes.get(ATTR_DISPLAYINFORMATIONS));
+    }
+
+    /**
+     * Synchronously get the <i>Display Informations</i> attribute [attribute ID <b>0x0502</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getDisplayInformations(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_DISPLAYINFORMATIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DISPLAYINFORMATIONS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_DISPLAYINFORMATIONS));
+    }
+
+    /**
+     * Set reporting for the <i>Display Informations</i> attribute [attribute ID <b>0x0502</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     */
+    @Deprecated
+    public Future<CommandResult> setDisplayInformationsReporting(final int minInterval, final int maxInterval) {
+        return setReporting(serverAttributes.get(ATTR_DISPLAYINFORMATIONS), minInterval, maxInterval);
     }
 }

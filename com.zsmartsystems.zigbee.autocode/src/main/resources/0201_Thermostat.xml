@@ -251,6 +251,34 @@
     <attribute code="0x0047" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFF" default="0x00">
         <name>AC Capacity Format</name>
     </attribute>
+    <attribute code="0x0500" type="ENUMERATION_8_BIT" side="server" optional="false" writable="true" reportable="true">
+        <name>Allowed System Mode</name>
+    </attribute>
+    <attribute code="0x0510" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Fcu Configuration</name>
+    </attribute>
+    <attribute code="0x0511" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Valve Operation</name>
+    </attribute>
+    <attribute code="0x0512" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Min Output Voltage</name>
+    </attribute>
+    <attribute code="0x0513" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Max Output Voltage</name>
+    </attribute>
+    <attribute code="0x0520" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Hysteresis</name>
+    </attribute>
+    <attribute code="0x0521" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Coef Kp Up</name>
+    </attribute>
+    <attribute code="0x0522" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Coef Kp Down</name>
+    </attribute>
+        <attribute code="0x0523" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+        <name>Coef Ki</name>
+    </attribute>
+    
 
     <constant type="BITMAP_8_BIT" class="DayOfWeekBitmap">
         <name>Day Of Week</name>

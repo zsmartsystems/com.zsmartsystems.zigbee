@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-06-25T09:06:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-13T08:10:08Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -136,6 +136,15 @@ public class ZclThermostatCluster extends ZclCluster {
     public static final int ATTR_ACLOUVERPOSITION = 0x0045;
     public static final int ATTR_ACCOILTEMPERATURE = 0x0046;
     public static final int ATTR_ACCAPACITYFORMAT = 0x0047;
+    public static final int ATTR_ALLOWEDSYSTEMMODE = 0x0500;
+    public static final int ATTR_FCUCONFIGURATION = 0x0510;
+    public static final int ATTR_VALVEOPERATION = 0x0511;
+    public static final int ATTR_MINOUTPUTVOLTAGE = 0x0512;
+    public static final int ATTR_MAXOUTPUTVOLTAGE = 0x0513;
+    public static final int ATTR_HYSTERESIS = 0x0520;
+    public static final int ATTR_COEFKPUP = 0x0521;
+    public static final int ATTR_COEFKPDOWN = 0x0522;
+    public static final int ATTR_COEFKI = 0x0523;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -198,6 +207,15 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_ACLOUVERPOSITION, new ZclAttribute(this, ATTR_ACLOUVERPOSITION, "AC Louver Position", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
         attributeMap.put(ATTR_ACCOILTEMPERATURE, new ZclAttribute(this, ATTR_ACCOILTEMPERATURE, "AC Coil Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACCAPACITYFORMAT, new ZclAttribute(this, ATTR_ACCAPACITYFORMAT, "AC Capacity Format", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ALLOWEDSYSTEMMODE, new ZclAttribute(this, ATTR_ALLOWEDSYSTEMMODE, "Allowed System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, true, true));
+        attributeMap.put(ATTR_FCUCONFIGURATION, new ZclAttribute(this, ATTR_FCUCONFIGURATION, "Fcu Configuration", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_VALVEOPERATION, new ZclAttribute(this, ATTR_VALVEOPERATION, "Valve Operation", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_MINOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MINOUTPUTVOLTAGE, "Min Output Voltage", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_MAXOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MAXOUTPUTVOLTAGE, "Max Output Voltage", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_HYSTERESIS, new ZclAttribute(this, ATTR_HYSTERESIS, "Hysteresis", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKPUP, new ZclAttribute(this, ATTR_COEFKPUP, "Coef Kp Up", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKPDOWN, new ZclAttribute(this, ATTR_COEFKPDOWN, "Coef Kp Down", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKI, new ZclAttribute(this, ATTR_COEFKI, "Coef Ki", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
 
         return attributeMap;
     }
@@ -2933,6 +2951,689 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_ACCAPACITYFORMAT));
+    }
+
+    /**
+     * Set the <i>Allowed System Mode</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param allowedSystemMode the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAllowedSystemMode(final Integer allowedSystemMode) {
+        return write(serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE), allowedSystemMode);
+    }
+
+    /**
+     * Get the <i>Allowed System Mode</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAllowedSystemModeAsync() {
+        return read(serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE));
+    }
+
+    /**
+     * Synchronously get the <i>Allowed System Mode</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAllowedSystemMode(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE));
+    }
+
+    /**
+     * Set reporting for the <i>Allowed System Mode</i> attribute [attribute ID <b>0x0500</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAllowedSystemModeReporting(final int minInterval, final int maxInterval) {
+        return setReporting(serverAttributes.get(ATTR_ALLOWEDSYSTEMMODE), minInterval, maxInterval);
+    }
+
+    /**
+     * Set the <i>Fcu Configuration</i> attribute [attribute ID <b>0x0510</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param fcuConfiguration the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setFcuConfiguration(final Integer fcuConfiguration) {
+        return write(serverAttributes.get(ATTR_FCUCONFIGURATION), fcuConfiguration);
+    }
+
+    /**
+     * Get the <i>Fcu Configuration</i> attribute [attribute ID <b>0x0510</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getFcuConfigurationAsync() {
+        return read(serverAttributes.get(ATTR_FCUCONFIGURATION));
+    }
+
+    /**
+     * Synchronously get the <i>Fcu Configuration</i> attribute [attribute ID <b>0x0510</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getFcuConfiguration(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_FCUCONFIGURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FCUCONFIGURATION).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_FCUCONFIGURATION));
+    }
+
+    /**
+     * Set reporting for the <i>Fcu Configuration</i> attribute [attribute ID <b>0x0510</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setFcuConfigurationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_FCUCONFIGURATION), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Valve Operation</i> attribute [attribute ID <b>0x0511</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param valveOperation the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setValveOperation(final Integer valveOperation) {
+        return write(serverAttributes.get(ATTR_VALVEOPERATION), valveOperation);
+    }
+
+    /**
+     * Get the <i>Valve Operation</i> attribute [attribute ID <b>0x0511</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getValveOperationAsync() {
+        return read(serverAttributes.get(ATTR_VALVEOPERATION));
+    }
+
+    /**
+     * Synchronously get the <i>Valve Operation</i> attribute [attribute ID <b>0x0511</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getValveOperation(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_VALVEOPERATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_VALVEOPERATION).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_VALVEOPERATION));
+    }
+
+    /**
+     * Set reporting for the <i>Valve Operation</i> attribute [attribute ID <b>0x0511</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setValveOperationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_VALVEOPERATION), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Min Output Voltage</i> attribute [attribute ID <b>0x0512</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minOutputVoltage the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMinOutputVoltage(final Integer minOutputVoltage) {
+        return write(serverAttributes.get(ATTR_MINOUTPUTVOLTAGE), minOutputVoltage);
+    }
+
+    /**
+     * Get the <i>Min Output Voltage</i> attribute [attribute ID <b>0x0512</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMinOutputVoltageAsync() {
+        return read(serverAttributes.get(ATTR_MINOUTPUTVOLTAGE));
+    }
+
+    /**
+     * Synchronously get the <i>Min Output Voltage</i> attribute [attribute ID <b>0x0512</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMinOutputVoltage(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MINOUTPUTVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINOUTPUTVOLTAGE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MINOUTPUTVOLTAGE));
+    }
+
+    /**
+     * Set reporting for the <i>Min Output Voltage</i> attribute [attribute ID <b>0x0512</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMinOutputVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_MINOUTPUTVOLTAGE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Max Output Voltage</i> attribute [attribute ID <b>0x0513</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param maxOutputVoltage the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMaxOutputVoltage(final Integer maxOutputVoltage) {
+        return write(serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE), maxOutputVoltage);
+    }
+
+    /**
+     * Get the <i>Max Output Voltage</i> attribute [attribute ID <b>0x0513</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMaxOutputVoltageAsync() {
+        return read(serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE));
+    }
+
+    /**
+     * Synchronously get the <i>Max Output Voltage</i> attribute [attribute ID <b>0x0513</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMaxOutputVoltage(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE));
+    }
+
+    /**
+     * Set reporting for the <i>Max Output Voltage</i> attribute [attribute ID <b>0x0513</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMaxOutputVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_MAXOUTPUTVOLTAGE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Hysteresis</i> attribute [attribute ID <b>0x0520</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param hysteresis the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setHysteresis(final Integer hysteresis) {
+        return write(serverAttributes.get(ATTR_HYSTERESIS), hysteresis);
+    }
+
+    /**
+     * Get the <i>Hysteresis</i> attribute [attribute ID <b>0x0520</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getHysteresisAsync() {
+        return read(serverAttributes.get(ATTR_HYSTERESIS));
+    }
+
+    /**
+     * Synchronously get the <i>Hysteresis</i> attribute [attribute ID <b>0x0520</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getHysteresis(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_HYSTERESIS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_HYSTERESIS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_HYSTERESIS));
+    }
+
+    /**
+     * Set reporting for the <i>Hysteresis</i> attribute [attribute ID <b>0x0520</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setHysteresisReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_HYSTERESIS), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Coef Kp Up</i> attribute [attribute ID <b>0x0521</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param coefKpUp the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKpUp(final Integer coefKpUp) {
+        return write(serverAttributes.get(ATTR_COEFKPUP), coefKpUp);
+    }
+
+    /**
+     * Get the <i>Coef Kp Up</i> attribute [attribute ID <b>0x0521</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getCoefKpUpAsync() {
+        return read(serverAttributes.get(ATTR_COEFKPUP));
+    }
+
+    /**
+     * Synchronously get the <i>Coef Kp Up</i> attribute [attribute ID <b>0x0521</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getCoefKpUp(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_COEFKPUP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COEFKPUP).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_COEFKPUP));
+    }
+
+    /**
+     * Set reporting for the <i>Coef Kp Up</i> attribute [attribute ID <b>0x0521</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKpUpReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_COEFKPUP), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Coef Kp Down</i> attribute [attribute ID <b>0x0522</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param coefKpDown the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKpDown(final Integer coefKpDown) {
+        return write(serverAttributes.get(ATTR_COEFKPDOWN), coefKpDown);
+    }
+
+    /**
+     * Get the <i>Coef Kp Down</i> attribute [attribute ID <b>0x0522</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getCoefKpDownAsync() {
+        return read(serverAttributes.get(ATTR_COEFKPDOWN));
+    }
+
+    /**
+     * Synchronously get the <i>Coef Kp Down</i> attribute [attribute ID <b>0x0522</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getCoefKpDown(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_COEFKPDOWN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COEFKPDOWN).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_COEFKPDOWN));
+    }
+
+    /**
+     * Set reporting for the <i>Coef Kp Down</i> attribute [attribute ID <b>0x0522</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKpDownReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_COEFKPDOWN), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Coef Ki</i> attribute [attribute ID <b>0x0523</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param coefKi the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKi(final Integer coefKi) {
+        return write(serverAttributes.get(ATTR_COEFKI), coefKi);
+    }
+
+    /**
+     * Get the <i>Coef Ki</i> attribute [attribute ID <b>0x0523</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getCoefKiAsync() {
+        return read(serverAttributes.get(ATTR_COEFKI));
+    }
+
+    /**
+     * Synchronously get the <i>Coef Ki</i> attribute [attribute ID <b>0x0523</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getCoefKi(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_COEFKI).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COEFKI).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_COEFKI));
+    }
+
+    /**
+     * Set reporting for the <i>Coef Ki</i> attribute [attribute ID <b>0x0523</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setCoefKiReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_COEFKI), minInterval, maxInterval, reportableChange);
     }
 
     /**
