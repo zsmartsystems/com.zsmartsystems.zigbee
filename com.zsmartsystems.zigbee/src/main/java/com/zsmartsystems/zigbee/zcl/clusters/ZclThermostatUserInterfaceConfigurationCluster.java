@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-13T08:10:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-16T13:36:22Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -80,9 +80,9 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
         attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(this, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_KEYPADLOCKOUT, new ZclAttribute(this, ATTR_KEYPADLOCKOUT, "Keypad Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_SCHEDULEPROGRAMMINGVISIBILITY, new ZclAttribute(this, ATTR_SCHEDULEPROGRAMMINGVISIBILITY, "Schedule Programming Visibility", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_DISPLAYLOCALTEMPERATURE, new ZclAttribute(this, ATTR_DISPLAYLOCALTEMPERATURE, "Display Local Temperature", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_DISPLAYFANCONTROL, new ZclAttribute(this, ATTR_DISPLAYFANCONTROL, "Display Fan Control", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_DISPLAYINFORMATIONS, new ZclAttribute(this, ATTR_DISPLAYINFORMATIONS, "Display Informations", ZclDataType.ENUMERATION_8_BIT, true, true, true, true));
+        attributeMap.put(ATTR_DISPLAYLOCALTEMPERATURE, new ZclAttribute(this, ATTR_DISPLAYLOCALTEMPERATURE, "Display Local Temperature", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_DISPLAYFANCONTROL, new ZclAttribute(this, ATTR_DISPLAYFANCONTROL, "Display Fan Control", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_DISPLAYINFORMATIONS, new ZclAttribute(this, ATTR_DISPLAYINFORMATIONS, "Display Informations", ZclDataType.BITMAP_8_BIT, true, true, true, true));
 
         return attributeMap;
     }
