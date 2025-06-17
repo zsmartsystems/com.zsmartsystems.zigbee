@@ -15,13 +15,13 @@
         <description>The ScheduleProgrammingVisibility attribute is used to hide the weekly schedule programming functionality or menu on a thermostat from a user to prevent local user programming of the weekly schedule. The schedule programming MAY still be performed via a remote interface, and the thermostat MAY operate in schedule programming mode.</description>
         <description>This command is designed to prevent local tampering with or disabling of schedules that MAY have been programmed by users or service providers via a more capable remote interface. The programming schedule SHALL continue to run even though it is not visible to the user locally at the thermostat.</description>
     </attribute>
-    <attribute code="0x0500" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+    <attribute code="0x0500" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
         <name>Display Local Temperature</name>
     </attribute>
-    <attribute code="0x0501" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
+    <attribute code="0x0501" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
         <name>Display Fan Control</name>
     </attribute>
-    <attribute code="0x0502" type="ENUMERATION_8_BIT" side="server" optional="false" writable="true" reportable="true">
+    <attribute code="0x0502" type="BITMAP_8_BIT" side="server" optional="false" writable="true" reportable="true">
         <name>Display Informations</name>
     </attribute>
 

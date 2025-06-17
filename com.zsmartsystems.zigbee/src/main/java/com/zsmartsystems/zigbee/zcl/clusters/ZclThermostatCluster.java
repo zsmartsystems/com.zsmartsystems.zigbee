@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-13T08:10:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2025-06-16T13:36:22Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -207,15 +207,15 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_ACLOUVERPOSITION, new ZclAttribute(this, ATTR_ACLOUVERPOSITION, "AC Louver Position", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
         attributeMap.put(ATTR_ACCOILTEMPERATURE, new ZclAttribute(this, ATTR_ACCOILTEMPERATURE, "AC Coil Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACCAPACITYFORMAT, new ZclAttribute(this, ATTR_ACCAPACITYFORMAT, "AC Capacity Format", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_ALLOWEDSYSTEMMODE, new ZclAttribute(this, ATTR_ALLOWEDSYSTEMMODE, "Allowed System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, true, true));
-        attributeMap.put(ATTR_FCUCONFIGURATION, new ZclAttribute(this, ATTR_FCUCONFIGURATION, "Fcu Configuration", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_VALVEOPERATION, new ZclAttribute(this, ATTR_VALVEOPERATION, "Valve Operation", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_MINOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MINOUTPUTVOLTAGE, "Min Output Voltage", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_MAXOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MAXOUTPUTVOLTAGE, "Max Output Voltage", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_HYSTERESIS, new ZclAttribute(this, ATTR_HYSTERESIS, "Hysteresis", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_COEFKPUP, new ZclAttribute(this, ATTR_COEFKPUP, "Coef Kp Up", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_COEFKPDOWN, new ZclAttribute(this, ATTR_COEFKPDOWN, "Coef Kp Down", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_COEFKI, new ZclAttribute(this, ATTR_COEFKI, "Coef Ki", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_ALLOWEDSYSTEMMODE, new ZclAttribute(this, ATTR_ALLOWEDSYSTEMMODE, "Allowed System Mode", ZclDataType.BITMAP_8_BIT, true, true, true, true));
+        attributeMap.put(ATTR_FCUCONFIGURATION, new ZclAttribute(this, ATTR_FCUCONFIGURATION, "Fcu Configuration", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_VALVEOPERATION, new ZclAttribute(this, ATTR_VALVEOPERATION, "Valve Operation", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_MINOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MINOUTPUTVOLTAGE, "Min Output Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_MAXOUTPUTVOLTAGE, new ZclAttribute(this, ATTR_MAXOUTPUTVOLTAGE, "Max Output Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_HYSTERESIS, new ZclAttribute(this, ATTR_HYSTERESIS, "Hysteresis", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKPUP, new ZclAttribute(this, ATTR_COEFKPUP, "Coef Kp Up", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKPDOWN, new ZclAttribute(this, ATTR_COEFKPDOWN, "Coef Kp Down", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_COEFKI, new ZclAttribute(this, ATTR_COEFKI, "Coef Ki", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true, true));
 
         return attributeMap;
     }
