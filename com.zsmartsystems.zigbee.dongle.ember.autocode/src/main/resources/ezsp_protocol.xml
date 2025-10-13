@@ -1965,26 +1965,6 @@
 	</command>
 
 	<command>
-		<name>becomeTrustCenter</name>
-		<id>0x77</id>
-		<description>This function causes a coordinator to become the Trust Center when it is operating in a network that is not using one. It will send out an updated Network Key to all devices that will indicate a transition of the network to now use a Trust Center. The Trust Center should also switch all devices to using this new network key with the appropriate API.</description>
-		<command_parameters>
-			<parameter>
-				<data_type>EmberKeyData</data_type>
-				<name>newNetworkKey</name>
-				<description>The key data for the Updated Network Key.</description>
-			</parameter>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberStatus</data_type>
-				<name>status</name>
-				<description>The response status.</description>
-			</parameter>
-		</response_parameters>
-	</command>
-
-	<command>
 		<name>aesMmoHash</name>
 		<id>0x6F</id>
 		<description>This routine processes the passed chunk of data and updates the hash context based on it. If the 'finalize' parameter is not set, then the length of the data passed in must be a multiple of 16. If the 'finalize' parameter is set then the length can be any value up 1-16, and the final hash value will be calculated.</description>
@@ -3916,6 +3896,30 @@
 		<description>A command which does nothing. The Host can use this to set the sleep mode or check the status of the NCP.</description>
 	</command>
 	
+    <command>
+		<name>tokenFactoryReset</name>
+		<id>0x0077</id>
+		<description>Factory reset all configured Zigbee tokens.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>excludeOutgoingFC</name>
+				<description>Exclude network and APS outgoing frame counter tokens.</description>
+			</parameter>			
+			<parameter>
+				<data_type>bool</data_type>
+				<name>excludeBootCounter</name>
+				<description>Exclude stack boot counter token.</description>
+			</parameter>			
+		</command_parameters>
+	</command>
+	
+    <command>
+		<name>resetNode</name>
+		<id>0x0104</id>
+		<description>Reset the node by calling halReboot.</description>
+	</command>
+
 	<structure>
 		<name>EmberCertificateData</name>
 		<description>The implicit certificate used in CBKE.</description>

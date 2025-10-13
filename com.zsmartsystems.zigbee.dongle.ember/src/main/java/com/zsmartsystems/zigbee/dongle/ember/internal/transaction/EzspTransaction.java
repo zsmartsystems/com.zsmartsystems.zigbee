@@ -59,7 +59,7 @@ public interface EzspTransaction {
      * response indicating the final state of the transaction.
      *
      * @return {@link EmberStatus} indicating the transaction completion state or
-     *         {@link EmberStatus#EMBED_UNKNOWN_STATUS} on error.
+     *         {@link EmberStatus#UNKNOWN} on error.
      */
     EmberStatus getStatus();
 }

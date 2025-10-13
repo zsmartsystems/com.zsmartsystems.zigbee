@@ -71,14 +71,22 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      */
     protected ZigBeeEndpoint getEndpoint(final ZigBeeNetworkManager networkManager, final String endpointId)
             throws IllegalArgumentException {
-        for (final ZigBeeNode node : networkManager.getNodes()) {
-            for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
-                if (endpointId.equals(node.getNetworkAddress() + "/" + endpoint.getEndpointId())) {
-                    return endpoint;
-                }
-            }
+        String[] endpointParts = endpointId.split("/");
+        if (endpointParts.length != 2) {
+            throw new IllegalArgumentException("Invalid endpoint format '" + endpointId + "'");
         }
-        throw new IllegalArgumentException("Endpoint '" + endpointId + "' is not found");
+        ZigBeeNode node = getNode(networkManager, endpointParts[0]);
+        int endpointNumber;
+        try {
+            endpointNumber = Integer.parseInt(endpointParts[1]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid endpoint number '" + endpointParts[1] + "'");
+        }
+        ZigBeeEndpoint endpoint = node.getEndpoint(endpointNumber);
+        if (endpoint == null) {
+            throw new IllegalArgumentException("Endpoint '" + endpointId + "' is not found");
+        }
+        return endpoint;
     }
 
     /**

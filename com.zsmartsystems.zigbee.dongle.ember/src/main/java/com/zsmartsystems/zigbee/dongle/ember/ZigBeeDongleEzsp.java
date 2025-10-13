@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -132,7 +133,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * Response to the getBootloaderVersion if no bootloader is available
      */
     private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
-    
+
     private static final Set<EmberTrustCenterJoinListener> trustCenterJoinListeners = new HashSet<>();
 
 
@@ -444,7 +445,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         return new EmberMfglib(frameHandler);
     }
-    
+
     public void addTrustCenterJoinListener(EmberTrustCenterJoinListener trustCenterListener) {
         trustCenterJoinListeners.add(trustCenterListener);
     }
@@ -477,40 +478,46 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ncp);
 
+        stackConfigurer.setConfiguration(stackConfiguration);
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
             logger.debug("[{}]: Configuration state {} = {}", handlerIdentifier, config.getKey(), config.getValue());
         }
 
+        stackConfigurer.setPolicy(stackPolicies);
         Map<EzspPolicyId, Integer> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
         for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
-            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            EzspDecisionId decisionId = null;
+            try {
+                decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            } catch (Exception e) {
+                // Eat me!
+                // This is only for logging.
+            }
             logger.debug("[{}]: Policy state {} = {} [{}]", handlerIdentifier, policy.getKey(), decisionId,
-                    String.format("%02X", policy.getValue()));
-        }
-
-        stackConfigurer.setConfiguration(stackConfiguration);
-        configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
-            logger.debug("[{}]: Configuration state {} = {}", handlerIdentifier, config.getKey(), config.getValue());
-        }
-
-        stackConfigurer.setPolicy(stackPolicies);
-        policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
-            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
-            logger.debug("[{}]: Policy state {} = {} [{}]", handlerIdentifier, policy.getKey(), decisionId,
-                    String.format("%02X", policy.getValue()));
+                String.format("%02X", policy.getValue()));
         }
 
         // Get the current network parameters so that any configuration updates start from here
-        networkParameters = ncp.getNetworkParameters().getParameters();
+        EzspGetNetworkParametersResponse networkParametersResponse = ncp.getNetworkParameters();
+        if (networkParametersResponse == null) {
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
+        EmberNetworkParameters localNetworkParameters = networkParametersResponse.getParameters();
+        if (localNetworkParameters != null) {
+            networkParameters = localNetworkParameters;
+        }
         logger.debug("[{}]: Ember initial network parameters are {}", handlerIdentifier, networkParameters);
 
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("[{}]: Ember local IEEE Address is {}", handlerIdentifier, ieeeAddress);
 
         ncp.getNetworkParameters();
+
+        if (!frameHandler.isAlive()) {
+            logger.error("Ember frame handler is not alive after initialize!");
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
 
         isConfigured = true;
         logger.debug("[{}]: EZSP Dongle: initialize done", handlerIdentifier);
@@ -605,7 +612,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ncp.sendManyToOneRouteRequest(concentratorType, radius);
         }
 
-        ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_PACKET_BUFFER_COUNT);
         return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 
@@ -770,8 +776,60 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
+    public boolean setIeeeAddress(IeeeAddress ieeeAddress) {
+        EmberNcp ncp = getEmberNcp();
+        if (ncp.getIeeeAddress().equals(ieeeAddress)) {
+            // Don't write the IEEE address unless it's different since there are limitations on how many times this can
+            // be changed in some firmware versions.
+            return true;
+        }
+        return ncp.setMfgCustomEui64(ieeeAddress) == EmberStatus.EMBER_SUCCESS;
+    }
+
+    @Override
     public Integer getNwkAddress() {
         return nwkAddress;
+    }
+
+    @Override
+    public ZigBeeStatus setNetworkState(ZigBeeNetworkState networkState) {
+        EmberNcp ncp = getEmberNcp();
+        switch (networkState) {
+            case UNINITIALISED:
+                // Reset the NCP to "factory default"
+                // Note that tokenFactoryReset was introduced in firmware 7.3 (approx) and older versions used the same
+                // ID for another function.
+                // We don't check the result here for that reason.
+                // Note that the impact of this function not working is that the IEEE address can only be written to the
+                // token area once - subsequent writes will fail, and therefore changing IEEE address (eg from a
+                // backup/restore) may fail.
+                ncp.tokenFactoryReset(false, false);
+                if (ncp.leaveNetwork() != EmberStatus.EMBER_SUCCESS) {
+                    return ZigBeeStatus.FAILURE;
+                }
+
+                // Wait for the notification from the NCP that it is offline.
+                // This comes through the EzspStackStatusHandler which is processed elsewhere
+                // and sets networkStateUp to false
+                long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
+                do {
+                    if (!networkStateUp) {
+                        return ZigBeeStatus.SUCCESS;
+                    }
+
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                } while (timer > System.currentTimeMillis());
+
+                return ZigBeeStatus.INVALID_STATE;
+            case ONLINE:
+                return ncp.networkInit() == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+            default:
+                return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
     }
 
     @Override
@@ -1022,7 +1080,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             EzspTrustCenterJoinHandler EzspTrustCenterJoinresponse =  (EzspTrustCenterJoinHandler) response;
             trustCenterJoinListeners.stream().forEach(l -> l.emberTrustCenterJoinPacketReceived(handlerIdentifier, EzspTrustCenterJoinresponse.getNewNodeEui64().toString(), EzspTrustCenterJoinresponse.getPolicyDecision()));
-        
+
             ZigBeeNodeStatus status;
             switch (joinHandler.getStatus()) {
                 case EMBER_HIGH_SECURITY_UNSECURED_JOIN:
@@ -1119,11 +1177,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         if (networkStateUp) {
-            ncp.setRadioChannel(channel);
+            EmberNcp ncp = getEmberNcp();
+            return ncp.setRadioChannel(channel) == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS
+                    : ZigBeeStatus.BAD_RESPONSE;
         } else {
             networkParameters.setRadioChannel(channel.getChannel());
+            return ZigBeeStatus.SUCCESS;
         }
-        return ZigBeeStatus.SUCCESS;
     }
 
     @Override

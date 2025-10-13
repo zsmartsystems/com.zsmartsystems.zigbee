@@ -104,7 +104,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                         .toString();
             }
             boolean showManufacturerAndModel = endpoint.getParentNode().getNetworkAddress() != 0;
-            String endpointInfo = String.format("%3d  %-25s  %-25s  %-15s  %-15s", endpoint.getEndpointId(),
+            String endpointInfo = String.format("%3d  %-25s  %-35s  %-20s  %-15s", endpoint.getEndpointId(),
                     profileType, deviceType, showManufacturerAndModel ? getManufacturer(endpoint) : "",
                     showManufacturerAndModel ? getModel(endpoint) : "");
 

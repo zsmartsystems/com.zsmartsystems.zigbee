@@ -1,0 +1,5 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x1000">
+    <name>Light Link Commissioning</name>
+    <description>Cluster used for commissioning ZLL devices, including touchlinking and network management.</description>
+</cluster>

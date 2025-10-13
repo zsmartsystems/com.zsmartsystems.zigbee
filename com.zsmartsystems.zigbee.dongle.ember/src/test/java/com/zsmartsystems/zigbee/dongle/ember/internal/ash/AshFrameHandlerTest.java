@@ -21,7 +21,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -170,7 +170,7 @@ public class AshFrameHandlerTest {
 
         @Override
         public void write(int[] bytes) {
-            for(int val : bytes) {
+            for (int val : bytes) {
                 outputData.add(val);
             }
         }
@@ -317,5 +317,20 @@ public class AshFrameHandlerTest {
         frameHandler.start(port);
 
         Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT)).handleLinkStateChange(true);
+    }
+
+    @Test
+    public void sendEzspTransactionNullCheck() {
+        EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
+        AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
+
+        frameHandler.setClosing();
+        EzspVersionRequest request = new EzspVersionRequest();
+        EzspTransaction transaction = frameHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
+
+        assertNotNull(transaction);
+        assertEquals(EmberStatus.UNKNOWN, transaction.getStatus());
+        assertNull(transaction.getResponse());
     }
 }

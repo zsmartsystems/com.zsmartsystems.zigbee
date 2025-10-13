@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclIlluminanceMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLeafWetnessMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLightLinkCommissioningCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMessagingCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeterIdentificationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
@@ -75,7 +76,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-07-16T22:58:38Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-11-19T22:12:16Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -130,7 +131,8 @@ public enum ZclClusterType {
     KEY_ESTABLISHMENT(0x0800, ZclKeyEstablishmentCluster.class, "Key Establishment"),
     METER_IDENTIFICATION(0x0B01, ZclMeterIdentificationCluster.class, "Meter Identification"),
     ELECTRICAL_MEASUREMENT(0x0B04, ZclElectricalMeasurementCluster.class, "Electrical Measurement"),
-    DIAGNOSTICS(0x0B05, ZclDiagnosticsCluster.class, "Diagnostics");
+    DIAGNOSTICS(0x0B05, ZclDiagnosticsCluster.class, "Diagnostics"),
+    LIGHT_LINK_COMMISSIONING(0x1000, ZclLightLinkCommissioningCluster.class, "Light Link Commissioning");
 
     private static final Map<Integer, ZclClusterType> idValueMap = new ConcurrentHashMap<>();
 

@@ -290,7 +290,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                             responseFrame = new AshFrameNak(ackNum);
                         }
                     } else {
-                        logger.debug("<-- RX ASH frame: {}", packet);
+                        logger.trace("<-- RX ASH frame: {}", packet);
 
                         // Reset the exception counter
                         exceptionCnt = 0;
@@ -573,7 +573,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
-        logger.debug("--> TX ASH frame: {}", ashFrame);
+        logger.trace("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
         int[] outputBuffer = ashFrame.getOutputBuffer();
@@ -873,17 +873,16 @@ public class AshFrameHandler implements EzspProtocolHandler {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("ASH: Error sending EZSP transaction: Future is null");
-            return null;
-        }
-
-        try {
-            futureResponse.get(timeout, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException e) {
-            futureResponse.cancel(true);
-            logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
-        } catch (TimeoutException e) {
-            futureResponse.cancel(true);
-            logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
+        } else {
+            try {
+                futureResponse.get(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException | ExecutionException e) {
+                futureResponse.cancel(true);
+                logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
+            } catch (TimeoutException e) {
+                futureResponse.cancel(true);
+                logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
+            }
         }
 
         return ezspTransaction;

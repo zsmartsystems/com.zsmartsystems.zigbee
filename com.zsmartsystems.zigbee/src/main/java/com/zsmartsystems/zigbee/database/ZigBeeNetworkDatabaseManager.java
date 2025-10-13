@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.database;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -257,7 +258,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
 
                 if (deferredWriteTimes.get(node.getIeeeAddress()) != null
                         && deferredWriteTimes.get(node.getIeeeAddress()) < System.nanoTime()) {
-                    logger.debug("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
+                    logger.trace("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
 
                     // Run the write immediately.
                     // This is still run through the scheduler to ensure we don't make
@@ -269,7 +270,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
                 deferredWriteTimes.put(node.getIeeeAddress(), System.nanoTime() + deferredWriteTimeout);
             }
 
-            logger.debug("{}: Data store: Deferring write for {}ms.", node.getIeeeAddress(), deferredDelay);
+            logger.trace("{}: Data store: Deferring write for {}ms.", node.getIeeeAddress(), deferredDelay);
 
             CommitNodeTask commitTask = new CommitNodeTask(node);
             deferredWriteFutures.put(node.getIeeeAddress(),
@@ -306,6 +307,18 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
 
     public void writeKey(String key, Object value) {
         dataStore.writeObject(key, value);
+    }
+
+    public boolean writeBackup(ZigBeeNetworkBackupDao backup) {
+        return dataStore.writeBackup(backup);
+    }
+
+    public ZigBeeNetworkBackupDao readBackup(UUID uuid) {
+        return dataStore.readBackup(uuid);
+    }
+
+    public Set<ZigBeeNetworkBackupDao> listBackups() {
+        return dataStore.listBackups();
     }
 
 }

@@ -110,6 +110,8 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0B04_ElectricalMeasurement.xml");
         zclParser.addFile("src/main/resources/0B05_Diagnostics.xml");
 
+        zclParser.addFile("src/main/resources/1000_ZllCommissioning.xml");
+
         List<ZigBeeXmlCluster> zclClusters = zclParser.parseClusterConfiguration();
 
         ZigBeeXmlParser zdoParser = new ZigBeeXmlParser();

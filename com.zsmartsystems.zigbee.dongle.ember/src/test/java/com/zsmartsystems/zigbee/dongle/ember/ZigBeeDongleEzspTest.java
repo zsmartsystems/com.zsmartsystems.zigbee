@@ -409,11 +409,18 @@ public class ZigBeeDongleEzspTest {
     }
 
     @Test
-    public void setZigBeeChannel() {
+    public void setZigBeeChannelOk() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
-        assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_03));
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        Mockito.when(ncp.setRadioChannel(ArgumentMatchers.any())).thenReturn(EmberStatus.EMBER_SUCCESS);
 
         assertEquals(ZigBeeStatus.SUCCESS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_11));
         assertEquals(ZigBeeChannel.CHANNEL_11, dongle.getZigBeeChannel());
@@ -423,12 +430,30 @@ public class ZigBeeDongleEzspTest {
     }
 
     @Test
+    public void setZigBeeChannelError() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "networkStateUp", true);
+
+        Mockito.when(ncp.setRadioChannel(ArgumentMatchers.any())).thenReturn(EmberStatus.UNKNOWN);
+
+        assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_03));
+        assertEquals(ZigBeeStatus.BAD_RESPONSE, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_24));
+    }
+
+    @Test
     public void testEzspMessageSentHandler() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
-        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(transport);
 
@@ -721,5 +746,56 @@ public class ZigBeeDongleEzspTest {
 
         assertNull(dongle.getTcLinkKey());
         assertNotNull(dongle.getZigBeeNetworkKey());
+    }
+
+    @Test
+    public void initializeNoNetorkParameters() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        final EzspVersionResponse version = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(version.getProtocolVersion()).thenReturn(4);
+
+        Mockito.when(ncp.getVersion()).thenReturn(version);
+
+        final ZigBeePort port = Mockito.mock(ZigBeePort.class);
+        Mockito.when(port.open()).thenReturn(true);
+
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(port) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        final ZigBeeTransportReceive receiver = Mockito.mock(ZigBeeTransportReceive.class);
+
+        dongle.setZigBeeTransportReceive(receiver);
+        assertEquals(ZigBeeStatus.COMMUNICATION_ERROR, dongle.initialize());
+    }
+
+    @Test
+    public void initializeSuccess() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        final EzspVersionResponse version = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(version.getProtocolVersion()).thenReturn(4);
+
+        Mockito.when(ncp.getVersion()).thenReturn(version);
+        Mockito.when(ncp.getNetworkParameters()).thenReturn(Mockito.mock(EzspGetNetworkParametersResponse.class));
+
+        final ZigBeePort port = Mockito.mock(ZigBeePort.class);
+        Mockito.when(port.open()).thenReturn(true);
+
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(port) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        final ZigBeeTransportReceive receiver = Mockito.mock(ZigBeeTransportReceive.class);
+
+        dongle.setZigBeeTransportReceive(receiver);
+        assertEquals(ZigBeeStatus.SUCCESS, dongle.initialize());
     }
 }

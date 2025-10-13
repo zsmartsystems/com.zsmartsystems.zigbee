@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -36,8 +38,10 @@ import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkBackupDao;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager.GroupSynchronizationMethod;
@@ -184,7 +188,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     private Collection<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableCollection(new HashSet<>());
 
     private Collection<ZigBeeNetworkPermitJoinListener> permitJoinListeners = Collections.unmodifiableCollection(new HashSet<>());
-    
+
     /**
      * {@link AtomicInteger} used to generate APS header counters
      */
@@ -1469,7 +1473,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         sendTransaction(command);
-        
+
         for (final ZigBeeNetworkPermitJoinListener permitJoinListener : permitJoinListeners) {
             notificationService.execute(new Runnable() {
                 @Override
@@ -2052,7 +2056,141 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             transactionManager.receiveCommandState(msgTag, state);
         }
     }
-    
+
+    /**
+     * Creates a backup of the {@link ZigBeeNetworkManager}, storing it in the {@link ZigBeeNetworkDataStore}
+     *
+     * @return a unique {@link UUID} referencing the backup
+     */
+    public UUID createBackup() {
+        ZigBeeNetworkBackupDao backup = new ZigBeeNetworkBackupDao();
+
+        backup.setUuid(UUID.randomUUID());
+        backup.setDate(new Date());
+
+        backup.setPan(getZigBeePanId());
+        backup.setEpan(getZigBeeExtendedPanId());
+        backup.setChannel(getZigBeeChannel());
+        backup.setNetworkKey(getZigBeeNetworkKey());
+        backup.setLinkKey(getZigBeeLinkKey());
+
+        Set<ZigBeeNodeDao> nodesDao = new HashSet<>();
+        for (ZigBeeNode node : getNodes()) {
+            nodesDao.add(node.getDao());
+        }
+        backup.setNodes(nodesDao);
+
+        return databaseManager.writeBackup(backup) ? backup.getUuid() : null;
+    }
+
+    /**
+     * Restores the backup referenced from the provided {@link UUID}.
+     *
+     * @param uuid the unique {@link UUID} referencing the backup to restore
+     * @return ZigBeeStatus.SUCCESS if the backup was restored
+     */
+    public ZigBeeStatus restoreBackup(UUID uuid) {
+        ZigBeeNetworkBackupDao backup = databaseManager.readBackup(uuid);
+        if (backup == null) {
+            logger.debug("RestoreBackup: Failed to read {}", uuid);
+            return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
+        logger.debug("RestoreBackup: Backup read from {}", uuid);
+
+        // Take the network offline for reconfiguration
+        ZigBeeStatus offlineResponse = transport.setNetworkState(ZigBeeNetworkState.UNINITIALISED);
+        if (offlineResponse != ZigBeeStatus.SUCCESS) {
+            logger.error("RestoreBackup: Failed to set network to UNINITIALISED with response {}", offlineResponse);
+            return ZigBeeStatus.INVALID_STATE;
+        }
+
+        // To properly re-add nodes, we must be INITIALIZING
+        // To call startup, we must be INITIALIZING
+        // Setting the state to INITIALIZING should also stop listeners receiving
+        // notifications as the nodes are removed and added.
+        setNetworkState(ZigBeeNetworkState.INITIALISING);
+
+        // Find the coordinator
+        ZigBeeNodeDao coordinator = null;
+        for (ZigBeeNodeDao node : backup.getNodes()) {
+            if (node.getNetworkAddress() == 0) {
+                coordinator = node;
+                break;
+            }
+        }
+
+        logger.debug("RestoreBackup: Coordinator {}found {}", coordinator == null ? "not " : "",
+                coordinator == null ? "" : coordinator.getIeeeAddress());
+
+        // Set the coordinator address
+        if (coordinator != null) {
+            transport.setIeeeAddress(coordinator.getIeeeAddress());
+            transport.setNwkAddress(coordinator.getNetworkAddress());
+        }
+
+        long secondsSince = new Date().getTime() - backup.getDate().getTime();
+        ZigBeeKey key = backup.getNetworkKey();
+
+        // Frame counters need to be incremented
+        if (key.hasIncomingFrameCounter()) {
+            key.setIncomingFrameCounter((int) (key.getIncomingFrameCounter() + secondsSince * 5));
+        }
+        if (key.hasOutgoingFrameCounter()) {
+            key.setOutgoingFrameCounter((int) (key.getOutgoingFrameCounter() + secondsSince * 5));
+        }
+
+        // Set the network configuration
+        if (setZigBeePanId(backup.getPan()) != ZigBeeStatus.SUCCESS
+                || setZigBeeExtendedPanId(backup.getEpan()) != ZigBeeStatus.SUCCESS
+                || setZigBeeChannel(backup.getChannel()) != ZigBeeStatus.SUCCESS
+                || setZigBeeNetworkKey(backup.getNetworkKey()) != ZigBeeStatus.SUCCESS
+                || setZigBeeLinkKey(backup.getLinkKey()) != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
+            return ZigBeeStatus.FAILURE;
+        }
+
+        // Remove all existing nodes
+        for (ZigBeeNode node : networkNodes.values()) {
+            logger.debug("RestoreBackup: Removing node {} [{}]", node.getIeeeAddress(), node.getNetworkAddress());
+            removeNode(node);
+        }
+
+        // Clear the data store
+        databaseManager.clear();
+
+        // Restore
+        for (ZigBeeNodeDao nodeDao : backup.getNodes()) {
+            ZigBeeNode node = new ZigBeeNode(this, nodeDao.getIeeeAddress());
+            node.setDao(nodeDao);
+            logger.debug("{}: RestoreBackup: Node was restored from backup.", node.getIeeeAddress());
+            updateNode(node);
+        }
+
+        groupManager.initialize();
+
+        // Start the transport layer
+        ZigBeeStatus status = transport.startup(true);
+        if (status != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
+        } else {
+            setNetworkState(ZigBeeNetworkState.ONLINE);
+        }
+        logger.debug("RestoreBackup: Completed from {} with state {}", uuid, status);
+
+        return status;
+    }
+
+    /**
+     * Returns a list of all backups found on the system (ie in the {@link ZigBeeDataStore}).
+     * The returned Set of {@link ZigBeeNetworkBackupDao} contains only the network information, and not all the
+     * {@link ZigBeeNode} data
+     *
+     * @return Set of {@link ZigBeeNetworkBackupDao} containing the network information
+     */
+    public Set<ZigBeeNetworkBackupDao> listBackups() {
+        return databaseManager.listBackups();
+    }
+
     public void addNetworkPermitJoinListener(final ZigBeeNetworkPermitJoinListener networkPermitJoinListener) {
         if (permitJoinListeners.contains(networkPermitJoinListener)) {
             return;
@@ -2062,7 +2200,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         permitJoinListeners = Collections.unmodifiableCollection(modifiedPermitJoinListeners);
     }
 
-    
+
     public void removeNetworkPermitJoinListener(final ZigBeeNetworkPermitJoinListener networkPermitJoinListener) {
         final List<ZigBeeNetworkPermitJoinListener> modifiedListeners = new ArrayList<>(permitJoinListeners);
         modifiedListeners.remove(networkPermitJoinListener);

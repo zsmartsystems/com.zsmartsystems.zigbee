@@ -113,7 +113,16 @@ public class ZigBeeNetworkGroupManager {
     }
 
     public void initialize() {
-        networkManager.readNetworkDataStore(DATASTORE_KEY_GROUPS);
+        Set<ZigBeeGroupDao> daoSet = (Set<ZigBeeGroupDao>) networkManager.readNetworkDataStore(DATASTORE_KEY_GROUPS);
+        if (daoSet == null) {
+            return;
+        }
+
+        for (ZigBeeGroupDao dao : daoSet) {
+            ZigBeeGroup group = new ZigBeeGroup(networkManager, 0);
+            group.setDao(dao);
+            networkGroups.put(group.getGroupId(), group);
+        }
     }
 
     public void shutdown() {
