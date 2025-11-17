@@ -153,6 +153,8 @@ public class ZigBeeTransaction {
      * A {@link Long} that records the time this transaction was first added to the queue in milliseconds
      */
     private Long queueTime;
+    
+    private boolean sleepy;
 
     /**
      * Transaction constructor
@@ -511,6 +513,14 @@ public class ZigBeeTransaction {
         logger.debug("Transaction state changed: nwk={}, TID={}, event={}, state={}",
                 String.format("%04X", command.getDestinationAddress().getAddress()),
                 String.format("%02X", transactionId), progress, state);
+    }
+    
+    public void setSleepy() {
+        this.sleepy = true;
+    }
+    
+    public boolean isSleepy() {
+        return sleepy;
     }
 
     @Override

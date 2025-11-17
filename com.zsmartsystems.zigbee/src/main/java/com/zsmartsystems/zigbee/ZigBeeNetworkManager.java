@@ -73,7 +73,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
  * ZigBeeNetworkManager implements functions for managing the ZigBee interfaces. The network manager is the central
