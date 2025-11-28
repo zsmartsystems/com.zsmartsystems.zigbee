@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.NwkLayerStatusCode;
 
 /**
  * Class to implement the Ember EZSP command <b>incomingNetworkStatusHandler</b>.
@@ -27,9 +28,9 @@ public class EzspIncomingNetworkStatusHandler extends EzspFrameResponse {
     /**
      * Over the air error code.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>NwkLayerStatusCode</i> - Java type is {@link NwkLayerStatusCode}
      */
-    private int errorCode;
+    private NwkLayerStatusCode errorCode;
 
     /**
      * The node ID associated with the error.  Depending on the error code this may be either
@@ -47,27 +48,27 @@ public class EzspIncomingNetworkStatusHandler extends EzspFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        errorCode = deserializer.deserializeUInt8();
+        errorCode = deserializer.deserializeNwkLayerStatusCode();
         target = deserializer.deserializeUInt16();
     }
 
     /**
      * Over the air error code.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>NwkLayerStatusCode</i> - Java type is {@link NwkLayerStatusCode}
      *
-     * @return the current errorCode as {@link int}
+     * @return the current errorCode as {@link NwkLayerStatusCode}
      */
-    public int getErrorCode() {
+    public NwkLayerStatusCode getErrorCode() {
         return errorCode;
     }
 
     /**
      * Over the air error code.
      *
-     * @param errorCode the errorCode to set as {@link int}
+     * @param errorCode the errorCode to set as {@link NwkLayerStatusCode}
      */
-    public void setErrorCode(int errorCode) {
+    public void setErrorCode(NwkLayerStatusCode errorCode) {
         this.errorCode = errorCode;
     }
 

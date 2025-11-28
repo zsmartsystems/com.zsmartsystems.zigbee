@@ -61,6 +61,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyDat
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.NwkLayerStatusCode;
 
 /**
  * The EmberZNet Serial Protocol Data Representation
@@ -417,5 +418,9 @@ public class EzspDeserializer {
 
     public EmberMultiPhyRadioParameters deserializeEmberMultiPhyRadioParameters() {
         return new EmberMultiPhyRadioParameters(this);
+    }
+
+    public NwkLayerStatusCode deserializeNwkLayerStatusCode() {
+        return NwkLayerStatusCode.getNwkLayerStatusCode(deserializeUInt8());
     }
 }
