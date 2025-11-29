@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2024 by the respective copyright holders.
+ * Copyright (c) 2016-2025 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,6 +84,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOccupancySensingCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
@@ -131,7 +132,8 @@ public class ZigBeeConsoleMain {
                         ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclBallastConfigurationCluster.CLUSTER_ID, ZclOtaUpgradeCluster.CLUSTER_ID,
-                        ZclBinaryInputBasicCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID, 1000, 0xff17)
+                        ZclBinaryInputBasicCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
+                        ZclOccupancySensingCluster.CLUSTER_ID, 1000, 0xff17)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
@@ -145,7 +147,7 @@ public class ZigBeeConsoleMain {
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
                         ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
                         ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID,
-                        ZclBallastConfigurationCluster.CLUSTER_ID, 1000, 0xff17)
+                        ZclBallastConfigurationCluster.CLUSTER_ID, ZclOccupancySensingCluster.CLUSTER_ID, 1000, 0xff17)
                 .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();
