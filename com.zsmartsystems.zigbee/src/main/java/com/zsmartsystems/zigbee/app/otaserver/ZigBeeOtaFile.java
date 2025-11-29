@@ -257,7 +257,7 @@ public class ZigBeeOtaFile {
             // IEEE Address, Upgrade file destination [optional]
             int[] addressBytes = new int[8];
             for (int cnt = 0; cnt < 8; cnt++) {
-                addressBytes[cnt] = readUnsigned16();
+                addressBytes[cnt] = readUnsigned8();
             }
             destination = new IeeeAddress(addressBytes);
         }
