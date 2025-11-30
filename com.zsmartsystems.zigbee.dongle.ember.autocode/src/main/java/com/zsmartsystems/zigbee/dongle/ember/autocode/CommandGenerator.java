@@ -823,6 +823,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberMulticastTableEntry":
             case "EmberKeyStatus":
             case "EmberMultiPhyRadioParameters":
+            case "NwkLayerStatusCode":
                 addImport(ezspStructurePackage + "." + dataTypeLocal);
                 return dataTypeLocal + modifier;
             default:
@@ -899,6 +900,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberBeaconIterator":
             case "EmberMulticastTableEntry":
             case "EmberMultiPhyRadioParameters":
+            case "NwkLayerStatusCode":
                 return dataTypeLocal;
             default:
                 return dataType;

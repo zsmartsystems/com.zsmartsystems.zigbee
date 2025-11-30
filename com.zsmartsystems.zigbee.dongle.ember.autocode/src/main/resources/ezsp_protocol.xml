@@ -627,7 +627,7 @@
 		</command_parameters>
 		<response_parameters>
 			<parameter>
-				<data_type>uint8_t</data_type>
+				<data_type>NwkLayerStatusCode</data_type>
 				<name>errorCode</name>
 				<description>Over the air error code.</description>
 			</parameter>
@@ -7967,6 +7967,118 @@
 				<name>EMBER_TX_POWER_MODE_BOOST_AND_ALTERNATE</name>
 				<enum_value>0x03</enum_value>
 				<description>Enable both boost mode and the alternate transmitter output.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>NwkLayerStatusCode</name>
+		<description></description>
+		<values>
+			<value>
+				<name>SUCCESS</name>
+				<enum_value>0x00</enum_value>
+				<description>A request has been executed successfully.</description>
+			</value>
+			<value>
+				<name>INVALID_PARAMETER</name>
+				<enum_value>0xC1</enum_value>
+				<description>An invalid or out-of-range parameter has been passed to a primitive from the next higher layer.</description>
+			</value>
+			<value>
+				<name>INV_REQUESTTYPE</name>
+				<enum_value>0xC2</enum_value>
+				<description>The next higher layer has issued a request that is invalid or cannot be executed given the current state of the NWK layer.</description>
+			</value>
+			<value>
+				<name>NOT_PERMITTED</name>
+				<enum_value>0xC3</enum_value>
+				<description>An NLME-JOIN.request has been disallowed.</description>
+			</value>
+			<value>
+				<name>STARTUP_FAILURE</name>
+				<enum_value>0xC4</enum_value>
+				<description>An NLME-NETWORK-FORMATION.request has failed to start a network.</description>
+			</value>
+			<value>
+				<name>ALREADY_PRESENT </name>
+				<enum_value>0xC5</enum_value>
+				<description>A device with the address supplied to the NLME-ADD-NEIGHBOR.request is already present in the neighbor table of the device on which the NLME-ADD-NEIGHBOR.request was issued.</description>
+			</value>
+			<value>
+				<name>SYNC_FAILURE</name>
+				<enum_value>0xC6</enum_value>
+				<description>Used to indicate that an NLME-SYNC.request has failed at the MAC layer.</description>
+			</value>
+			<value>
+				<name>NEIGHBOR_TABLE_FULL</name>
+				<enum_value>0xC7</enum_value>
+				<description>An NLME-JOIN-DIRECTLY.request has failed because there is no more room in the neighbor table.</description>
+			</value>
+			<value>
+				<name>UNKNOWN_DEVICE</name>
+				<enum_value>0xC8</enum_value>
+				<description>An NLME-LEAVE.request has failed because the device addressed in the parameter list is not in the neighbor table of the issuing device.</description>
+			</value>
+			<value>
+				<name>UNSUPPORTED_ATTRIBUTE</name>
+				<enum_value>0xC9</enum_value>
+				<description>An NLME-GET.request or NLME-SET.request has been issued with an unknown attribute identifier.</description>
+			</value>
+			<value>
+				<name>NO_NETWORKS</name>
+				<enum_value>0xCA</enum_value>
+				<description>An NLME-JOIN.request has been issued in an environment where no networks are detectable.</description>
+			</value>
+			<value>
+				<name>MAX_FRM_COUNTER</name>
+				<enum_value>0xCC</enum_value>
+				<description>Security processing has been attempted on an outgoing frame, and has failed because the frame counter has reached its maximum value.</description>
+			</value>
+			<value>
+				<name>NO_KEY</name>
+				<enum_value>0xCD</enum_value>
+				<description>Security processing has been attempted on an outgoing frame, and has failed because no key was available with which to process it.</description>
+			</value>
+			<value>
+				<name>BAD_CCM_OUTPUT </name>
+				<enum_value>0xCE</enum_value>
+				<description>Security processing has been attempted on an outgoing frame, and has failed because the security engine produced erroneous output.</description>
+			</value>
+			<value>
+				<name>ROUTE_DISCOVERY_FAILED</name>
+				<enum_value>0xD0</enum_value>
+				<description>An attempt to discover a route has failed due to a reason other than a lack of routing capacity.</description>
+			</value>
+			<value>
+				<name>ROUTE_ERROR</name>
+				<enum_value>0xD1</enum_value>
+				<description>An NLDE-DATA.request has failed due to a routing failure on the sending device or an NLME-ROUTE-DISCOVERY.request has failed due to the cause cited in the accompanying NetworkStatusCode.</description>
+			</value>
+			<value>
+				<name>BT_TABLE_FULL</name>
+				<enum_value>0xD2</enum_value>
+				<description>An attempt to send a broadcast frame has failed because there is no room in the BTT.</description>
+			</value>
+			<value>
+				<name>FRAME_NOT_BUFFERED</name>
+				<enum_value>0xD3</enum_value>
+				<description>An NLDE-DATA.request has failed due to insufficient buffering available.</description>
+			</value>
+			<value>
+				<name>INVALID_INTERFACE</name>
+				<enum_value>0xD5</enum_value>
+				<description>An attempt was made to use a MAC Interface with a state that is currently set to FALSE (disabled) or that is unknown to the stack.</description>
+			</value>
+			<value>
+				<name>MISSING_TLV </name>
+				<enum_value>0xD6</enum_value>
+				<description>A required TLV for processing the request was not present.</description>
+			</value>
+			<value>
+				<name>INVALID_TLV </name>
+				<enum_value>0xD7</enum_value>
+				<description>A TLV was malformed or missing relevant information.</description>
 			</value>
 		</values>
 	</enum>
