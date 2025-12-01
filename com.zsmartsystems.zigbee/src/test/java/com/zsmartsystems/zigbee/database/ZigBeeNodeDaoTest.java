@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.database;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.IeeeAddress;

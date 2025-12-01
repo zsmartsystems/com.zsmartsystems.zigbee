@@ -7,9 +7,9 @@
  */
 package com.zsmartsystems.zigbee.security;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MMO Hash function used for generating link keys from install codes for ZigBee 3 and Smart Energy.

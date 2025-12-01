@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zdo.field;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

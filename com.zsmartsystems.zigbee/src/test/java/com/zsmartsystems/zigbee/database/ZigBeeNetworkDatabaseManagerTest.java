@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.database;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,8 +19,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -54,7 +54,7 @@ public class ZigBeeNetworkDatabaseManagerTest {
                     runnable.run();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Assert.fail();
+                    Assertions.fail();
                 }
                 return true;
             }

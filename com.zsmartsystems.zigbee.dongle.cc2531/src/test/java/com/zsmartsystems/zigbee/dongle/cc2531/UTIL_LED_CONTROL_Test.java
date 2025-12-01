@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.cc2531;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 

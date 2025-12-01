@@ -7,9 +7,9 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;

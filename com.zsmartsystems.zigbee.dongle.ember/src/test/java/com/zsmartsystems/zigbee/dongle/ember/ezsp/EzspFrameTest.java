@@ -7,9 +7,9 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

@@ -7,14 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.internal.frame;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeNetworkParameter;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeReadParameterRequest;
+import org.junit.jupiter.api.Test;
 
 /**
  *

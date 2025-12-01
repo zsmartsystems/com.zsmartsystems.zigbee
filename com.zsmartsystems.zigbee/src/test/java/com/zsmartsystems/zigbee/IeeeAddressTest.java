@@ -7,10 +7,11 @@
  */
 package com.zsmartsystems.zigbee;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -34,14 +35,18 @@ public class IeeeAddressTest {
         assertEquals("8418260000D9959B", address.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorStringError() {
-        new IeeeAddress("ABCDEFGH");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new IeeeAddress("ABCDEFGH");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorArrayError() {
-        new IeeeAddress(new int[4]);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new IeeeAddress(new int[4]);
+        });
     }
 
     @Test

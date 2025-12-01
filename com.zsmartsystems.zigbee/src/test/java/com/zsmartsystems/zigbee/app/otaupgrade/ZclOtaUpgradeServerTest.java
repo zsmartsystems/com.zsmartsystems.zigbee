@@ -9,20 +9,19 @@ package com.zsmartsystems.zigbee.app.otaupgrade;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.timeout;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -85,7 +84,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         Set<ZigBeeEndpoint> devices = new HashSet<ZigBeeEndpoint>();
         devices.add(endpoint);
 
-        Mockito.when(mockedNetworkManager.getNode((IeeeAddress) ArgumentMatchers.anyObject())).thenReturn(node);
+        Mockito.when(mockedNetworkManager.getNode((IeeeAddress) ArgumentMatchers.any())).thenReturn(node);
         // Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(endpoint);
         // Mockito.when(mockedNetworkManager.getNodeDevices((IeeeAddress) Matchers.anyObject())).thenReturn(devices);
 
@@ -120,7 +119,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         server.setFirmware(otaFile);
         Mockito.verify(cluster, Mockito.times(1)).sendCommand(ArgumentMatchers.any(ImageNotifyCommand.class));
 
-        Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaListenerUpdated());
+        Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaStatusCapture.size() > 0);
 
         assertEquals(1, otaStatusCapture.size());
         ZigBeeOtaServerStatus status = otaStatusCapture.get(0);
@@ -161,7 +160,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         server.setTransferTimeoutPeriod(Integer.MAX_VALUE);
 
         server.cancelUpgrade();
-        await().atMost(1, SECONDS).until(() -> assertEquals(0, otaStatusCapture.size()));
+        await().atMost(1, SECONDS).until(() -> otaStatusCapture.size() == 0);
+        assertEquals(0, otaStatusCapture.size());
 
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);
         Mockito.when(otaFile.getManufacturerCode()).thenReturn(123);
@@ -169,18 +169,20 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         server.setFirmware(otaFile);
         await().atMost(1, SECONDS)
-                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
 
         QueryNextImageCommand query = new QueryNextImageCommand(0, 123, 987, 0, 0);
         query.setApsSecurity(true);
 
         server.commandReceived(query);
         await().atMost(1, SECONDS)
-                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS)));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS));
 
         otaStatusCapture.clear();
         server.cancelUpgrade();
-        await().atMost(1, SECONDS).until(() -> otaListenerUpdated());
+        await().atMost(1, SECONDS).until(() -> otaStatusCapture.size() > 0);
 
         assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_CANCELLED));
 
@@ -227,7 +229,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         Mockito.verify(callback2, Mockito.times(1)).otaIncomingRequest(query);
 
         await().atMost(1, SECONDS)
-                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
 
         server.addListener(callback2);
 
@@ -236,7 +239,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         Mockito.verify(callback2, Mockito.times(1)).otaIncomingRequest(query);
 
         await().atMost(1, SECONDS)
-                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
 
         // Transfer is now in progress so we shouldn't notify the listener this time
         server.commandReceived(query);
@@ -252,7 +256,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         Mockito.verify(callback3, Mockito.times(1)).otaIncomingRequest(query);
 
         await().atMost(1, SECONDS)
-                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
     }
 
     @Test
@@ -350,15 +355,6 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     @Override
     public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
         otaStatusCapture.add(status);
-    }
-
-    private Callable<Integer> otaListenerUpdated() {
-        return new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return otaStatusCapture.size(); // The condition that must be fulfilled
-            }
-        };
     }
 
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2024 by the respective copyright holders.
+ * Copyright (c) 2016-2025 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,7 +54,7 @@ public enum NwkLayerStatusCode {
      * A device with the address supplied to the NLME-ADD-NEIGHBOR.request is already present in
      * the neighbor table of the device on which the NLME-ADD-NEIGHBOR.request was issued.
      */
-    ALREADY_PRESENT (0x00C5),
+    ALREADY_PRESENT(0x00C5),
 
     /**
      * Used to indicate that an NLME-SYNC.request has failed at the MAC layer.
@@ -100,7 +100,7 @@ public enum NwkLayerStatusCode {
      * Security processing has been attempted on an outgoing frame, and has failed because the
      * security engine produced erroneous output.
      */
-    BAD_CCM_OUTPUT (0x00CE),
+    BAD_CCM_OUTPUT(0x00CE),
 
     /**
      * An attempt to discover a route has failed due to a reason other than a lack of routing capacity.
@@ -133,12 +133,12 @@ public enum NwkLayerStatusCode {
     /**
      * A required TLV for processing the request was not present.
      */
-    MISSING_TLV (0x00D6),
+    MISSING_TLV(0x00D6),
 
     /**
      * A TLV was malformed or missing relevant information.
      */
-    INVALID_TLV (0x00D7);
+    INVALID_TLV(0x00D7);
 
     /**
      * A mapping between the integer code and its corresponding type to

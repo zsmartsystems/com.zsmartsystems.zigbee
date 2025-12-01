@@ -7,12 +7,13 @@
  */
 package com.zsmartsystems.zigbee.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -30,10 +31,13 @@ public class ZigBeeKeyTest {
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorArrayShort() {
-        new ZigBeeKey(
-                new int[] { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0x00, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ZigBeeKey(
+                    new int[] { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0x00, 0xAA, 0xBB, 0xCC, 0xDD,
+                            0xEE });
+        });
     }
 
     @Test
@@ -60,9 +64,11 @@ public class ZigBeeKeyTest {
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorStringShort() {
-        new ZigBeeKey("11223344556677889900AABBCCDDEE");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ZigBeeKey("11223344556677889900AABBCCDDEE");
+        });
     }
 
     @Test

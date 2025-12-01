@@ -7,9 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -17,16 +18,20 @@ import org.junit.Test;
  *
  */
 public class TelegesisChangeChannelCommandTest extends TelegesisFrameBaseTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testChannelLow() {
         TelegesisChangeChannelCommand command = new TelegesisChangeChannelCommand();
-        command.setChannel(10);
+        assertThrows(IllegalArgumentException.class, () -> {
+            command.setChannel(10);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testChannelHigh() {
         TelegesisChangeChannelCommand command = new TelegesisChangeChannelCommand();
-        command.setChannel(27);
+        assertThrows(IllegalArgumentException.class, () -> {
+            command.setChannel(27);
+        });
     }
 
     @Test

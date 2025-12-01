@@ -10,11 +10,11 @@ package com.zsmartsystems.zigbee.zcl;
 import static com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster.ATTR_ONOFF;
 import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.toSet;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockSettings;
 import org.mockito.Mockito;
@@ -257,7 +257,8 @@ public class ZclClusterTest {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
-        Set<ZclAttributeListener> attributeListeners = TestUtilities.getField(ZclCluster.class, cluster, "attributeListeners");
+        Set<ZclAttributeListener> attributeListeners = TestUtilities.getField(ZclCluster.class, cluster,
+                "attributeListeners");
         assertEquals(0, attributeListeners.size());
 
         // This reports an incorrect type which is changed through the normalisation
@@ -388,7 +389,8 @@ public class ZclClusterTest {
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
 
-        Set<ZclCommandListener> commandListeners = TestUtilities.getField(ZclCluster.class, cluster, "commandListeners");
+        Set<ZclCommandListener> commandListeners = TestUtilities.getField(ZclCluster.class, cluster,
+                "commandListeners");
         assertEquals(0, commandListeners.size());
         int tid = 123;
         ZclCommand command = Mockito.mock(ZclCommand.class);

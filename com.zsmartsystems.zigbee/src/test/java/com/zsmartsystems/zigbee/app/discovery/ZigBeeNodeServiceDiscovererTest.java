@@ -7,10 +7,10 @@
  */
 package com.zsmartsystems.zigbee.app.discovery;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -72,7 +72,7 @@ public class ZigBeeNodeServiceDiscovererTest {
     ArgumentCaptor<ZigBeeNode> nodeCapture;
     Map<Integer, ZigBeeCommand> responses = new HashMap<Integer, ZigBeeCommand>();
 
-    @Before
+    @BeforeEach
     public void setupTest() {
         networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         nodeCapture = ArgumentCaptor.forClass(ZigBeeNode.class);

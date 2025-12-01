@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee.app.seclient;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
@@ -39,8 +39,8 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
@@ -206,7 +206,7 @@ public class SmartEnergyClientTest {
                     runnable.run();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Assert.fail();
+                    Assertions.fail();
                 }
                 return true;
             }
@@ -258,7 +258,7 @@ public class SmartEnergyClientTest {
                     runnable.run();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Assert.fail();
+                    Assertions.fail();
                 }
                 return true;
             }

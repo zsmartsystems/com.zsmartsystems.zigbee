@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmitAbstractTest;
  */
 public class ZigBeeTransportTransmitTest extends ZigBeeTransportTransmitAbstractTest {
 
-    @Before
+    @BeforeEach
     public void initialiseTransport() throws Exception {
         EmberNetworkParameters networkParameters = Mockito.mock(EmberNetworkParameters.class);
         Mockito.when(networkParameters.getRadioTxPower()).thenReturn(Integer.valueOf(0));
