@@ -7,14 +7,14 @@
  */
 package com.zsmartsystems.zigbee.app.otaupgrade;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeStackType;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;

@@ -7,14 +7,15 @@
  */
 package com.zsmartsystems.zigbee;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -35,9 +36,11 @@ public class ExtendedPanIdTest {
         assertEquals("0017880100DC880B", address.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorArrayShort() {
-        new ExtendedPanId(new int[] { 0x0b, 0x88, 0xdc, 0x00, 0x01, 0x88, 0x17 });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ExtendedPanId(new int[] { 0x0b, 0x88, 0xdc, 0x00, 0x01, 0x88, 0x17 });
+        });
     }
 
     @Test

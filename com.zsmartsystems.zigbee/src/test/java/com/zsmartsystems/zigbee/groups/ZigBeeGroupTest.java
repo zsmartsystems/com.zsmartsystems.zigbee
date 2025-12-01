@@ -7,14 +7,15 @@
  */
 package com.zsmartsystems.zigbee.groups;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
@@ -67,18 +68,22 @@ public class ZigBeeGroupTest {
         System.out.println(group2);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGroupIdTooLow() {
         ZigBeeGroup group = new ZigBeeGroup(Mockito.mock(ZigBeeNetworkManager.class), 1);
 
-        group.setGroupId(-2);
+        assertThrows(IllegalArgumentException.class, () -> {
+            group.setGroupId(-2);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGroupIdTooHigh() {
         ZigBeeGroup group = new ZigBeeGroup(Mockito.mock(ZigBeeNetworkManager.class), 1);
 
-        group.setGroupId(0xfff8);
+        assertThrows(IllegalArgumentException.class, () -> {
+            group.setGroupId(0xfff8);
+        });
     }
 
     @Test

@@ -7,15 +7,15 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal.transaction;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
@@ -26,7 +26,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
 
 /**
  *

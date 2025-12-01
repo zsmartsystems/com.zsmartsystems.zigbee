@@ -7,17 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.internal.frame;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
-
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeEnqueueSendDataResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeFrame;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeNetworkState;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeQuerySendDataResponse;
+import org.junit.jupiter.api.Test;
 
 /**
  *

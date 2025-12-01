@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.security;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests to check creation of CBKE certificates from a Certicom string (cut and paste from website).
- * 
+ *
  * @author Chris Jackson
  *
  */

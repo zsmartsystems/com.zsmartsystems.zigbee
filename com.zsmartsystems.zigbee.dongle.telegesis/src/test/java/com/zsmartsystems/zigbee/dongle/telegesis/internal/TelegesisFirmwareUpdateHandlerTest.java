@@ -7,9 +7,9 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
@@ -170,7 +170,7 @@ public class TelegesisFirmwareUpdateHandlerTest {
 
         @Override
         public void write(int[] bytes) {
-            for(int val : bytes) {
+            for (int val : bytes) {
                 output[cnt++] = (byte) val;
             }
         }

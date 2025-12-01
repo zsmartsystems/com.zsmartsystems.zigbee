@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -327,7 +327,7 @@ public class ZigBeeDongleTelegesisTest {
                 return TelegesisStatusCode.SUCCESS;
             }
         }).when(handler).sendRequest(ArgumentMatchers.any(TelegesisDisplayNetworkInformationCommand.class));
-        
+
         ZigBeeStatus status = dongle.startup(false);
         assertEquals(ZigBeeStatus.NO_NETWORK, status);
 

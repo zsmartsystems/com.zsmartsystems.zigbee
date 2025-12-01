@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
@@ -27,62 +27,67 @@ import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
  *
  */
 public class ZclResponseMatcherTest {
-    
+
     private ZclTransactionMatcher matcher;
-    
-    @Before
+
+    @BeforeEach
     public void setup() {
         matcher = new ZclTransactionMatcher();
     }
-    
+
     @Test
     public void testMatch() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
-        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(), request.getClusterId(), 5);
-        
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), 5);
+        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(),
+                request.getClusterId(), 5);
+
         assertTrue(matcher.isTransactionMatch(request, response));
     }
-    
+
     @Test
     public void testNoTransactionIDs() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), null);
-        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(), request.getClusterId(), null);
-        
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), null);
+        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(),
+                request.getClusterId(), null);
+
         assertFalse(matcher.isTransactionMatch(request, response));
     }
-    
+
     @Test
     public void testNonMatchingTransactionIds() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
-        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(), request.getClusterId(), 6);
-        
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), 5);
+        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(),
+                request.getClusterId(), 6);
+
         assertFalse(matcher.isTransactionMatch(request, response));
     }
-    
+
     @Test
     public void testZdoResponse() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), 5);
         ZdoCommand response = new DeviceAnnounce(123, new IeeeAddress("0123456789123456"), null);
-        
+
         assertFalse(matcher.isTransactionMatch(request, response));
     }
-    
+
     @Test
     public void testNonMatchingAddresses() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
-        ZclCommand response = createDefaultResponse(new ZigBeeEndpointAddress(1234,6), request.getSourceAddress(), request.getClusterId(), 5);
-        
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), 5);
+        ZclCommand response = createDefaultResponse(new ZigBeeEndpointAddress(1234, 6), request.getSourceAddress(),
+                request.getClusterId(), 5);
+
         assertFalse(matcher.isTransactionMatch(request, response));
     }
-    
+
     @Test
     public void testNonMatchingClusters() {
-        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
-        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(), request.getClusterId(), 6);
-        
+        ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0, 1), new ZigBeeEndpointAddress(1234, 5), 5);
+        ZclCommand response = createDefaultResponse(request.getDestinationAddress(), request.getSourceAddress(),
+                request.getClusterId(), 6);
+
         assertFalse(matcher.isTransactionMatch(request, response));
     }
-    
+
     private ZclCommand createOnCommand(ZigBeeAddress source, ZigBeeAddress dest, Integer transactionId) {
         ZclCommand zclCommand = new OnCommand();
         zclCommand.setSourceAddress(source);
@@ -92,8 +97,9 @@ public class ZclResponseMatcherTest {
         }
         return zclCommand;
     }
-    
-    private ZclCommand createDefaultResponse(ZigBeeAddress source, ZigBeeAddress dest, Integer clusterId, Integer transactionId) {
+
+    private ZclCommand createDefaultResponse(ZigBeeAddress source, ZigBeeAddress dest, Integer clusterId,
+            Integer transactionId) {
         ZclCommand zclResponse = new DefaultResponse(DefaultResponse.COMMAND_ID, ZclStatus.SUCCESS);
         zclResponse.setSourceAddress(source);
         zclResponse.setDestinationAddress(dest);
@@ -101,6 +107,6 @@ public class ZclResponseMatcherTest {
         if (transactionId != null) {
             zclResponse.setTransactionId(transactionId);
         }
-        return zclResponse; 
+        return zclResponse;
     }
 }

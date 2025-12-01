@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.cc2531;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.aps;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -241,7 +241,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
         apsFrame.setAckRequest(true);
-        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH-1));
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH - 1));
 
         aps.send(0, apsFrame);
 
@@ -277,7 +277,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
         apsFrame.setAckRequest(true);
-        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH + 1));
 
         aps.send(0, apsFrame);
 
@@ -298,7 +298,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
         apsFrame.setAckRequest(true);
-        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH*2+1));
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH * 2 + 1));
 
         aps.send(0, apsFrame);
 
@@ -322,7 +322,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
         apsFrame.setAckRequest(false);
-        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH + 1));
 
         aps.send(0, apsFrame);
 
@@ -341,7 +341,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
         apsFrame.setAckRequest(false);
-        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH + 1));
 
         aps.send(0, apsFrame);
 

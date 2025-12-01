@@ -7,15 +7,16 @@
  */
 package com.zsmartsystems.zigbee.app.iasclient;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
@@ -29,7 +30,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStateEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
-import org.mockito.stubbing.Answer;
 
 /**
  *

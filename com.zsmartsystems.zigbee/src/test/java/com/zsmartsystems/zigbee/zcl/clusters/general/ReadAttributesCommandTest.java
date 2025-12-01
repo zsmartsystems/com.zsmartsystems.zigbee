@@ -7,12 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;

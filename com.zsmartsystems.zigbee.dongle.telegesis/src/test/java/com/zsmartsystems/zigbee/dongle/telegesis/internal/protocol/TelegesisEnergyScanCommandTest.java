@@ -7,11 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEnergyScanCommand.ScanResult;
 

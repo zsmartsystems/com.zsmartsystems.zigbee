@@ -7,19 +7,17 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.internal.transaction;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeEnqueueSendDataResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.transaction.ConBeeSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.transaction.ConBeeTransaction;
 
 /**
  *

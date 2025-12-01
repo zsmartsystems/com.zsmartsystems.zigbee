@@ -7,11 +7,9 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.internal.frame;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeVersionResponse;
+import org.junit.jupiter.api.Test;
 
 /**
  *

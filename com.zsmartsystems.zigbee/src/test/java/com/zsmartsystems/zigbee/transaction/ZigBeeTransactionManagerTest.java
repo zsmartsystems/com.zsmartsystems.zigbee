@@ -8,11 +8,11 @@
 package com.zsmartsystems.zigbee.transaction;
 
 import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +27,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
@@ -194,7 +194,8 @@ public class ZigBeeTransactionManagerTest {
         // Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(1))
         // .getQueue(new IeeeAddress("1111111111111111"));
         await().atMost(TIMEOUT, TimeUnit.MILLISECONDS)
-                .until(() -> assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111"))));
+                .until(() -> transactionManager.getQueue(new IeeeAddress("1111111111111111")) == null);
+        assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111")));
         System.out.println(cmdResult);
         assertTrue(cmdResult.isCancelled());
     }

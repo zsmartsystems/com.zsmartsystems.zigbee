@@ -7,10 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,18 +19,12 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSleepyDeviceAnnounceEvent;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -117,47 +111,6 @@ public class TelegesisFrameHandlerTest {
         assertFalse(frameHandler.isAlive());
     }
 
-    @Ignore
-    @Test
-    public void testRetriesReset() {
-        // Initialise mock
-        ZigBeeDongleTelegesis dongle = Mockito.mock(ZigBeeDongleTelegesis.class);
-        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(dongle);
-        frameHandler.setCommandTimeout(500);
-
-        // Accept calls and monitor the time, when the call has been made
-        ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
-
-        // Repeat whenever processed[0] == false, only give response if respond[0] == true
-        boolean[] processed = new boolean[] { false };
-        boolean[] respond = new boolean[] { false };
-        int[] call = new int[] { 0 };
-        String response = "OK" + CRLF;
-        Mockito.when(serialPort.read()).thenAnswer(invocationCall -> {
-            if (!respond[0] || processed[0]) {
-                return -1;
-            }
-            processed[0] |= call[0] % response.length() == response.length() - 1;
-            return (int) response.getBytes()[call[0]++ % response.length()];
-        });
-
-        frameHandler.start(serialPort);
-
-        // Repeat the task four times, with timeouts after every second. Retries should be reset after each round
-        for (int i = 0; i < 3; i++) {
-            respond[0] = false;
-            sendCommandAndWait(frameHandler, processed, respond);
-            respond[0] = true;
-            sendCommandAndWait(frameHandler, processed, respond);
-        }
-
-        Mockito.verify(dongle, Mockito.times(0)).notifyStateUpdate(false);
-
-        assertTrue(frameHandler.isAlive());
-        frameHandler.close();
-        assertFalse(frameHandler.isAlive());
-    }
-
     @Test
     public void testRetriesExceeded() {
         // Initialise mock
@@ -193,52 +146,6 @@ public class TelegesisFrameHandlerTest {
         assertNotNull(response);
         assertEquals(10, response.length);
         assertEquals('A', response[0]);
-    }
-
-    @Ignore
-    @Test
-    public void testEventWait() {
-        final TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(null);
-
-        final List<TelegesisEvent> eventCapture = new ArrayList<TelegesisEvent>();
-
-        Thread waitThread = new Thread() {
-            @Override
-            public void run() {
-                // Send the transaction and wait for the response
-                eventCapture.add(frameHandler.eventWait(TelegesisSleepyDeviceAnnounceEvent.class));
-                synchronized (eventCapture) {
-                    eventCapture.notify();
-                }
-            }
-        };
-
-        waitThread.start();
-
-        TelegesisEvent eventOk = new TelegesisSleepyDeviceAnnounceEvent();
-        TelegesisEvent eventNOk = new TelegesisNetworkLostEvent();
-        try {
-            Method privateMethod;
-            try {
-                privateMethod = TelegesisFrameHandler.class.getDeclaredMethod("notifyEventReceived",
-                        new Class[] { TelegesisEvent.class });
-                privateMethod.setAccessible(true);
-
-                privateMethod.invoke(frameHandler, eventNOk);
-                privateMethod.invoke(frameHandler, eventOk);
-            } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
-                    | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            synchronized (eventCapture) {
-                eventCapture.wait(1000);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(1, eventCapture.size());
     }
 
     /**
