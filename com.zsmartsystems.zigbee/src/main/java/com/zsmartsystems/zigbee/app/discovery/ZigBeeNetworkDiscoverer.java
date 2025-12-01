@@ -169,52 +169,49 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             return;
         }
 
-        networkManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                logger.debug("NWK Discovery starting node rediscovery {}", String.format("%04X", networkAddress));
+        networkManager.executeTask(() -> {
+            logger.debug("NWK Discovery starting node rediscovery {}", String.format("%04X", networkAddress));
 
-                try {
-                    if (Thread.currentThread().isInterrupted()) {
-                        return;
-                    }
-
-                    IeeeAddressResponse ieeeAddressResponse = null;
-                    logger.debug("NWK Discovery: Rediscovery of {} using unicast",
-                            String.format("%04X", networkAddress));
-                    IeeeAddressRequest request = new IeeeAddressRequest(networkAddress, 0, 0);
-                    request.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-                    CommandResult response = networkManager.sendTransaction(request, request).get();
-                    ieeeAddressResponse = response.getResponse();
-
-                    if (ieeeAddressResponse == null) {
-                        logger.debug("NWK Discovery: Rediscovery of {} using broadcast",
-                                String.format("%04X", networkAddress));
-                        request = new IeeeAddressRequest(networkAddress, 0, 0);
-                        request.setDestinationAddress(
-                                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
-                        response = networkManager.sendTransaction(request, request).get();
-                        ieeeAddressResponse = response.getResponse();
-                    }
-
-                    logger.debug("{}: NWK Discovery IeeeAddressRequest returned from {}", ieeeAddressResponse,
-                            String.format("%04X", networkAddress));
-                    if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
-                        addNode(ieeeAddressResponse.getIeeeAddrRemoteDev(),
-                                ieeeAddressResponse.getNwkAddrRemoteDev());
-                        startNodeDiscovery(ieeeAddressResponse.getNwkAddrRemoteDev());
-                        return;
-                    }
-
-                    // We failed with the request
-                    logger.debug("NWK Discovery node rediscovery for {} request failed.",
-                            String.format("%04X", networkAddress));
-                } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("NWK Discovery interrupted in checkIeeeAddressResponse");
+            try {
+                if (Thread.currentThread().isInterrupted()) {
+                    return;
                 }
-                logger.debug("NWK Discovery for {} finishing node rediscovery",
+
+                IeeeAddressResponse ieeeAddressResponse = null;
+                logger.debug("NWK Discovery: Rediscovery of {} using unicast",
                         String.format("%04X", networkAddress));
+                IeeeAddressRequest request = new IeeeAddressRequest(networkAddress, 0, 0);
+                request.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
+                CommandResult response = networkManager.sendTransaction(request, request).get();
+                ieeeAddressResponse = response.getResponse();
+
+                if (ieeeAddressResponse == null) {
+                    logger.debug("NWK Discovery: Rediscovery of {} using broadcast",
+                            String.format("%04X", networkAddress));
+                    request = new IeeeAddressRequest(networkAddress, 0, 0);
+                    request.setDestinationAddress(
+                            new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
+                    response = networkManager.sendTransaction(request, request).get();
+                    ieeeAddressResponse = response.getResponse();
+                }
+
+                logger.debug("{}: NWK Discovery IeeeAddressRequest returned from {}", ieeeAddressResponse,
+                        String.format("%04X", networkAddress));
+                if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                    addNode(ieeeAddressResponse.getIeeeAddrRemoteDev(),
+                            ieeeAddressResponse.getNwkAddrRemoteDev());
+                    startNodeDiscovery(ieeeAddressResponse.getNwkAddrRemoteDev());
+                    return;
+                }
+
+                // We failed with the request
+                logger.debug("NWK Discovery node rediscovery for {} request failed.",
+                        String.format("%04X", networkAddress));
+            } catch (InterruptedException | ExecutionException e) {
+                logger.debug("NWK Discovery interrupted in checkIeeeAddressResponse");
             }
+            logger.debug("NWK Discovery for {} finishing node rediscovery",
+                    String.format("%04X", networkAddress));
         });
     }
 
@@ -231,54 +228,51 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             return;
         }
 
-        networkManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                logger.debug("{}: NWK Discovery starting node rediscovery", ieeeAddress);
-                try {
-                    if (Thread.currentThread().isInterrupted()) {
-                        return;
-                    }
-
-                    NetworkAddressResponse nwkAddressResponse = null;
-                    ZigBeeNode node = networkManager.getNode(ieeeAddress);
-                    if (node != null) {
-                        logger.debug("{}: NWK Discovery: Rediscovery using unicast to {}", ieeeAddress,
-                                String.format("%04X", node.getNetworkAddress()));
-                        NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
-                        request.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-                        CommandResult response = networkManager.sendTransaction(request, request).get();
-                        nwkAddressResponse = response.getResponse();
-                    }
-
-                    if (nwkAddressResponse == null) {
-                        logger.debug("{}: NWK Discovery: Rediscovery using broadcast", ieeeAddress);
-                        NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
-                        request.setDestinationAddress(
-                                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
-                        CommandResult response = networkManager.sendTransaction(request, request).get();
-                        nwkAddressResponse = response.getResponse();
-                    }
-
-                    logger.debug("{}: NWK Discovery NetworkAddressRequest returned from {}", ieeeAddress,
-                            nwkAddressResponse);
-                    if (nwkAddressResponse != null && nwkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
-                        logger.debug("{}: NWK Discovery: Rediscovery found network address to {}", ieeeAddress,
-                                String.format("%04X", nwkAddressResponse.getNwkAddrRemoteDev()));
-                        addNode(nwkAddressResponse.getIeeeAddrRemoteDev(),
-                                nwkAddressResponse.getNwkAddrRemoteDev());
-                        startNodeDiscovery(nwkAddressResponse.getNwkAddrRemoteDev());
-                        return;
-                    }
-
-                    // We failed with the request
-                    logger.debug("{}: NWK Discovery node rediscovery request failed.",
-                            ieeeAddress);
-                } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("NWK Discovery interrupt in rediscoverNode");
+        networkManager.executeTask(() -> {
+            logger.debug("{}: NWK Discovery starting node rediscovery", ieeeAddress);
+            try {
+                if (Thread.currentThread().isInterrupted()) {
+                    return;
                 }
-                logger.debug("{}: NWK Discovery finishing node rediscovery", ieeeAddress);
+
+                NetworkAddressResponse nwkAddressResponse = null;
+                ZigBeeNode node = networkManager.getNode(ieeeAddress);
+                if (node != null) {
+                    logger.debug("{}: NWK Discovery: Rediscovery using unicast to {}", ieeeAddress,
+                            String.format("%04X", node.getNetworkAddress()));
+                    NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
+                    request.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
+                    CommandResult response = networkManager.sendTransaction(request, request).get();
+                    nwkAddressResponse = response.getResponse();
+                }
+
+                if (nwkAddressResponse == null) {
+                    logger.debug("{}: NWK Discovery: Rediscovery using broadcast", ieeeAddress);
+                    NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
+                    request.setDestinationAddress(
+                            new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
+                    CommandResult response = networkManager.sendTransaction(request, request).get();
+                    nwkAddressResponse = response.getResponse();
+                }
+
+                logger.debug("{}: NWK Discovery NetworkAddressRequest returned from {}", ieeeAddress,
+                        nwkAddressResponse);
+                if (nwkAddressResponse != null && nwkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                    logger.debug("{}: NWK Discovery: Rediscovery found network address to {}", ieeeAddress,
+                            String.format("%04X", nwkAddressResponse.getNwkAddrRemoteDev()));
+                    addNode(nwkAddressResponse.getIeeeAddrRemoteDev(),
+                            nwkAddressResponse.getNwkAddrRemoteDev());
+                    startNodeDiscovery(nwkAddressResponse.getNwkAddrRemoteDev());
+                    return;
+                }
+
+                // We failed with the request
+                logger.debug("{}: NWK Discovery node rediscovery request failed.",
+                        ieeeAddress);
+            } catch (InterruptedException | ExecutionException e) {
+                logger.debug("NWK Discovery interrupt in rediscoverNode");
             }
+            logger.debug("{}: NWK Discovery finishing node rediscovery", ieeeAddress);
         });
     }
 
@@ -302,42 +296,39 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
         }
 
         logger.debug("NWK Discovery for {} scheduling node discovery", String.format("%04X", nodeNetworkAddress));
-        networkManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    logger.debug("NWK Discovery for {} starting node discovery",
-                            String.format("%04X", nodeNetworkAddress));
-                    boolean success = true;
-                    if (Thread.currentThread().isInterrupted()) {
-                        return;
-                    }
-
-                    if (!success) {
-                        // We failed with the request.
-                        return;
-                    }
-
-                    // If we don't know the node yet, then try to find the IEEE address
-                    // before requesting the associated nodes.
-                    if (networkManager.getNode(nodeNetworkAddress) == null) {
-                        success = getIeeeAddress(nodeNetworkAddress);
-                        return;
-                    }
-
-                    success = getAssociatedNodes(nodeNetworkAddress);
-                    if (success) {
-                        return;
-                    }
-
-                    logger.debug("NWK Discovery for {} ending node discovery. Success={}.",
-                            String.format("%04X", nodeNetworkAddress), success);
-                } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("NWK Discovery interrupted");
-                } catch (Exception e) {
-                    logger.error("NWK Discovery for {} error during node discovery: ",
-                            String.format("%04X", nodeNetworkAddress), e);
+        networkManager.executeTask(() -> {
+            try {
+                logger.debug("NWK Discovery for {} starting node discovery",
+                        String.format("%04X", nodeNetworkAddress));
+                boolean success = true;
+                if (Thread.currentThread().isInterrupted()) {
+                    return;
                 }
+
+                if (!success) {
+                    // We failed with the request.
+                    return;
+                }
+
+                // If we don't know the node yet, then try to find the IEEE address
+                // before requesting the associated nodes.
+                if (networkManager.getNode(nodeNetworkAddress) == null) {
+                    success = getIeeeAddress(nodeNetworkAddress);
+                    return;
+                }
+
+                success = getAssociatedNodes(nodeNetworkAddress);
+                if (success) {
+                    return;
+                }
+
+                logger.debug("NWK Discovery for {} ending node discovery. Success={}.",
+                        String.format("%04X", nodeNetworkAddress), success);
+            } catch (InterruptedException | ExecutionException e) {
+                logger.debug("NWK Discovery interrupted");
+            } catch (Exception e) {
+                logger.error("NWK Discovery for {} error during node discovery: ",
+                        String.format("%04X", nodeNetworkAddress), e);
             }
         });
     }

@@ -662,16 +662,13 @@ public class XBeeFrameHandler {
     private void startTimer() {
         stopTimer();
         logger.trace("XBEE Timer: Start");
-        timeoutTimer = timeoutScheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                timeoutTimer = null;
-                logger.debug("XBEE Timer: Timeout");
-                synchronized (commandLock) {
-                    if (sentCommand != null) {
-                        sentCommand = null;
-                        sendNextFrame();
-                    }
+        timeoutTimer = timeoutScheduler.schedule(() -> {
+            timeoutTimer = null;
+            logger.debug("XBEE Timer: Timeout");
+            synchronized (commandLock) {
+                if (sentCommand != null) {
+                    sentCommand = null;
+                    sendNextFrame();
                 }
             }
         }, commandTimeout, TimeUnit.MILLISECONDS);

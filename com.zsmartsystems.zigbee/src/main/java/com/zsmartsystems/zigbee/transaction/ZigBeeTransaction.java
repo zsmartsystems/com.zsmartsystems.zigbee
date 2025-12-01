@@ -401,18 +401,15 @@ public class ZigBeeTransaction {
         stopTimer();
 
         // Schedule a task to timeout the transaction
-        timeoutTask = transactionManager.scheduleTask(new Runnable() {
-            @Override
-            public void run() {
-                if (transactionFuture.isCancelled() || state == TransactionState.RESPONDED) {
-                    // Even though this transaction has timed out waiting for the transport,
-                    // we did receive a response that completed the transaction at application level
-                    // Additionally, if the future was cancelled, we assume this was done by the application
-                    // so it's treated as complete.
-                    completeTransaction(completionCommand);
-                } else {
-                    failTransaction();
-                }
+        timeoutTask = transactionManager.scheduleTask(() -> {
+            if (transactionFuture.isCancelled() || state == TransactionState.RESPONDED) {
+                // Even though this transaction has timed out waiting for the transport,
+                // we did receive a response that completed the transaction at application level
+                // Additionally, if the future was cancelled, we assume this was done by the application
+                // so it's treated as complete.
+                completeTransaction(completionCommand);
+            } else {
+                failTransaction();
             }
         }, timeout);
     }

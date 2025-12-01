@@ -617,11 +617,8 @@ public class ZigBeeNode {
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.deviceAdded(endpoint);
-                    }
+                getNotificationService().execute(() -> {
+                    listener.deviceAdded(endpoint);
                 });
             }
         }
@@ -638,11 +635,8 @@ public class ZigBeeNode {
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.deviceUpdated(endpoint);
-                    }
+                getNotificationService().execute(() -> {
+                    listener.deviceUpdated(endpoint);
                 });
             }
         }
@@ -661,11 +655,8 @@ public class ZigBeeNode {
         synchronized (this) {
             if (endpoint != null) {
                 for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                    getNotificationService().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.deviceRemoved(endpoint);
-                        }
+                    getNotificationService().execute(() -> {
+                        listener.deviceRemoved(endpoint);
                     });
                 }
             }
