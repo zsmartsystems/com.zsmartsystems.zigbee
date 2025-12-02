@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.database;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -312,9 +311,9 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     public boolean writeBackup(ZigBeeNetworkBackupDao backup) {
         return dataStore.writeBackup(backup);
     }
-
-    public ZigBeeNetworkBackupDao readBackup(UUID uuid) {
-        return dataStore.readBackup(uuid);
+    
+    public ZigBeeNetworkBackupDao readBackup(Long gatewayId) {
+        return dataStore.readBackup(gatewayId);
     }
 
     public Set<ZigBeeNetworkBackupDao> listBackups() {

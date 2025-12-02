@@ -23,6 +23,8 @@ import com.zsmartsystems.zigbee.transport.DeviceType;
  * @author Chris Jackson
  */
 public class ZigBeeNetworkBackupDao {
+    private String macAddress;
+    private Long gatewayId;
     private UUID uuid;
     private Date date;
     private DeviceType deviceType;
@@ -32,6 +34,23 @@ public class ZigBeeNetworkBackupDao {
     private ZigBeeKey networkKey;
     private ZigBeeKey linkKey;
     private Set<ZigBeeNodeDao> nodes = new HashSet<>();
+    
+    
+    public Long getGatewayId() {
+        return gatewayId;
+    }
+
+    public void setGatewayId(Long gatewayId) {
+        this.gatewayId = gatewayId;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
 
     /**
      * @return the uuid

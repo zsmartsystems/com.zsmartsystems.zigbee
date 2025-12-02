@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.console;
 import java.io.PrintStream;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.UUID;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
@@ -56,10 +55,10 @@ public class ZigBeeConsoleNetworkBackupCommand extends ZigBeeConsoleAbstractComm
                 listBackups(out, networkManager);
                 break;
             case "BACKUP":
-                createBackup(out, networkManager);
+                createBackup(out, networkManager, Long.parseLong(args[2]));
                 break;
             case "RESTORE":
-                restoreBackup(out, networkManager, UUID.fromString(args[2]));
+                restoreBackup(out, networkManager, Long.parseLong(args[2]));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown option '" + args[1] + "'");
@@ -91,20 +90,20 @@ public class ZigBeeConsoleNetworkBackupCommand extends ZigBeeConsoleAbstractComm
         }
     }
 
-    private void createBackup(PrintStream out, ZigBeeNetworkManager networkManager) {
-        UUID uuid = networkManager.createBackup();
-        if (uuid == null) {
+    private void createBackup(PrintStream out, ZigBeeNetworkManager networkManager, Long gatewayId) {
+        String  macAddress = networkManager.createBackup(gatewayId);
+        if (macAddress != null) {
             out.println("Error creating backup!!");
         } else {
-            out.println("Backup created with UUID " + uuid);
+            out.println("Backup created with macAddress " + macAddress);
         }
     }
 
-    private void restoreBackup(PrintStream out, ZigBeeNetworkManager networkManager, UUID uuid) {
-        if (networkManager.restoreBackup(uuid) == ZigBeeStatus.SUCCESS) {
-            out.println("Backup restored from " + uuid.toString());
+    private void restoreBackup(PrintStream out, ZigBeeNetworkManager networkManager, Long gatewayId) {
+        if (networkManager.restoreBackup(gatewayId) == ZigBeeStatus.SUCCESS) {
+            out.println("Backup restored from " + gatewayId);
         } else {
-            out.println("Error restoring backup " + uuid.toString());
+            out.println("Error restoring backup " + gatewayId);
         }
     }
 }

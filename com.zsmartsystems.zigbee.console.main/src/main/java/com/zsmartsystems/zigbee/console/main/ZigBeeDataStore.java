@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,8 +106,8 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
         return new File(networkId + address + ".xml");
     }
 
-    private File getFile(UUID uuid) {
-        return new File(DATABASE + BACKUP + "/" + uuid + ".xml");
+    private File getFile(Integer panId) {
+        return new File(DATABASE + BACKUP + "/" + panId + ".xml");
     }
 
     private File getFile(String key) {
@@ -199,7 +198,7 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
     @Override
     public boolean writeBackup(ZigBeeNetworkBackupDao backup) {
         XStream stream = openStream();
-        File file = getFile(backup.getUuid());
+        File file = getFile(backup.getMacAddress());
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), CHARSET))) {
             stream.marshal(backup, new PrettyPrintWriter(writer));
@@ -213,16 +212,16 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
     }
 
     @Override
-    public ZigBeeNetworkBackupDao readBackup(UUID uuid) {
+    public ZigBeeNetworkBackupDao readBackup(String macAddress) {
         XStream stream = openStream();
-        File file = getFile(uuid);
+        File file = getFile(macAddress);
 
         ZigBeeNetworkBackupDao backup = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), CHARSET))) {
             backup = (ZigBeeNetworkBackupDao) stream.fromXML(reader);
             reader.close();
         } catch (Exception e) {
-            logger.error("{}: Error reading network backup: ", uuid, e);
+            logger.error("{}: Error reading network backup: ", macAddress, e);
         }
 
         return backup;
@@ -245,8 +244,8 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
 
             try {
                 String filename = file.getName();
-                UUID uuid = UUID.fromString(filename.substring(0, filename.length() - 4));
-                ZigBeeNetworkBackupDao backup = readBackup(uuid);
+                String macAddress = filename.substring(0, filename.length() - 4);
+                ZigBeeNetworkBackupDao backup = readBackup(macAddress);
                 for (ZigBeeNodeDao node : backup.getNodes()) {
                     node.setEndpoints(null);
                     node.setBindingTable(null);
