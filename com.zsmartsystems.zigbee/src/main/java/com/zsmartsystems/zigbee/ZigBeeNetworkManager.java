@@ -2057,16 +2057,16 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
     
     public String createBackup(Long gatewayId) {
-        ZigBeeNetworkBackupDao backup =  createInternalBackup(gatewayId);
+        ZigBeeNetworkBackupDao backup = createBackupDao(gatewayId);
         return backup != null ? backup.getMacAddress() : null;
     }
-    
+
     public UUID createBackup() {
-        ZigBeeNetworkBackupDao backup =  createInternalBackup(null);
+        ZigBeeNetworkBackupDao backup = createBackupDao(null);
         return backup != null ? backup.getUuid() : null;
     }
     
-    private ZigBeeNetworkBackupDao createInternalBackup(Long gatewayId) {
+    private ZigBeeNetworkBackupDao createBackupDao(Long gatewayId) {
         ZigBeeNetworkBackupDao backup = new ZigBeeNetworkBackupDao();
 
         backup.setMacAddress(transport.getHandlerIdentifier());
@@ -2105,19 +2105,19 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     private ZigBeeStatus restoreBackup(Long gatewayId, UUID uuid) {
         
         ZigBeeNetworkBackupDao backup = null;
-        String identifiant = null;
+        String identifier = null;
         
         if (gatewayId != null) {
             backup = databaseManager.readBackup(gatewayId);
-            identifiant = gatewayId.toString();
+            identifier = gatewayId.toString();
         }
         if (uuid != null) {
             backup = databaseManager.readBackup(uuid);
-            identifiant = uuid.toString();
+            identifier = uuid.toString();
         }
         
         if (backup == null) {
-            logger.debug("RestoreBackup: Failed to read {}", identifiant);
+            logger.debug("RestoreBackup: Failed to read {}", identifier);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         logger.debug("RestoreBackup: Backup read from {} [{}]", backup.getGatewayId() != null ?  backup.getGatewayId() : backup.getUuid(), backup.getMacAddress());
@@ -2205,7 +2205,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         } else {
             setNetworkState(ZigBeeNetworkState.ONLINE);
         }
-        logger.debug("RestoreBackup: Completed from {} with state {}", identifiant, status);
+        logger.debug("RestoreBackup: Completed from {} with state {}", identifier, status);
 
         return status;
     }
