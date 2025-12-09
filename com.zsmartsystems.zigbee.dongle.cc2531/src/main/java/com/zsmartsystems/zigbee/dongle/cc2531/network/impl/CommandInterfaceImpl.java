@@ -173,6 +173,17 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
         }
     }
 
+    private String frameToString(int[] inputBuffer) {
+        if (inputBuffer == null) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        for (int data : inputBuffer) {
+            result.append(String.format("%02X ", data));
+        }
+        return result.toString();
+    }
+
     /**
      * Send packet to dongle.
      *
@@ -183,6 +194,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     public void sendPacket(final ZToolPacket packet) throws IOException {
         logger.debug("->  {} ({}) ", packet.getClass().getSimpleName(), packet);
         final int[] pck = packet.getPacket();
+        logger.debug("Sending frame {}", frameToString(pck));
         sendRaw(pck);
     }
 
