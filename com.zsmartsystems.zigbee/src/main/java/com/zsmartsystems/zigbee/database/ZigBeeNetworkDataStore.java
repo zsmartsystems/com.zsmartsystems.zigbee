@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.database;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -107,7 +108,7 @@ public interface ZigBeeNetworkDataStore {
      * @param panId the {@link PanId} of the backup
      * @return the restored {@link ZigBeeNetworkBackupDao} or null
      */
-    default ZigBeeNetworkBackupDao readBackup(String macAddressSource) {
+    default ZigBeeNetworkBackupDao readBackup(UUID uuid) {
         return null;
     }
 
