@@ -35,6 +35,8 @@ public class ZigBeeNetworkBackupDao {
     private ZigBeeKey linkKey;
     private Set<ZigBeeNodeDao> nodes = new HashSet<>();
     
+
+    
     
     public Long getGatewayId() {
         return gatewayId;
@@ -176,6 +178,13 @@ public class ZigBeeNetworkBackupDao {
      */
     public void setNodes(Set<ZigBeeNodeDao> nodes) {
         this.nodes = nodes;
+    }
+    
+    public int getCountEndpoints() {
+        return nodes.stream()
+                    .filter(node -> node.getEndpoints() != null)
+                    .mapToInt(node -> node.getEndpoints().size())
+                    .sum();
     }
 
 }

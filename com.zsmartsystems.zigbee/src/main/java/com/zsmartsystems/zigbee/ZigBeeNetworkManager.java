@@ -2056,9 +2056,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
     }
     
-    public String createBackup(Long gatewayId) {
-        ZigBeeNetworkBackupDao backup = createBackupDao(gatewayId);
-        return backup != null ? backup.getMacAddress() : null;
+    public ZigBeeNetworkBackupDao createBackup(Long gatewayId) {
+        return createBackupDao(gatewayId);
     }
 
     public UUID createBackup() {
@@ -2121,6 +2120,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         logger.debug("RestoreBackup: Backup read from {} [{}]", backup.getGatewayId() != null ?  backup.getGatewayId() : backup.getUuid(), backup.getMacAddress());
+        logger.debug("RestoreBackup: backup panId : {} - network manager panId : {}", backup.getPan(), this.getZigBeePanId());
         
         if (backup.getPan() != this.getZigBeePanId()) {
             logger.info(String.format("RestoreBackup PanId is changed from %s to %s", backup.getPan(), this.getZigBeePanId()));
