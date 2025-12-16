@@ -275,8 +275,4 @@ public interface ZigBeeTransportTransmit {
     default ZigBeeStatus setNetworkState(ZigBeeNetworkState networkState) {
         return ZigBeeStatus.UNSUPPORTED;
     }
-    
-    default String getHandlerIdentifier() {
-        return null;
-    }
 }
