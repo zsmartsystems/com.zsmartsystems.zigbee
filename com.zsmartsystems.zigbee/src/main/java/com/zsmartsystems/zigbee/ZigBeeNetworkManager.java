@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -2056,20 +2057,29 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
     }
     
+
     public ZigBeeNetworkBackupDao createBackup(Long gatewayId) {
-        return createBackupDao(gatewayId);
+        ZigBeeNetworkBackupDao backup = createBackupDao();
+        if (backup != null) {
+            backup.setGatewayId(gatewayId);
+        }
+        return backup;
     }
 
+    /**
+     * Creates a backup of the {@link ZigBeeNetworkManager}, storing it in the {@link ZigBeeNetworkDataStore}
+     *
+     * @return a unique {@link UUID} referencing the backup
+     */
     public UUID createBackup() {
-        ZigBeeNetworkBackupDao backup = createBackupDao(null);
+        ZigBeeNetworkBackupDao backup = createBackupDao();
         return backup != null ? backup.getUuid() : null;
     }
     
-    private ZigBeeNetworkBackupDao createBackupDao(Long gatewayId) {
+    private ZigBeeNetworkBackupDao createBackupDao() {
         ZigBeeNetworkBackupDao backup = new ZigBeeNetworkBackupDao();
 
         backup.setMacAddress(transport.getHandlerIdentifier());
-        backup.setGatewayId(gatewayId);
         backup.setUuid(UUID.randomUUID());
         backup.setDate(new Date());
         backup.setPan(getZigBeePanId());
@@ -2103,11 +2113,12 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     private ZigBeeStatus restoreBackup(Long gatewayId, UUID uuid) {
         
+        Optional<ZigBeeNetworkBackupDao> optionalBackup = Optional.empty();
         ZigBeeNetworkBackupDao backup = null;
         String identifier = null;
         
         if (gatewayId != null) {
-            backup = databaseManager.readBackup(gatewayId);
+            optionalBackup = databaseManager.readBackup(gatewayId);
             identifier = gatewayId.toString();
         }
         if (uuid != null) {
@@ -2115,10 +2126,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             identifier = uuid.toString();
         }
         
-        if (backup == null) {
+        if (optionalBackup.isEmpty()) {
             logger.debug("RestoreBackup: Failed to read {}", identifier);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
+        backup = optionalBackup.get();
         logger.debug("RestoreBackup: Backup read from {} [{}]", backup.getGatewayId() != null ?  backup.getGatewayId() : backup.getUuid(), backup.getMacAddress());
         logger.debug("RestoreBackup: backup panId : {} - network manager panId : {}", backup.getPan(), this.getZigBeePanId());
         
