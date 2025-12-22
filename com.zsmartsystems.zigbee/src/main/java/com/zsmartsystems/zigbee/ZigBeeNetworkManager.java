@@ -2060,11 +2060,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     public ZigBeeNetworkBackupDao createBackup(Long gatewayId, String macAddress) {
         ZigBeeNetworkBackupDao backup = createBackupDao();
-        if (backup != null) {
-            backup.setGatewayId(gatewayId);
-            backup.setMacAddress(macAddress);
-        }
-        return backup;
+		backup.setGatewayId(gatewayId);
+		backup.setMacAddress(macAddress);
+		return databaseManager.writeBackup(backup) ? backup : null;
     }
 
     /**
@@ -2074,7 +2072,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public UUID createBackup() {
         ZigBeeNetworkBackupDao backup = createBackupDao();
-        return backup != null ? backup.getUuid() : null;
+        return databaseManager.writeBackup(backup) ? backup.getUuid() : null;
     }
     
     private ZigBeeNetworkBackupDao createBackupDao() {
@@ -2094,7 +2092,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
         backup.setNodes(nodesDao);
 
-        return databaseManager.writeBackup(backup) ? backup : null;
+        return backup;
     }
     
     public ZigBeeStatus restoreBackup(Long gatewayId) {
