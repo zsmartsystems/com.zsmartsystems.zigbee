@@ -332,10 +332,9 @@ public class ZigBeeConsoleMain {
 
         // Initialise the network
         ZigBeeStatus initResponse = networkManager.initialize();
-        System.out.println("networkManager.initialize returned " + initResponse);
         if (initResponse != ZigBeeStatus.SUCCESS) {
-            console.start();
-            System.out.println("Console closed.");
+            networkManager.shutdown();
+            System.out.println("Console closed. networkManager.initialize returned " + initResponse);
             return;
         }
 
@@ -433,6 +432,8 @@ public class ZigBeeConsoleMain {
 
         if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
+            networkManager.shutdown();
+            return;
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
