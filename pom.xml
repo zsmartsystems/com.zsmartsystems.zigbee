@@ -40,7 +40,7 @@
 	</developers>
 
 	<properties>
-		<license.year>2025</license.year>
+		<license.year>2026</license.year>
 		<source.version>1.8</source.version>
 		<target.version>1.8</target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
