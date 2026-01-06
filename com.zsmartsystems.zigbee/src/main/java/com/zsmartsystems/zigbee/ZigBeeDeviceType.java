@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-01-26T00:11:26Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2026-01-06T20:19:02Z")
 public enum ZigBeeDeviceType {
 
     /**
@@ -169,6 +169,41 @@ public enum ZigBeeDeviceType {
      * Meter Interface, 83, 0x0053
      */
     METER_INTERFACE(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0053),
+
+    /**
+     * ZGP Proxy, 96, 0x0060
+     */
+    ZGP_PROXY(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0060),
+
+    /**
+     * ZGP Proxy Basic, 97, 0x0061
+     */
+    ZGP_PROXY_BASIC(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0061),
+
+    /**
+     * ZGP Target Plus, 98, 0x0062
+     */
+    ZGP_TARGET_PLUS(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0062),
+
+    /**
+     * ZGP Target, 99, 0x0063
+     */
+    ZGP_TARGET(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0063),
+
+    /**
+     * ZGP Commissioning Tool, 100, 0x0064
+     */
+    ZGP_COMMISSIONING_TOOL(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0064),
+
+    /**
+     * ZGP Combo, 101, 0x0065
+     */
+    ZGP_COMBO(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0065),
+
+    /**
+     * ZGP Combo Basic, 102, 0x0066
+     */
+    ZGP_COMBO_BASIC(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0066),
 
     /**
      * Environmental Sensor, 103, 0x0067
