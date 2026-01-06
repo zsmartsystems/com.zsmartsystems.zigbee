@@ -577,11 +577,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         synchronized (this) {
             // Notify the listeners
             for (final ZigBeeOtaStatusCallback statusListener : statusListeners) {
-                cluster.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        statusListener.otaStatusUpdate(updatedStatus, percentComplete);
-                    }
+                cluster.getNotificationService().execute(() -> {
+                    statusListener.otaStatusUpdate(updatedStatus, percentComplete);
                 });
             }
         }
@@ -992,21 +989,18 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             // Notify the listeners
             latch = new CountDownLatch(statusListeners.size());
             for (final ZigBeeOtaStatusCallback statusListener : statusListeners) {
-                cluster.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        logger.trace("{}: ZigBeeOtaServer.notifyUpdateRequestReceived {} of {}",
-                                cluster.getZigBeeAddress(), statusListener, command);
+                cluster.getNotificationService().execute(() -> {
+                    logger.trace("{}: ZigBeeOtaServer.notifyUpdateRequestReceived {} of {}",
+                            cluster.getZigBeeAddress(), statusListener, command);
 
-                        ZigBeeOtaFile response = statusListener.otaIncomingRequest(command);
-                        if (response != null) {
-                            otaFiles.add(response);
-                            while (latch.getCount() > 0) {
-                                latch.countDown();
-                            }
-                        } else {
+                    ZigBeeOtaFile response = statusListener.otaIncomingRequest(command);
+                    if (response != null) {
+                        otaFiles.add(response);
+                        while (latch.getCount() > 0) {
                             latch.countDown();
                         }
+                    } else {
+                        latch.countDown();
                     }
                 });
             }

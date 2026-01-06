@@ -55,16 +55,9 @@ public class EzspNeighborTable {
     public EzspNeighborTable(AshFrameHandler ashHandler, int updatePeriod) {
         this.ashHandler = ashHandler;
 
-        Runnable neighborUpdateThread = new Runnable() {
-            @Override
-            public void run() {
-                updateNeighbors();
-            }
-        };
-
         routingEntries = getConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE);
 
-        scheduler.scheduleAtFixedRate(neighborUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::updateNeighbors, updatePeriod, updatePeriod, TimeUnit.SECONDS);
     }
 
     private void updateNeighbors() {

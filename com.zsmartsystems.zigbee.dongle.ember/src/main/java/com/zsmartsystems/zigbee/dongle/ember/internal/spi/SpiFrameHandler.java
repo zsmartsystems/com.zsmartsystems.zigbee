@@ -606,13 +606,10 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             return;
         }
 
-        pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (stateConnected && sendQueue.isEmpty()) {
-                    doCallbackRequest.set(true);
-                    sendNextFrame();
-                }
+        pollingTimer = pollingScheduler.scheduleAtFixedRate(() -> {
+            if (stateConnected && sendQueue.isEmpty()) {
+                doCallbackRequest.set(true);
+                sendNextFrame();
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }

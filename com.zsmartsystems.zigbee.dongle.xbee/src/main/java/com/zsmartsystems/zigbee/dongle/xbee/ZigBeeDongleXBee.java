@@ -372,27 +372,24 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
         logger.debug("XBee send: {}", command.toString());
         Future<XBeeResponse> responseFuture = frameHandler.sendRequestAsync(command);
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                // Let the stack know the frame is sent.
-                // We don't really have confirmation of this from the XBee, but this is the best we can do
-                zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_ACK);
+        executorService.execute(() -> {
+            // Let the stack know the frame is sent.
+            // We don't really have confirmation of this from the XBee, but this is the best we can do
+            zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_ACK);
 
-                ZigBeeTransportProgressState sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
-                try {
-                    XBeeResponse response = responseFuture.get(RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
-                    if (response instanceof XBeeTransmitStatusResponse) {
-                        XBeeTransmitStatusResponse sentHandler = (XBeeTransmitStatusResponse) response;
-                        if (sentHandler.getDeliveryStatus() == DeliveryStatus.SUCCESS) {
-                            sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
-                        }
+            ZigBeeTransportProgressState sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
+            try {
+                XBeeResponse response = responseFuture.get(RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
+                if (response instanceof XBeeTransmitStatusResponse) {
+                    XBeeTransmitStatusResponse sentHandler = (XBeeTransmitStatusResponse) response;
+                    if (sentHandler.getDeliveryStatus() == DeliveryStatus.SUCCESS) {
+                        sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
                     }
-                } catch (InterruptedException | ExecutionException | TimeoutException e) {
                 }
-
-                zigbeeTransportReceive.receiveCommandState(msgTag, sentHandlerState);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
             }
+
+            zigbeeTransportReceive.receiveCommandState(msgTag, sentHandlerState);
         });
     }
 

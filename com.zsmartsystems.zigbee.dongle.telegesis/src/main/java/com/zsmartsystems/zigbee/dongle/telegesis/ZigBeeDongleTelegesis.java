@@ -741,31 +741,28 @@ public class ZigBeeDongleTelegesis
 
         // We need to get the Telegesis SEQ number for the transaction so we can correlate the transaction ID
         // This is done in a separate thread that puts all the responses from the dongle in a pipeline
-        commandScheduler.execute(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (isConfiguredSync) {
-                    if (!isConfigured) {
-                        logger.debug("Telegesis dongle is not configured. Frame not sent: {}", apsFrame);
-                        return;
-                    }
+        commandScheduler.execute(() -> {
+            synchronized (isConfiguredSync) {
+                if (!isConfigured) {
+                    logger.debug("Telegesis dongle is not configured. Frame not sent: {}", apsFrame);
+                    return;
+                }
 
-                    lastSendCommand = System.currentTimeMillis();
-                    frameHandler.sendRequest(command);
+                lastSendCommand = System.currentTimeMillis();
+                frameHandler.sendRequest(command);
 
-                    // Let the stack know the frame is sent
-                    zigbeeTransportReceive.receiveCommandState(msgTag,
-                            command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
-                                    : ZigBeeTransportProgressState.TX_NAK);
+                // Let the stack know the frame is sent
+                zigbeeTransportReceive.receiveCommandState(msgTag,
+                        command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
+                                : ZigBeeTransportProgressState.TX_NAK);
 
-                    // Multicast doesn't have a sequence returned, so nothing more to do here
-                    if (command instanceof TelegesisSendMulticastCommand) {
-                        return;
-                    }
+                // Multicast doesn't have a sequence returned, so nothing more to do here
+                if (command instanceof TelegesisSendMulticastCommand) {
+                    return;
+                }
 
-                    if (((TelegesisSendUnicastCommand) command).getMessageId() != null) {
-                        messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
-                    }
+                if (((TelegesisSendUnicastCommand) command).getMessageId() != null) {
+                    messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
                 }
             }
         });
@@ -784,11 +781,8 @@ public class ZigBeeDongleTelegesis
         }
 
         // This is done in a separate thread that puts all the responses from the dongle in a pipeline
-        commandScheduler.execute(new Runnable() {
-            @Override
-            public void run() {
-                telegesisEventReceivedRunnable(event);
-            }
+        commandScheduler.execute(() -> {
+            telegesisEventReceivedRunnable(event);
         });
     }
 
@@ -1215,17 +1209,14 @@ public class ZigBeeDongleTelegesis
             pollingTimer.cancel(true);
         }
 
-        pollingTimer = executorService.scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                // Don't poll the state if the network is down
-                // or we've sent a command to the dongle within the pollRate
-                if (!networkStateUp || (lastSendCommand + pollRate > System.currentTimeMillis())) {
-                    return;
-                }
-                // Don't wait for the response. This is running in a single thread scheduler
-                frameHandler.queueFrame(new TelegesisDisplayNetworkInformationCommand());
+        pollingTimer = executorService.scheduleWithFixedDelay(() -> {
+            // Don't poll the state if the network is down
+            // or we've sent a command to the dongle within the pollRate
+            if (!networkStateUp || (lastSendCommand + pollRate > System.currentTimeMillis())) {
+                return;
             }
+            // Don't wait for the response. This is running in a single thread scheduler
+            frameHandler.queueFrame(new TelegesisDisplayNetworkInformationCommand());
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }
 
