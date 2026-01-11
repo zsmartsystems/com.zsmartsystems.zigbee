@@ -122,7 +122,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
             return;
         }
 
-        out.println("Address    Ieee Address      State     ");
+        out.println("Address    IEEE Address      State     ");
         for (ZigBeeEndpoint endpoint : applications.values()) {
             ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
                     .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
