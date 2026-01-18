@@ -22,6 +22,7 @@ import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 
 /**
  *
@@ -69,6 +70,12 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
                     throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
                 }
                 cmdNodeState(networkManager, args[2], out);
+                break;
+            case "NOTIFY":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
+                }
+                cmdOtaKick(networkManager, args[2], out);
                 break;
             case "START":
                 if (args.length < 4) {
@@ -122,12 +129,16 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
             return;
         }
 
-        out.println("Address    IEEE Address      State     ");
+        out.println("Address    IEEE Address      State                              %  Last Request");
         for (ZigBeeEndpoint endpoint : applications.values()) {
             ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
                     .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
-            out.println(String.format("%-9s  %s  %-8s", endpoint.getEndpointAddress(), endpoint.getIeeeAddress(),
-                    otaServer.getServerStatus()));
+            out.println(String.format("%-9s  %s  %-31s  %3s  %s", endpoint.getEndpointAddress(),
+                    endpoint.getIeeeAddress(),
+                    otaServer.getServerStatus(),
+                    otaServer.getPercentageComplete() == null ? "   "
+                            : String.format("%3d", otaServer.getPercentageComplete()),
+                    otaServer.getLastImageRequestTime() == null ? "NEVER" : otaServer.getLastImageRequestTime()));
         }
     }
 
@@ -171,6 +182,21 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
         out.println("OTA File: " + otaFile);
+    }
+
+    private void cmdOtaKick(ZigBeeNetworkManager networkManager, String endpointString,
+            PrintStream out) {
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
+
+        ZclOtaUpgradeCluster cluster = (ZclOtaUpgradeCluster) endpoint
+                .getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
+        if (cluster == null) {
+            throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
+        }
+
+        cluster.sendCommand(new ImageNotifyCommand(0, 0, 0, 0, 0));
+
+        out.println("OTA notify sent to " + endpoint.getEndpointAddress() + "");
     }
 
     private void cmdOtaStart(ZigBeeNetworkManager networkManager, String endpointString, String filename,

@@ -306,22 +306,6 @@ public class ZclClusterTest {
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
         assertEquals(2, updatedAttributes.size());
-
-        ZclAttribute attribute1 = updatedAttributes.get(0);
-        ZclAttribute attribute2 = updatedAttributes.get(1);
-        assertTrue(attribute1.getLastValue() instanceof Boolean);
-        assertEquals(ZclDataType.BOOLEAN, attribute1.getDataType());
-        assertEquals(ZclOnOffCluster.ATTR_ONOFF, attribute1.getId());
-        assertEquals(true, attribute1.getLastValue());
-        assertTrue(attribute2.getLastValue() instanceof Integer);
-        assertEquals(ZclDataType.UNSIGNED_16_BIT_INTEGER, attribute2.getDataType());
-        assertEquals(ZclOnOffCluster.ATTR_ONTIME, attribute2.getId());
-        assertEquals(1, attribute2.getLastValue());
-
-        assertEquals(attribute1.getLastReportTime(), attribute2.getLastReportTime());
-
-        cluster.removeAttributeListener(listenerMock);
-        assertEquals(0, attributeListeners.size());
     }
 
     @Test

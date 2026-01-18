@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.app.otaserver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -130,6 +131,11 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * The current {@link ZigBeeOtaServerStatus} associated with this server.
      */
     private ZigBeeOtaServerStatus status;
+
+    /**
+     * The time of the last image update request
+     */
+    private Date lastImageRequestTime = null;
 
     /**
      * The parameter is part of Image Notify Command sent by the upgrade server. The parameter indicates
@@ -277,6 +283,24 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      */
     public ZigBeeOtaServerStatus getServerStatus() {
         return status;
+    }
+
+    /**
+     * Gets the time the last image update request was received
+     *
+     * @return the {@link Date} of the last received image request
+     */
+    public Date getLastImageRequestTime() {
+        return lastImageRequestTime;
+    }
+
+    /**
+     * Gets the percentage complete when an update is in progress. Returns null if not upgrade is in progress.
+     *
+     * @return the percentage complete, or null if not upgrade is in progress.
+     */
+    public Integer getPercentageComplete() {
+        return status == ZigBeeOtaServerStatus.OTA_UNINITIALISED ? null : percentComplete;
     }
 
     /**
@@ -695,6 +719,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * @return true if the handler has, or will send a response to this command
      */
     private boolean handleQueryNextImageCommand(QueryNextImageCommand command) {
+        lastImageRequestTime = new Date();
+
         if (otaFile == null) {
             logger.debug("{} OTA Server: No file set in QueryNextImageCommand.",
                     cluster.getZigBeeAddress());
@@ -756,6 +782,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         }
 
         // Update the state as we're starting
+        updateStatus(ZigBeeOtaServerStatus.OTA_STARTED);
         updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
         startTransferTimer();
 
@@ -894,7 +921,15 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 && status != ZigBeeOtaServerStatus.OTA_TRANSFER_COMPLETE) {
             logger.debug("{} OTA Error: Invalid server state {} when handling UpgradeEndCommand.",
                     cluster.getZigBeeAddress(), status);
-            cluster.sendDefaultResponse(command, ZclStatus.UNKNOWN);
+
+            UpgradeEndResponse upgradeEndResponse = new UpgradeEndResponse(command.getManufacturerCode(),
+                    command.getImageType(), command.getFileVersion(), 0, 0);
+            try {
+                cluster.sendCommand(upgradeEndResponse).get();
+            } catch (InterruptedException e) {
+            } catch (ExecutionException e) {
+            }
+
             return true;
         }
 
@@ -987,6 +1022,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     private ZigBeeOtaFile notifyUpdateRequestReceived(final QueryNextImageCommand command) {
         CountDownLatch latch;
         List<ZigBeeOtaFile> otaFiles = new ArrayList<>();
+        logger.debug("{}: ZigBeeOtaServer.notifyUpdateRequestReceived ({} listeners)", cluster.getZigBeeAddress(),
+                statusListeners.size());
 
         synchronized (this) {
             // Notify the listeners
@@ -1043,7 +1080,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
     @Override
     public String toString() {
-        return "ZigBeeOtaServer [status=" + status + ", cluster=" + cluster + ", otaFile=" + otaFile + "]";
+        return "ZigBeeOtaServer [status=" + status + ", listeners=" + statusListeners.size() + ", otaFile=" + otaFile
+                + "]";
     }
-
 }
