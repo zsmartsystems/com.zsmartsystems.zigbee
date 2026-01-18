@@ -226,7 +226,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     /**
      * The sleep time before trying to request the current firmware version
      */
-    private static final long CURRENT_FW_VERSION_REQUEST_DELAY = 10000;
+    private static final long CURRENT_FW_VERSION_REQUEST_DELAY = 1500;
 
     /**
      * Field control value of 0x01 (bit 0 set) means that the client’s IEEE address is included in the payload. This
@@ -479,7 +479,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     }
                     ImageUpgradeStatus status = ImageUpgradeStatus.getStatus(statusValue);
                     if (status != ImageUpgradeStatus.DOWNLOAD_COMPLETE
-                            && status != ImageUpgradeStatus.WAITING_TO_UPGRADE) {
+                            && status != ImageUpgradeStatus.WAITING_TO_UPGRADE && status != ImageUpgradeStatus.NORMAL) {
                         // Client is not in correct state to end upgrade
                         switch (status) {
                             case COUNT_DOWN:
@@ -491,22 +491,22 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                             case WAIT_FOR_MORE:
                                 updateStatus(ZigBeeOtaServerStatus.OTA_WAITING);
                                 break;
-                            case NORMAL:
                             case UNKNOWN:
                             default:
+                                logger.debug("{}: Unexpected remote transfer status {} - OTA failed.",
+                                        status, cluster.getZigBeeAddress());
                                 updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                                 break;
                         }
                         return;
                     }
 
-                    updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FIRMWARE_RESTARTING);
-
                     UpgradeEndResponse upgradeEndResponse = new UpgradeEndResponse(otaFile.getManufacturerCode(),
                             otaFile.getImageType(), otaFile.getFileVersion(), 0, 0);
+                    upgradeEndResponse.setDisableDefaultResponse(true);
 
                     // If we received a UpgradeEndCommand then send the UpgradeEndResponse as a response. Otherwise send
-                    // it as a commands
+                    // it as a command
                     CommandResult response;
                     if (command != null) {
                         response = cluster.sendResponse(command, upgradeEndResponse).get();
@@ -515,9 +515,11 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     }
 
                     if (!(response.isSuccess() || response.isTimeout())) {
+                        logger.debug("{}: Failed to send UpgradeEnd - OTA failed.", cluster.getZigBeeAddress());
                         updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                         return;
                     }
+                    updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FIRMWARE_RESTARTING);
 
                     // Attempt to get the current firmware version. As the device will be restarting, which could take
                     // some time to complete, we retry this a few times.
@@ -549,6 +551,9 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
                                     if (fileVersion.equals(otaFile.getFileVersion())) {
                                         updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_COMPLETE);
+                                        return;
+                                    } else {
+                                        updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                                         return;
                                     }
                                 } else if (attributesResponse.getRecords().get(0)
@@ -783,7 +788,6 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
         // Update the state as we're starting
         updateStatus(ZigBeeOtaServerStatus.OTA_STARTED);
-        updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
         startTransferTimer();
 
         cluster.sendResponse(command, new QueryNextImageResponse(
@@ -792,6 +796,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 otaFile.getImageType(),
                 otaFile.getFileVersion(),
                 otaFile.getImageSize()));
+
+        updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
 
         return true;
     }
