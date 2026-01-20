@@ -132,6 +132,8 @@ public class ZigBeeTransaction {
      * the command that completed the transaction.
      */
     private ZigBeeCommand completionCommand;
+    
+    private boolean sleepy;
 
     /**
      * The amount of time (in milliseconds) from when the command is sent to the transport, until when the transport
@@ -512,7 +514,15 @@ public class ZigBeeTransaction {
                 String.format("%04X", command.getDestinationAddress().getAddress()),
                 String.format("%02X", transactionId), progress, state);
     }
+    
+    public boolean isSleepy() {
+        return sleepy;
+    }
 
+    public void setSleepy() {
+        this.sleepy = true;
+    }
+    
     @Override
     public String toString() {
         String queuedTime = queueTime == null ? "-" : Long.toString(System.currentTimeMillis() - queueTime);

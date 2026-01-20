@@ -534,7 +534,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             } else {
                 queue.transactionComplete(transaction, state);
 
-                if (queue.isSleepy() && sleepyTransactions > 0) {
+                if (transaction.isSleepy() && sleepyTransactions > 0) {
                     sleepyTransactions--;
                 }
 
@@ -687,6 +687,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                     transaction = queue.getTransaction();
                     if (transaction != null) {
                         if (queue.isSleepy()) {
+                            transaction.setSleepy();
                             sleepyTransactions++;
                         }
 
