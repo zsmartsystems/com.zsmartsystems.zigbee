@@ -34,6 +34,7 @@ import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
+import com.zsmartsystems.zigbee.app.time.ZigBeeTimeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpAddressTableCommand;
@@ -421,6 +422,7 @@ public class ZigBeeConsoleMain {
         networkManager.addExtension(new ZigBeeIasCieExtension());
         networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
         networkManager.addExtension(new ZigBeeBasicServerExtension());
+        networkManager.addExtension(new ZigBeeTimeExtension());
 
         ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
         discoveryExtension.setUpdateMeshPeriod(0);
