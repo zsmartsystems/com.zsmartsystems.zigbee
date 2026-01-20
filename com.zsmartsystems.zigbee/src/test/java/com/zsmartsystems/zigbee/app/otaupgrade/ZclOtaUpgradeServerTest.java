@@ -177,8 +177,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         server.commandReceived(query);
         await().atMost(1, SECONDS)
-                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS));
-        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS));
+                .until(() -> otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_STARTED));
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_STARTED));
 
         otaStatusCapture.clear();
         server.cancelUpgrade();

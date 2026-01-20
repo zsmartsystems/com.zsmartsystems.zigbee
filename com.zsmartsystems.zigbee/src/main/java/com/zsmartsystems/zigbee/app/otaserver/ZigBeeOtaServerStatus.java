@@ -25,6 +25,11 @@ public enum ZigBeeOtaServerStatus {
     OTA_WAITING,
 
     /**
+     * The transfer has commenced
+     */
+    OTA_STARTED,
+
+    /**
      * The OTA server is currently progressing a transfer
      */
     OTA_TRANSFER_IN_PROGRESS,
