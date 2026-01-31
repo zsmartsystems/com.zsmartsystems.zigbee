@@ -243,14 +243,14 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
     @Override
     public void nodeAdded(ZigBeeNode node) {
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-            ZclTimeCluster timeServer = (ZclTimeCluster) endpoint.getInputCluster(ZclTimeCluster.CLUSTER_ID);
-            if (timeServer != null && !timeClients.containsKey(timeServer.getZigBeeAddress())) {
+            ZclTimeCluster timeServerCluster = (ZclTimeCluster) endpoint.getInputCluster(ZclTimeCluster.CLUSTER_ID);
+            if (timeServerCluster != null && !timeClients.containsKey(timeServerCluster.getZigBeeAddress())) {
                 // Create a new local client for the remote server
-                ZclTimeClient timeClient = new ZclTimeClient(timeServer);
+                ZclTimeClient timeClient = new ZclTimeClient(timeServerCluster);
                 synchronized (timeClients) {
                     logger.debug("Time extension: Adding client for {} endpoint {}", node.getIeeeAddress(),
-                            timeServer.getZigBeeAddress());
-                    timeClients.put(timeServer.getZigBeeAddress(), timeClient);
+                            timeServerCluster.getZigBeeAddress());
+                    timeClients.put(timeServerCluster.getZigBeeAddress(), timeClient);
                 }
             }
             ZclTimeCluster timeClient = (ZclTimeCluster) endpoint.getOutputCluster(ZclTimeCluster.CLUSTER_ID);

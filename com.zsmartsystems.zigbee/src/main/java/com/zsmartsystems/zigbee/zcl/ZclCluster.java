@@ -440,7 +440,8 @@ public abstract class ZclCluster {
      */
     public Future<CommandResult> writeAttribute(final int attributeId, final ZclDataType dataType, final Object value) {
         logger.debug("{}: Writing {} cluster {}, attribute {}, value {}, as dataType {}",
-                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attributeId, value,
+                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), String.format("%04X", clusterId),
+                attributeId, value,
                 dataType);
         final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
         attributeIdentifier.setAttributeIdentifier(attributeId);
@@ -563,7 +564,8 @@ public abstract class ZclCluster {
     public Future<CommandResult> reportAttribute(final int attributeId, final ZclDataType dataType,
             final Object value) {
         logger.debug("{}: Reporting {} cluster {}, attribute {}, value {}, as dataType {}",
-                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attributeId, value,
+                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), String.format("%04X", clusterId),
+                attributeId, value,
                 dataType);
         final AttributeReport attributeIdentifier = new AttributeReport();
         attributeIdentifier.setAttributeIdentifier(attributeId);
@@ -1477,7 +1479,7 @@ public abstract class ZclCluster {
             if (record.getStatus() != ZclStatus.SUCCESS) {
                 logger.debug("{}: Error reading {} attribute {} in cluster {} - {}",
                         zigbeeEndpoint.getEndpointAddress(), (isClient ? "client" : "server"),
-                        record.getAttributeIdentifier(), clusterId, record.getStatus());
+                        record.getAttributeIdentifier(), String.format("%04X", clusterId), record.getStatus());
                 continue;
             }
 
@@ -1512,7 +1514,7 @@ public abstract class ZclCluster {
                         normalizer.normalizeZclData(attribute.getDataType(), requestRecord.getAttributeValue()));
                 responseRecord.setStatus(ZclStatus.SUCCESS);
                 logger.debug("{}: Local attribute {} updated to {} for cluster {}", zigbeeEndpoint.getEndpointAddress(),
-                        attribute.getId(), attribute.getLastValue(), clusterId);
+                        attribute.getId(), attribute.getLastValue(), String.format("%04X", clusterId));
             }
 
             attributeStatus.add(responseRecord);
@@ -1531,11 +1533,11 @@ public abstract class ZclCluster {
 
     private void updateAttribute(int attributeId, Object attributeValue, Calendar reportTime) {
         logger.trace("{}: Attribute {} in {} cluster {} updated to {}", zigbeeEndpoint.getEndpointAddress(),
-                attributeId, (isClient ? "Client" : "Server"), clusterId, attributeValue);
+                attributeId, (isClient ? "Client" : "Server"), String.format("%04X", clusterId), attributeValue);
         ZclAttribute attribute = getAttribute(attributeId);
         if (attribute == null) {
             logger.debug("{}: Unknown {} attribute in {} cluster {}", zigbeeEndpoint.getEndpointAddress(),
-                    (isClient ? "Client" : "Server"), attributeId, clusterId);
+                    (isClient ? "Client" : "Server"), attributeId, String.format("%04X", clusterId));
         } else {
             Object value = normalizer.normalizeZclData(attribute.getDataType(), attributeValue);
             attribute.updateValue(value, reportTime);

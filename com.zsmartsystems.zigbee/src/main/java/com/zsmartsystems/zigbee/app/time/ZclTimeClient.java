@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclTimeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.time.TimeStatusBitmap;
 import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
@@ -62,6 +63,16 @@ public class ZclTimeClient {
     private ZigBeeUtcTime dstStart;
     private ZigBeeUtcTime dstEnd;
     private int dstOffset;
+
+    /**
+     * Count of sequential failures
+     */
+    private int errorCnt = 0;
+
+    /**
+     * Maximum number of attempts before we assume an error
+     */
+    private final static int MAX_RETRIES = 4;
 
     /**
      * Calculation of the daily drift rate. This is updated following each time set or poll.
@@ -275,11 +286,22 @@ public class ZclTimeClient {
      */
     protected boolean doPoll() {
         logger.debug("{}: Time client: poll start", timeCluster.getZigBeeAddress());
-        ZigBeeUtcTime currentTime = timeCluster.getTime(0);
+        ZclAttribute timeAttribute = timeCluster.getAttribute(ZclTimeCluster.ATTR_TIME);
+        if (!timeAttribute.isImplemented()) {
+
+        }
+
+        ZigBeeUtcTime currentTime = (ZigBeeUtcTime) timeAttribute.readValue(0);
         if (currentTime == null) {
-            logger.debug("{}: Time client: poll failed getting time", timeCluster.getZigBeeAddress());
+            errorCnt++;
+            logger.debug("{}: Time client: poll failed getting time (failure {})", timeCluster.getZigBeeAddress(),
+                    errorCnt);
+            if (errorCnt > MAX_RETRIES) {
+                lastRequestedTime = ZigBeeUtcTime.now();
+            }
             return false;
         }
+        errorCnt = 0;
         lastRequestedTime = ZigBeeUtcTime.now();
 
         currentTimeDelta = (int) (lastRequestedTime.getEpochSecond() - currentTime.getEpochSecond());
@@ -310,7 +332,9 @@ public class ZclTimeClient {
     protected boolean doUpdate() throws InterruptedException, ExecutionException {
         logger.debug("{}: Time client: synchronisation start", timeCluster.getZigBeeAddress());
 
-        ZigBeeUtcTime currentTime = timeCluster.getTime(0);
+        ZclAttribute timeAttribute = timeCluster.getAttribute(ZclTimeCluster.ATTR_TIME);
+
+        ZigBeeUtcTime currentTime = (ZigBeeUtcTime) timeAttribute.readValue(0);
         if (currentTime == null) {
             logger.debug("{}: Time client: synchronisation failed getting time", timeCluster.getZigBeeAddress());
             return false;
@@ -319,7 +343,7 @@ public class ZclTimeClient {
 
         lastTimeDelta = (int) (lastRequestedTime.getEpochSecond() - currentTime.getEpochSecond());
 
-        CommandResult result = timeCluster.setTime(ZigBeeUtcTime.now()).get();
+        CommandResult result = timeAttribute.writeValue(ZigBeeUtcTime.now()).get();
         if (!result.isSuccess()) {
             logger.debug("{}: Time client: synchronisation failed setting time", timeCluster.getZigBeeAddress());
             return false;
@@ -328,8 +352,10 @@ public class ZclTimeClient {
         lastUpdate = ZigBeeUtcTime.now();
         driftMap.put(lastUpdate, currentTime);
 
+        ZclAttribute statusAttribute = timeCluster.getAttribute(ZclTimeCluster.ATTR_TIMESTATUS);
+
         // Set the synchronised bit in the remote time status attribute
-        timeCluster.setTimeStatus(TimeStatusBitmap.SYNCHRONIZED.getKey());
+        statusAttribute.writeValue(TimeStatusBitmap.SYNCHRONIZED.getKey());
 
         updateStatus();
 
@@ -345,7 +371,7 @@ public class ZclTimeClient {
         // Do a poll to update our knowledge
         // TODO: Some devices don't actually seem to update their clock.
         // We could check here to see if the delta has changed.
-        currentTime = timeCluster.getTime(0);
+        currentTime = (ZigBeeUtcTime) timeAttribute.readValue(0);
         if (currentTime == null) {
             logger.debug("{}: Time client: poll failed getting time", timeCluster.getZigBeeAddress());
             return false;

@@ -7,26 +7,20 @@
  */
 package com.zsmartsystems.zigbee.app.time;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
-import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclTimeCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.time.TimeStatusBitmap;
-import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Local time server. This allows any clients on the network to read time as required.
@@ -34,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  *
  */
-public class ZclTimeServer implements ZclCommandListener {
+public class ZclTimeServer {
     /**
      * The {@link Logger}.
      */
@@ -55,6 +49,8 @@ public class ZclTimeServer implements ZclCommandListener {
     private int dstOffset;
     private boolean dstSet = false;
 
+    private int timezoneOffset = 0;
+
     private final ZigBeeNetworkManager networkManager;
 
     /**
@@ -62,14 +58,24 @@ public class ZclTimeServer implements ZclCommandListener {
      */
     private final Map<Integer, ZigBeeUtcTime> lastUpdate = new HashMap<>();
 
+    /**
+     * The worker thread that is scheduled periodically to check the synchronisation of remote devices
+     */
+    private ScheduledFuture<?> workerJob;
+
     protected ZclTimeServer(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
+        scheduleTimeUpdate();
     }
 
     /**
      * Shuts down the time server and frees any resources
      */
     protected void shutdown() {
+        if (workerJob != null) {
+            workerJob.cancel(true);
+            workerJob = null;
+        }
     }
 
     /**
@@ -89,6 +95,7 @@ public class ZclTimeServer implements ZclCommandListener {
      */
     protected void setMaster(boolean master) {
         this.master = master;
+        setTimeStatusAttribute();
     }
 
     /**
@@ -108,6 +115,8 @@ public class ZclTimeServer implements ZclCommandListener {
 
     protected void setSuperceding(boolean superceding) {
         this.superceding = superceding;
+        setTimeStatusAttribute();
+
     }
 
     /**
@@ -117,6 +126,12 @@ public class ZclTimeServer implements ZclCommandListener {
      */
     protected boolean isSuperceding() {
         return superceding;
+    }
+
+    protected void setTimezone(int timezoneOffset) {
+        this.timezoneOffset = timezoneOffset;
+        updateEndpointAttribute(ZclTimeCluster.ATTR_TIMEZONE, this.timezoneOffset);
+
     }
 
     /**
@@ -132,93 +147,11 @@ public class ZclTimeServer implements ZclCommandListener {
         this.dstEnd = dstEnd;
         this.dstOffset = dstOffset;
         dstSet = true;
-    }
-
-    @Override
-    public boolean commandReceived(ZclCommand command) {
-        if (command.getClusterId() != ZclTimeCluster.CLUSTER_ID) {
-            // TODO: This should check the message is addressed to the local NWK address
-            return false;
-        }
-
-        if (command instanceof ReadAttributesCommand) {
-            ReadAttributesCommand readRequest = (ReadAttributesCommand) command;
-            if (readRequest.getCommandDirection() != ZclCommandDirection.CLIENT_TO_SERVER) {
-                return false;
-            }
-
-            List<ReadAttributeStatusRecord> records = new ArrayList<>();
-            for (Integer attributeId : readRequest.getIdentifiers()) {
-                ReadAttributeStatusRecord record = new ReadAttributeStatusRecord();
-                record.setAttributeIdentifier(attributeId);
-                record.setStatus(ZclStatus.SUCCESS); // Assume SUCCESS - failure will be set below if needed
-
-                switch (attributeId) {
-                    case ZclTimeCluster.ATTR_TIMESTATUS:
-                        int status = TimeStatusBitmap.SYNCHRONIZED.getKey();
-                        status |= master ? TimeStatusBitmap.MASTER.getKey() : 0x0;
-                        status |= superceding ? TimeStatusBitmap.SUPERSEDING.getKey() : 0x0;
-                        status |= dstSet ? TimeStatusBitmap.MASTER_ZONE_DST.getKey() : 0x0;
-                        record.setAttributeDataType(ZclDataType.BITMAP_8_BIT);
-                        record.setAttributeValue(status);
-                        break;
-                    case ZclTimeCluster.ATTR_DSTSTART:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(dstStart);
-                        break;
-                    case ZclTimeCluster.ATTR_DSTEND:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(dstEnd);
-                        break;
-                    case ZclTimeCluster.ATTR_DSTSHIFT:
-                        record.setAttributeDataType(ZclDataType.SIGNED_32_BIT_INTEGER);
-                        record.setAttributeValue(dstOffset);
-                        break;
-                    case ZclTimeCluster.ATTR_TIME:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(ZigBeeUtcTime.now());
-                        lastUpdate.put(command.getSourceAddress().getAddress(), ZigBeeUtcTime.now());
-                        break;
-                    case ZclTimeCluster.ATTR_LASTSETTIME:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(ZigBeeUtcTime.now());
-                        break;
-                    case ZclTimeCluster.ATTR_LOCALTIME:
-                    case ZclTimeCluster.ATTR_STANDARDTIME:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(ZigBeeUtcTime.now().plus(dstOffset));
-                        lastUpdate.put(command.getSourceAddress().getAddress(), ZigBeeUtcTime.now());
-                        break;
-                    case ZclTimeCluster.ATTR_TIMEZONE:
-                        record.setAttributeDataType(ZclDataType.SIGNED_32_BIT_INTEGER);
-                        record.setAttributeValue(dstOffset);
-                        break;
-                    case ZclTimeCluster.ATTR_VALIDUNTILTIME:
-                        record.setAttributeDataType(ZclDataType.UTCTIME);
-                        record.setAttributeValue(new ZigBeeUtcTime());
-                        break;
-                    default:
-                        record.setStatus(ZclStatus.UNSUPPORTED_ATTRIBUTE);
-                        logger.debug("TIME Server unknown request {} from {}", attributeId, command.getSourceAddress());
-                        break;
-                }
-
-                records.add(record);
-            }
-
-            ReadAttributesResponse readResponse = new ReadAttributesResponse(records);
-            readResponse.setDestinationAddress(command.getSourceAddress());
-            readResponse.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
-            readResponse.setClusterId(ZclTimeCluster.CLUSTER_ID);
-            readResponse.setSourceAddress(command.getDestinationAddress());
-            readResponse.setTransactionId(command.getTransactionId());
-
-            networkManager.sendCommand(readResponse);
-
-            return true;
-        }
-
-        return false;
+        setTimeStatusAttribute();
+        updateEndpointAttribute(ZclTimeCluster.ATTR_DSTSTART, this.dstStart);
+        updateEndpointAttribute(ZclTimeCluster.ATTR_DSTEND, this.dstEnd);
+        updateEndpointAttribute(ZclTimeCluster.ATTR_DSTSTART, this.dstStart);
+        updateEndpointAttribute(ZclTimeCluster.ATTR_DSTSHIFT, this.dstOffset); // TODO Only if DST active
     }
 
     /**
@@ -226,7 +159,67 @@ public class ZclTimeServer implements ZclCommandListener {
      *
      * @param timeClient the remote client
      */
-    public void addRemote(ZclTimeCluster timeClient) {
+    protected void addRemote(ZclTimeCluster timeClient) {
         timeClient.addCommandListener(this);
     }
+
+    /**
+     * Removes a remote client to be managed by the local server
+     *
+     * @param timeClient the remote client
+     */
+    protected void removeRemote(ZclTimeCluster timeClient) {
+        timeClient.removeCommandListener(this);
+    }
+
+    private void setTimeStatusAttribute() {
+        int status = TimeStatusBitmap.SYNCHRONIZED.getKey();
+        status |= master ? TimeStatusBitmap.MASTER.getKey() : 0x0;
+        status |= superceding ? TimeStatusBitmap.SUPERSEDING.getKey() : 0x0;
+        status |= dstSet ? TimeStatusBitmap.MASTER_ZONE_DST.getKey() : 0x0;
+
+        updateEndpointAttribute(ZclTimeCluster.ATTR_TIMESTATUS, status);
+    }
+
+    private void updateEndpointAttribute(int attributeId, Object attributeValue) {
+        logger.debug("*********** UPDATE {} -> {}", attributeId, attributeValue);
+
+        for (ZigBeeNode node : networkManager.getNodes()) {
+            for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                ZclTimeCluster cluster = (ZclTimeCluster) endpoint.getOutputCluster(ZclTimeCluster.CLUSTER_ID);
+                if (cluster != null) {
+                    ZclAttribute attribute = cluster.getLocalAttribute(attributeId);
+                    if (attribute == null) {
+                        logger.debug("{}: Endpoint {}. Time Server Extension: Updating attribute {} UNSUPPORTED",
+                                node.getIeeeAddress(), endpoint.getEndpointId(), attributeId);
+                        continue;
+                    }
+                    attribute.setValue(attributeValue);
+                    attribute.setImplemented(true);
+                    logger.debug("{}: Endpoint {}. Time Server Extension: Updated attribute {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(), attribute);
+                }
+            }
+        }
+    }
+
+    private void scheduleTimeUpdate() {
+        logger.debug("*********** SCHEDULE");
+        workerJob = networkManager.scheduleTask(new TimeWorkerThread(), 1000, 1000);
+    }
+
+    /**
+     * Class implementing the {@link Runnable} that will perform the time synchronisation work
+     */
+    private class TimeWorkerThread implements Runnable {
+        @Override
+        public void run() {
+            updateEndpointAttribute(ZclTimeCluster.ATTR_TIME, ZigBeeUtcTime.now());
+            updateEndpointAttribute(ZclTimeCluster.ATTR_STANDARDTIME, ZigBeeUtcTime.now()); // Standard Time = Time +
+                                                                                            // TimeZone
+            updateEndpointAttribute(ZclTimeCluster.ATTR_LOCALTIME, ZigBeeUtcTime.now()); // Local Time = Standard Time +
+                                                                                         // DstShift
+        }
+    }
+
 }
