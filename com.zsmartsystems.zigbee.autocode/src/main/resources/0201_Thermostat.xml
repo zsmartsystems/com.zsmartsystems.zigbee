@@ -278,6 +278,9 @@
     <attribute code="0x0523" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="true">
         <name>Coef Ki</name>
     </attribute>
+    <attribute code="0x0531" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true">
+        <name>Error Code</name>
+    </attribute>
     
     
 
