@@ -1256,6 +1256,51 @@
     <attribute code="0x0C43" arraystart="1" arraycount="13" arraystep="2" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
         <name>Previous Month {{count}} Alternative Consumption Received</name>
     </attribute>
+    <attribute code="0x2000" type="SIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L1 Phase Active Power</name>
+    </attribute>
+    <attribute code="0x2001" type="SIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L2 Phase Active Power</name>
+    </attribute>
+    <attribute code="0x2002" type="SIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L3 Phase Active Power</name>
+    </attribute>
+    <attribute code="0x3000" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L1 Phase Voltage</name>
+    </attribute>
+    <attribute code="0x3001" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L2 Phase Voltage</name>
+    </attribute>
+    <attribute code="0x3002" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L3 Phase Voltage</name>
+    </attribute>
+    <attribute code="0x3100" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L1 Phase Current</name>
+    </attribute>
+    <attribute code="0x3101" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L2 Phase Current</name>
+    </attribute>
+    <attribute code="0x3102" type="UNSIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L3 Phase Current</name>
+    </attribute>
+    <attribute code="0x4000" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L1 Phase Energy Consumption</name>
+    </attribute>
+    <attribute code="0x4001" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L2 Phase Energy Consumption</name>
+    </attribute>
+    <attribute code="0x4002" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L3 Phase Energy Consumption</name>
+    </attribute>
+    <attribute code="0x4100" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L1 Phase Reactive Energy Consumption</name>
+    </attribute>
+    <attribute code="0x4101" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L2 Phase Reactive Energy Consumption</name>
+    </attribute>
+    <attribute code="0x4102" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>L3 Phase Reactive Energy Consumption</name>
+    </attribute>
 
     <constant type="ENUMERATION_8_BIT" class="GetProfileStatusEnum">
         <name>Get Profile Status</name>
