@@ -105,13 +105,19 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         for (ZigBeeEndpoint applicationEndpoint : applications.values()) {
             if (applicationEndpoint.getParentNode().equals(node)) {
                 endpoint = applicationEndpoint;
+                endpoint.removeApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+            }
+        }
+        
+        for (ZigBeeEndpoint applicationEndpoint : applications.values()) {
+            if (applicationEndpoint.getParentNode().equals(node)) {
+                endpoint = applicationEndpoint;
                 server = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
             }
         }
 
         if (server == null) {
-            server = rebuildZclOtaUpgradeServer(applications, node);
-            out.println("OTA Upgrade Server is rebuilding");
+            server = rebuildZclOtaUpgradeServer(endpoint, out);
         }
         
         if (server == null) {
@@ -185,6 +191,11 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
 
         ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        
+        if (otaServer == null) {
+            otaServer = rebuildZclOtaUpgradeServer(endpoint, out);
+        }
+        
         if (otaServer == null) {
             throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
         }
@@ -207,6 +218,10 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
         if (otaServer == null) {
+            otaServer = rebuildZclOtaUpgradeServer(endpoint, out);
+        }
+        
+        if (otaServer == null) {
             throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
         }
 
@@ -219,6 +234,10 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
         if (otaServer == null) {
+            otaServer = rebuildZclOtaUpgradeServer(endpoint, out);
+        }
+        
+        if (otaServer == null) {
             throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
         }
 
@@ -226,18 +245,14 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         out.println("OTA Upgrade cancelled on endpoint " + endpoint.getEndpointAddress());
     }
     
-    private ZclOtaUpgradeServer rebuildZclOtaUpgradeServer(Map<Integer, ZigBeeEndpoint> applications, ZigBeeNode node) {
-        ZigBeeEndpoint endpoint = null;
+    private ZclOtaUpgradeServer rebuildZclOtaUpgradeServer(ZigBeeEndpoint endpoint, PrintStream out) {
         ZclOtaUpgradeServer zclOtaUpgradeServer = new ZclOtaUpgradeServer();
-        for (ZigBeeEndpoint applicationEndpoint : applications.values()) {
-            if (applicationEndpoint.getParentNode().equals(node)) {
-                endpoint = applicationEndpoint;
-                ZigBeeStatus status = endpoint.addApplication(zclOtaUpgradeServer);
-                if (status == ZigBeeStatus.SUCCESS) {
-                    return zclOtaUpgradeServer;
-                }
-            }
+        ZigBeeStatus status = endpoint.addApplication(zclOtaUpgradeServer);
+        if (status != ZigBeeStatus.SUCCESS) {
+            zclOtaUpgradeServer = null;
         }
-        return null;
+        out.println("OTA Upgrade Server was rebuilding : " + status);
+        
+        return zclOtaUpgradeServer;
     }
 }
