@@ -295,7 +295,7 @@ public class ZigBeeConsoleMain {
 
         final ZigBeePort serialPort = new ZigBeeSerialPort(serialPortName, serialBaud, flowControl);
 
-        System.out.println("Initialising ZigBee console...");
+        System.out.println("Initialising ZigBee console...(correctif Clement #123)");
 
         List<Class<? extends ZigBeeConsoleCommand>> commands = new ArrayList<>();
 

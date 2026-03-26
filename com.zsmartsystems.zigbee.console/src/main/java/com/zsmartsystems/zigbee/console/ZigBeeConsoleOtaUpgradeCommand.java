@@ -18,6 +18,7 @@ import java.util.TreeMap;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
@@ -100,6 +101,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         ZigBeeEndpoint endpoint = null;
         ZclOtaUpgradeServer server = null;
+        
         for (ZigBeeEndpoint applicationEndpoint : applications.values()) {
             if (applicationEndpoint.getParentNode().equals(node)) {
                 endpoint = applicationEndpoint;
@@ -107,6 +109,11 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
             }
         }
 
+        if (server == null) {
+            server = rebuildZclOtaUpgradeServer(applications, node);
+            out.println("OTA Upgrade Server is rebuilding");
+        }
+        
         if (server == null) {
             throw new IllegalArgumentException(
                     "Node " + node.getNetworkAddress().toString() + " does not implement the OTA Upgrade server");
@@ -217,5 +224,20 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         otaServer.cancelUpgrade();
         out.println("OTA Upgrade cancelled on endpoint " + endpoint.getEndpointAddress());
+    }
+    
+    private ZclOtaUpgradeServer rebuildZclOtaUpgradeServer(Map<Integer, ZigBeeEndpoint> applications, ZigBeeNode node) {
+        ZigBeeEndpoint endpoint = null;
+        ZclOtaUpgradeServer zclOtaUpgradeServer = new ZclOtaUpgradeServer();
+        for (ZigBeeEndpoint applicationEndpoint : applications.values()) {
+            if (applicationEndpoint.getParentNode().equals(node)) {
+                endpoint = applicationEndpoint;
+                ZigBeeStatus status = endpoint.addApplication(zclOtaUpgradeServer);
+                if (status == ZigBeeStatus.SUCCESS) {
+                    return zclOtaUpgradeServer;
+                }
+            }
+        }
+        return null;
     }
 }
