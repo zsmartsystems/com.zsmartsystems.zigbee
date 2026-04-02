@@ -117,6 +117,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ENERGY_SCAN_REQUEST = 0x9C;
     protected static final int FRAME_ID_ENERGY_SCAN_RESULT_HANDLER = 0x48;
     protected static final int FRAME_ID_ERASE_KEY_TABLE_ENTRY = 0x76;
+    protected static final int FRAME_ID_EXPORT_KEY = 0x0114;
     protected static final int FRAME_ID_FIND_AND_REJOIN_NETWORK = 0x21;
     protected static final int FRAME_ID_FIND_KEY_TABLE_ENTRY = 0x75;
     protected static final int FRAME_ID_FORM_NETWORK = 0x1E;
@@ -177,6 +178,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_INCOMING_NETWORK_STATUS_HANDLER = 0xC4;
     protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
     protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
+    protected static final int FRAME_ID_IMPORT_KEY = 0x0115;
     protected static final int FRAME_ID_INCOMING_SENDER_EUI64_HANDLER = 0x62;
     protected static final int FRAME_ID_INVALID_COMMAND = 0x58;
     protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
@@ -221,6 +223,15 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SEND_REPLY = 0x39;
     protected static final int FRAME_ID_SEND_TRUST_CENTER_LINK_KEY = 0x67;
     protected static final int FRAME_ID_SEND_UNICAST = 0x34;
+    protected static final int FRAME_ID_SEC_MAN_CHECK_KEY_CONTEXT = 0x0110;
+    protected static final int FRAME_ID_SEC_MAN_EXPORT_LINK_KEY_BY_EUI = 0x010D;
+    protected static final int FRAME_ID_SEC_MAN_EXPORT_LINK_KEY_BY_INDEX = 0x010F;
+    protected static final int FRAME_ID_SEC_MAN_EXPORT_TRANSIENT_KEY_BY_EUI = 0x0113;
+    protected static final int FRAME_ID_SEC_MAN_EXPORT_TRANSIENT_KEY_BY_INDEX = 0x0112;
+    protected static final int FRAME_ID_SEC_MAN_GET_APS_KEY_INFO = 0x010C;
+    protected static final int FRAME_ID_SEC_MAN_GET_NETWORK_KEY_INFO = 0x0116;
+    protected static final int FRAME_ID_SEC_MAN_IMPORT_LINK_KEY = 0x010E;
+    protected static final int FRAME_ID_SEC_MAN_IMPORT_TRANSIENT_KEY = 0x0111;
     protected static final int FRAME_ID_SET_ADDRESS_TABLE_REMOTE_EUI64 = 0x5C;
     protected static final int FRAME_ID_SET_ADDRESS_TABLE_REMOTE_NODE_ID = 0x5D;
     protected static final int FRAME_ID_SET_BINDING = 0x2B;
@@ -288,6 +299,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_REQUEST, EzspEnergyScanRequestResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_RESULT_HANDLER, EzspEnergyScanResultHandler.class);
         ezspHandlerMap.put(FRAME_ID_ERASE_KEY_TABLE_ENTRY, EzspEraseKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_EXPORT_KEY, EzspExportKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_FIND_AND_REJOIN_NETWORK, EzspFindAndRejoinNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_FIND_KEY_TABLE_ENTRY, EzspFindKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_FORM_NETWORK, EzspFormNetworkResponse.class);
@@ -310,6 +322,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_FIRST_BEACON, EzspGetFirstBeaconResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY, EzspGetKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY_TABLE_ENTRY, EzspGetKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_IMPORT_KEY, EzspImportKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_LIBRARY_STATUS, EzspGetLibraryStatusResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_MFG_TOKEN, EzspGetMfgTokenResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_MULTICAST_TABLE_ENTRY, EzspGetMulticastTableEntryResponse.class);
@@ -392,6 +405,15 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SEND_REPLY, EzspSendReplyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SEND_TRUST_CENTER_LINK_KEY, EzspSendTrustCenterLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SEND_UNICAST, EzspSendUnicastResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_CHECK_KEY_CONTEXT, EzspSecManCheckKeyContextResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_EXPORT_LINK_KEY_BY_EUI, EzspSecManExportLinkKeyByEuiResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_EXPORT_LINK_KEY_BY_INDEX, EzspSecManExportLinkKeyByIndexResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_EXPORT_TRANSIENT_KEY_BY_EUI, EzspSecManExportTransientKeyByEuiResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_EXPORT_TRANSIENT_KEY_BY_INDEX, EzspSecManExportTransientKeyByIndexResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_GET_APS_KEY_INFO, EzspSecManGetApsKeyInfoResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_GET_NETWORK_KEY_INFO, EzspSecManGetNetworkKeyInfoResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_IMPORT_LINK_KEY, EzspSecManImportLinkKeyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SEC_MAN_IMPORT_TRANSIENT_KEY, EzspSecManImportTransientKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_ADDRESS_TABLE_REMOTE_EUI64, EzspSetAddressTableRemoteEui64Response.class);
         ezspHandlerMap.put(FRAME_ID_SET_ADDRESS_TABLE_REMOTE_NODE_ID, EzspSetAddressTableRemoteNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_BINDING, EzspSetBindingResponse.class);

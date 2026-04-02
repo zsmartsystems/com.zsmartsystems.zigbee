@@ -50,6 +50,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspExtendedValueId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerApsKeyMetadata;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerContext;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerNetworkKeyInfo;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
@@ -328,5 +331,17 @@ public class EzspSerializer {
 
     public void serializeEzspExtendedValueId(EzspExtendedValueId extendedValueId) {
         buffer[length++] = extendedValueId.getKey();
+    }
+
+    public void serializeEzspSecurityManagerContext(EzspSecurityManagerContext context) {
+        context.serialize(this);
+    }
+
+    public void serializeEzspSecurityManagerNetworkKeyInfo(EzspSecurityManagerNetworkKeyInfo networkKeyInfo) {
+        networkKeyInfo.serialize(this);
+    }
+
+    public void serializeEzspSecurityManagerApsKeyMetadata(EzspSecurityManagerApsKeyMetadata apsKeyMetadata) {
+        apsKeyMetadata.serialize(this);
     }
 }
