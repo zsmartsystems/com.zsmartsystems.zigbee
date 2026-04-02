@@ -88,7 +88,7 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
         }
     }
 
-    private void registerApplication(ZigBeeNode node) {
+    public void registerApplication(ZigBeeNode node) {
         /*
          * This method needs to register the ZclOtaUpgradeServer to an endpoint on the node. Only one endpoint should be
          * registered with the ZclOtaUpgradeServer.

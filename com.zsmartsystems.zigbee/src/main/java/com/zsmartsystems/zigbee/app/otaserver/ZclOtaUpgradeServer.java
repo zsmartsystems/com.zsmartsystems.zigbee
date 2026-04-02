@@ -563,6 +563,14 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         return (Integer) cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(0);
     }
 
+    public int getPercentComplete() {
+        return percentComplete;
+    }
+
+    public ZigBeeOtaFile getOtaFile() {
+        return otaFile;
+    }
+
     /**
      * Send an updated status on OTA progress to the listeners
      *
