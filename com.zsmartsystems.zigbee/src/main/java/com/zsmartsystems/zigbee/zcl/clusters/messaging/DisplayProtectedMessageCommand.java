@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.messaging;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,7 +62,7 @@ public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
      * Start Time of now, adjust the Duration In Minutes field to correspond to the remainder of
      * the event.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Duration In Minutes command message field.
@@ -116,7 +115,7 @@ public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
      *
      * @param messageId {@link Integer} Message ID
      * @param messageControl {@link Integer} Message Control
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param message {@link String} Message
      * @param extendedMessageControl {@link Integer} Extended Message Control
@@ -124,7 +123,7 @@ public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
     public DisplayProtectedMessageCommand(
             Integer messageId,
             Integer messageControl,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer durationInMinutes,
             String message,
             Integer extendedMessageControl) {
@@ -204,7 +203,7 @@ public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -220,7 +219,7 @@ public class DisplayProtectedMessageCommand extends ZclMessagingCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

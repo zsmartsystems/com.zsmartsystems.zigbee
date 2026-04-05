@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
@@ -230,6 +231,11 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (int) ((uint48Value >> 40) & 0xFF);
                 break;
             case UTCTIME:
+                final long utcValue = ((ZigBeeUtcTime) data).getZigBeeSecond();
+                buffer[length++] = (int) (utcValue & 0xFF);
+                buffer[length++] = (int) ((utcValue >> 8) & 0xFF);
+                buffer[length++] = (int) ((utcValue >> 16) & 0xFF);
+                buffer[length++] = (int) ((utcValue >> 24) & 0xFF);
                 break;
             case ZDO_STATUS:
                 buffer[length++] = ((ZdoStatus) data).getId();
