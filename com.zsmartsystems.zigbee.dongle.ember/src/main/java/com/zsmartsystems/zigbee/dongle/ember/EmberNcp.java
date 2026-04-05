@@ -28,6 +28,15 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspExportKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspExportKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSecManImportTransientKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSecManImportTransientKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSecManGetNetworkKeyInfoRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSecManGetNetworkKeyInfoResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerContext;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerNetworkKeyInfo;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryResponse;
@@ -454,6 +463,35 @@ public class EmberNcp {
      * @return the {@link EmberKeyStruct} or null on error
      */
     public EmberKeyStruct getKey(EmberKeyType keyType) {
+        // EZSP v13+: Use SecurityManager exportKey API (legacy getKey was removed)
+        if (EzspFrame.getEzspVersion() >= 13) {
+            EzspSecurityManagerKeyType secManKeyType;
+            switch (keyType) {
+                case EMBER_CURRENT_NETWORK_KEY:
+                    secManKeyType = EzspSecurityManagerKeyType.NETWORK;
+                    break;
+                case EMBER_TRUST_CENTER_LINK_KEY:
+                    secManKeyType = EzspSecurityManagerKeyType.TC_LINK;
+                    break;
+                case EMBER_APPLICATION_LINK_KEY:
+                    secManKeyType = EzspSecurityManagerKeyType.APP_LINK;
+                    break;
+                default:
+                    logger.debug("Unsupported key type for EZSP v13 exportKey: {}", keyType);
+                    return null;
+            }
+            EmberKeyData keyData = secManExportKey(secManKeyType);
+            if (keyData == null) {
+                return null;
+            }
+            // Wrap EmberKeyData in an EmberKeyStruct for backwards compatibility
+            EmberKeyStruct keyStruct = new EmberKeyStruct();
+            keyStruct.setKey(keyData);
+            keyStruct.setType(keyType);
+            return keyStruct;
+        }
+
+        // Legacy EZSP v4-v12
         EzspGetKeyRequest request = new EzspGetKeyRequest();
         request.setKeyType(keyType);
         EzspTransaction transaction = protocolHandler
@@ -468,6 +506,32 @@ public class EmberNcp {
             return null;
         }
         return response.getKeyStruct();
+    }
+
+    /**
+     * Exports a key using the EZSP v13+ SecurityManager API.
+     *
+     * @param keyType the {@link EzspSecurityManagerKeyType} to export
+     * @return the {@link EmberKeyData} or null on error
+     */
+    public EmberKeyData secManExportKey(EzspSecurityManagerKeyType keyType) {
+        EzspSecurityManagerContext context = new EzspSecurityManagerContext();
+        context.setKeyType(keyType);
+        EzspExportKeyRequest request = new EzspExportKeyRequest();
+        request.setContext(context);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspExportKeyResponse.class));
+        EzspExportKeyResponse response = (EzspExportKeyResponse) transaction.getResponse();
+        if (response == null) {
+            logger.debug("No response from exportKey command");
+            return null;
+        }
+        logger.debug(response.toString());
+        if (response.getSlStatus() != 0) {
+            logger.debug("Error exporting key: status=0x{}", String.format("%08X", response.getSlStatus()));
+            return null;
+        }
+        return response.getKey();
     }
 
     /**
@@ -682,6 +746,28 @@ public class EmberNcp {
     public EmberStatus addTransientLinkKey(IeeeAddress partner, ZigBeeKey transientKey) {
         EmberKeyData emberKey = new EmberKeyData();
         emberKey.setContents(transientKey.getValue());
+
+        // EZSP v13+: Use SecurityManager importTransientKey API
+        if (EzspFrame.getEzspVersion() >= 13) {
+            EzspSecManImportTransientKeyRequest request = new EzspSecManImportTransientKeyRequest();
+            request.setEui64(partner);
+            request.setPlaintextKey(emberKey);
+            EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                    new EzspSingleResponseTransaction(request, EzspSecManImportTransientKeyResponse.class));
+            EzspSecManImportTransientKeyResponse response = (EzspSecManImportTransientKeyResponse) transaction
+                    .getResponse();
+            if (response == null) {
+                return EmberStatus.UNKNOWN;
+            }
+            logger.debug(response.toString());
+            if (response.getSlStatus() != 0) {
+                logger.debug("Error importing transient key: status=0x{}", String.format("%08X", response.getSlStatus()));
+                return EmberStatus.EMBER_ERR_FATAL;
+            }
+            return EmberStatus.EMBER_SUCCESS;
+        }
+
+        // Legacy EZSP v4-v12
         EzspAddTransientLinkKeyRequest request = new EzspAddTransientLinkKeyRequest();
         request.setPartner(partner);
         request.setTransientKey(emberKey);

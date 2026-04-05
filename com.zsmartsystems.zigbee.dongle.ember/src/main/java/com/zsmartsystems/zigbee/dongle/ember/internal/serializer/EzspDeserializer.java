@@ -60,6 +60,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerApsKeyMetadata;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerContext;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspSecurityManagerNetworkKeyInfo;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.NwkLayerStatusCode;
 
@@ -422,5 +425,17 @@ public class EzspDeserializer {
 
     public NwkLayerStatusCode deserializeNwkLayerStatusCode() {
         return NwkLayerStatusCode.getNwkLayerStatusCode(deserializeUInt8());
+    }
+
+    public EzspSecurityManagerContext deserializeEzspSecurityManagerContext() {
+        return new EzspSecurityManagerContext(this);
+    }
+
+    public EzspSecurityManagerNetworkKeyInfo deserializeEzspSecurityManagerNetworkKeyInfo() {
+        return new EzspSecurityManagerNetworkKeyInfo(this);
+    }
+
+    public EzspSecurityManagerApsKeyMetadata deserializeEzspSecurityManagerApsKeyMetadata() {
+        return new EzspSecurityManagerApsKeyMetadata(this);
     }
 }
