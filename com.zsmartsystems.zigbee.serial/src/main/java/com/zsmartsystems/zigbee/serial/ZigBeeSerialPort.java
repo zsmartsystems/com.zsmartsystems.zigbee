@@ -273,19 +273,21 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
         }
     }
 
-    public boolean setDtr(boolean state) {
+    @Override
+    public void setDtr(boolean state) {
         try {
-            return serialPort.setDTR(state);
+            serialPort.setDTR(state);
         } catch (SerialPortException e) {
-            return false;
+            logger.warn("Could not set DTR to {} on {}", state, this.portName, e);
         }
     }
 
-    public boolean setRts(boolean state) {
+    @Override
+    public void setRts(boolean state) {
         try {
-            return serialPort.setRTS(state);
+            serialPort.setRTS(state);
         } catch (SerialPortException e) {
-            return false;
+            logger.warn("Could not set RTS to {} on {}", state, this.portName, e);
         }
     }
 }
