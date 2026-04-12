@@ -958,11 +958,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
             // Notify the listeners that we have heard a command that was unknown to us
             for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-                notificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
-                    }
+                notificationService.execute(() -> {
+                    announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
                 });
             }
         }
@@ -1034,11 +1031,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // Directly distribute commands to nodes
         ZigBeeNode node = getNode(command.getSourceAddress().getAddress());
         if (node != null) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    node.commandReceived(finalCommand, apsFrame.getReceivedRssi(), apsFrame.getReceivedLqi());
-                }
+            notificationService.execute(() -> {
+                node.commandReceived(finalCommand, apsFrame.getReceivedRssi(), apsFrame.getReceivedLqi());
             });
         }
 
@@ -1269,11 +1263,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         // Notify the announce listeners
         for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
-                }
+            notificationService.execute(() -> {
+                announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
             });
         }
     }
@@ -1330,22 +1321,14 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // and ensure that the local node is added.
         // This is done in another thread which will then notify users.
         if (state == ZigBeeNetworkState.ONLINE) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    setNetworkStateOnline();
-                }
-            });
+            notificationService.execute(this::setNetworkStateOnline);
 
             return;
         }
 
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    stateListener.networkStateUpdated(state);
-                }
+            notificationService.execute(() -> {
+                stateListener.networkStateUpdated(state);
             });
         }
     }
@@ -1377,31 +1360,22 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             logger.debug("Network state ONLINE: Notifying node {} [{}]", node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
             if (node.getNodeDescriptor() != null) {
-                notificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
-                    }
+                notificationService.execute(() -> {
+                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
                 });
             }
 
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                notificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.nodeAdded(node);
-                    }
+                notificationService.execute(() -> {
+                    listener.nodeAdded(node);
                 });
             }
         }
 
         // Now that everything is added and started, notify the listeners that the state has updated
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    stateListener.networkStateUpdated(ZigBeeNetworkState.ONLINE);
-                }
+            notificationService.execute(() -> {
+                stateListener.networkStateUpdated(ZigBeeNetworkState.ONLINE);
             });
         }
     }
@@ -1689,11 +1663,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listener.nodeRemoved(node);
-                }
+            notificationService.execute(() -> {
+                listener.nodeRemoved(node);
             });
         }
     }
@@ -1731,20 +1702,14 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         if (node.getNodeDescriptor() != null) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
-                }
+            notificationService.execute(() -> {
+                transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
             });
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listener.nodeAdded(node);
-                }
+            notificationService.execute(() -> {
+                listener.nodeAdded(node);
             });
         }
     }
@@ -1784,11 +1749,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         if (node.getNodeDescriptor() != null && currentNode.getNodeDescriptor() != null) {
-            notificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    transport.setNodeDescriptor(currentNode.getIeeeAddress(), currentNode.getNodeDescriptor());
-                }
+            notificationService.execute(() -> {
+                transport.setNodeDescriptor(currentNode.getIeeeAddress(), currentNode.getNodeDescriptor());
             });
         }
 
@@ -1816,16 +1778,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             synchronized (nodeListeners) {
                 latch = new CountDownLatch(nodeListeners.size());
                 for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                    notificationService.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (sendNodeAdded) {
-                                listener.nodeAdded(currentNode);
-                            } else {
-                                listener.nodeUpdated(currentNode);
-                            }
-                            latch.countDown();
+                    notificationService.execute(() -> {
+                        if (sendNodeAdded) {
+                            listener.nodeAdded(currentNode);
+                        } else {
+                            listener.nodeUpdated(currentNode);
                         }
+                        latch.countDown();
                     });
                 }
             }
